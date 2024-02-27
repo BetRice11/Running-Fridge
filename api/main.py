@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers import chatgpt_routers, accounts_routers, beverages_routers, dairies_routers, grains_routers, produces_routers, proteins_routers
 import os
 
 app = FastAPI()
@@ -26,3 +27,11 @@ def launch_details():
             "min": "00"
         }
     }
+
+app.include_router(chatgpt_routers.router)
+app.include_router(accounts_routers.router)
+app.include_router(beverages_routers.router)
+app.include_router(dairies_routers.router)
+app.include_router(grains_routers.router)
+app.include_router(produces_routers.router)
+app.include_router(proteins_routers.router)
