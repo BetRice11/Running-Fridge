@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import chatgpt_routers, accounts_routers, beverages_routers, dairies_routers, grains_routers, produces_routers, proteins_routers
 import os
+from fastapi import APIRouter
 
 app = FastAPI()
 
