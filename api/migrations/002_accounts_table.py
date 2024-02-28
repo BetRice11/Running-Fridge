@@ -11,4 +11,4 @@ steps = [
          DROP TABLE accounts;
          """
      ]
- ]
+  ]
