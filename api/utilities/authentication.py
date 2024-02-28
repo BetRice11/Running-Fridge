@@ -6,27 +6,26 @@ from fastapi import Cookie
 from jose import JWTError, jwt
 from jose.constants import ALGORITHMS
 from typing import Annotated, Optional
-from models.jwt import AccountJWTPayload, AccountJWTUserData
+from models.jwt import JWTPayload, JWTUserData
 from queries.accounts_queries import AccountUserWithPassword
 
 ALGORITHM = ALGORITHMS.HS256
 
 
-SIGNING_KEY = os.environ.get("SIGNING_KEY")
-if not SIGNING_KEY:
-    ValueError("SIGNING_KEY environment variable not set")
+SIGNING_KEY = 'acfeaacc06a847e52c43ebb33b0beb8137ee6895aaf89e2bb24c5b653a380a6a'
 
 
-async def decode_jwt(token: str) -> Optional[AccountJWTPayload]:
+
+async def decode_jwt(token: str) -> Optional[JWTPayload]:
     try:
         payload = jwt.decode(token, SIGNING_KEY, algorithms=[ALGORITHM])
-        return AccountJWTPayload(**payload)
+        return JWTPayload(**payload)
     except (JWTError, AttributeError) as e:
         print(e)
     return None
 
 
-async def try_get_jwt_user_data(fast_api_token: Annotated[str | None, Cookie()] = None) -> Optional[AccountJWTUserData]:
+async def try_get_jwt_user_data(fast_api_token: Annotated[str | None, Cookie()] = None) -> Optional[JWTUserData]:
     if not fast_api_token:
         return
     payload = await decode_jwt(fast_api_token)
@@ -50,12 +49,12 @@ def hash_password(plain_password) -> str:
 
 def generate_jwt(user: AccountUserWithPassword) -> str:
     exp = timegm((datetime.utcnow() + timedelta(hours=1)).utctimetuple())
-    jwt_data = AccountJWTPayload(
+    jwt_data = JWTPayload(
         exp=exp,
         sub=user.username,
-        user=AccountJWTUserData(username=user.username, id=user.id),
+        user=JWTUserData(username=user.username, id=user.id),
     )
     encoded_jwt = jwt.encode(
-        jwt_data.model_dump(), SIGNING_KEY, algorithm=ALGORITHMS.HS256
+        jwt_data.dict(),SIGNING_KEY, algorithm=ALGORITHMS.HS256
     )
     return encoded_jwt

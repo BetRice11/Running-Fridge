@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 
 
-class AccountJWTUserData(BaseModel):
+class JWTUserData(BaseModel):
 
     id: int
     username: str
 
-class AccountJWTPayload(BaseModel):
+class JWTPayload(BaseModel):
 
-    user: AccountJWTUserData
+    user: JWTUserData
     sub: str
     exp: int

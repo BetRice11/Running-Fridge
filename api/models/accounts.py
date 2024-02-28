@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class AccountUserRequest(BaseModel):
     """
@@ -16,6 +17,7 @@ class AccountUserResponse(BaseModel):
 
     id: int
     username: str
+    token: Optional[str]
 
 
 class AccountUserWithPassword(BaseModel):
