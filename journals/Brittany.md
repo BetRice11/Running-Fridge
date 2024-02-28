@@ -1,4 +1,8 @@
-
+## FEB 28, 2024
+Today, I worked on:
+*our first standup: We talked about what we did yesterday and what we are going to continue to work on today.
+*today we are going to finish the FastAPI for the backend.
+Ah-Ha: Re-watched the lecture to gain more information, understand it better now 
 
 ## FEB 27, 2024
 Today, I worked on:
