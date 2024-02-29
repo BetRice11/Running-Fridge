@@ -1,3 +1,9 @@
+## FEB 29, 2024
+Today, I worked on:
+*watched one person drive the backend api while we assisted on advice
+*finalized the login and logout for react
+ah-ha:able to figure out how to handle the other forms
+
 ## FEB 28, 2024
 Today, I worked on:
 *our first standup: We talked about what we did yesterday and what we are going to continue to work on today.
