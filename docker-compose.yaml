@@ -1,12 +1,24 @@
 volumes:
-    postgres-data:
+    jwtdown-db-data:
+        external: true
+    mongo-data:
         external: true
 services:
+    mongo:
+        image: mongo:5
+        volumes:
+            - mongo-data:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: example_user
+            MONGO_INITDB_ROOT_PASSWORD: secret
+        ports:
+            - "15432:5432"
     fastapi:
         environment:
+            DATABASE_URL: mongodb://example_user:secret@mongo
+            DB_NAME: db-running-fridge-db
             CORS_HOST: http://localhost:5173
-            DATABASE_URL: postgresql://example_user:secret@postgres/example_db
-            signin_key: 
+            SIGNING_KEY: ${SIGNING_KEY}
         build:
             context: api
             dockerfile: Dockerfile.dev
@@ -25,13 +37,3 @@ services:
             VITE_API_HOST: http://localhost:8000
         ports:
             - "5173:5173"
-    postgres:
-        image: postgres:14.5-bullseye
-        volumes:
-            - postgres-data:/var/lib/postgresql/data
-        environment:
-            POSTGRES_PASSWORD: secret
-            POSTGRES_USER: example_user
-            POSTGRES_DB: example_db
-        ports:
-            - "15432:5432"

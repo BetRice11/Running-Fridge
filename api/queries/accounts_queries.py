@@ -1,86 +1,27 @@
-import os
-import psycopg
-from psycopg_pool import ConnectionPool
-from psycopg.rows import class_row
+from queries.client import MongoQueries
 from typing import Optional
-from models.accounts import AccountUserWithPassword
+from models.accounts import Account, AccountIn, AccountOut
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
+class DuplicateAccountError(ValueError):
+    pass
 
-pool = ConnectionPool(DATABASE_URL)
+class AccountRepo(MongoQueries):
+    DB_NAME = "db-running-fridge-db"
+    collection = "accounts"
 
+    def get(self, username: str) -> Optional[AccountOut]:
+        account = self.collection.find_one({"username": username})
+        if account is None:
+            return None
+        account['id'] = str(account['_id'])
+        return Account(**account)
 
-class AccountUserQueries:
-
-    def get_by_username(self, username: str) -> Optional[AccountUserWithPassword]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor(row_factory=class_row(AccountUserWithPassword)) as db:
-                    db.execute(
-                        """
-                            SELECT
-                                *
-                            FROM accounts
-                            WHERE username = %s
-                            """,
-                        [username],
-                    )
-                    user = db.fetchone()
-                    if not user:
-                        return None
-        except:
-            raise (f"Error getting user {username}")
-        return user
-
-    def get_by_id(self, id: int) -> Optional[AccountUserWithPassword]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor(row_factory=class_row(AccountUserWithPassword)) as db:
-                    db.execute(
-                        """
-                            SELECT
-                                *
-                            FROM accounts
-                            WHERE id = %s
-                            """,
-                        [id],
-                    )
-                    user = db.fetchone()
-                    if not user:
-                        return None
-        except:
-            raise (f"Error getting user with id {id}")
-
-        return user
-
-    def create_user(self, username: str, hashed_password: str) -> AccountUserWithPassword:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor(row_factory=class_row(AccountUserWithPassword)) as db:
-                    db.execute(
-                        """
-                        INSERT INTO accounts (
-                            username,
-                            password
-                        ) VALUES (
-                            %s, %s
-                        )
-                        RETURNING *;
-                        """,
-                        [
-                            username,
-                            hashed_password
-                        ],
-                    )
-                    user = db.fetchone()
-                    if not user:
-                        raise (
-                            f"Could not create user with username {username}"
-                        )
-        except psycopg.Error:
-            raise (
-                f"Could not create user with username {username}"
-            )
-        return user
+    def create(self, info: AccountIn, hashed_password: str) -> AccountOut:
+        if self.get(info.username) is not None:
+            raise DuplicateAccountError
+        account = info.dict()
+        account['hashed_password'] = hashed_password
+        del account['password']
+        self.collection.insert_one(account)
+        account['id'] = str(account['_id'])
+        return Account(**account)

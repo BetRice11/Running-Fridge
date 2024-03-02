@@ -11,3 +11,5 @@ class JWTPayload(BaseModel):
     user: JWTUserData
     sub: str
     exp: int
+
+

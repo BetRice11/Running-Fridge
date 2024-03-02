@@ -1,7 +1,8 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import chatgpt_routers, accounts_routers, beverages_routers, dairies_routers, grains_routers, produces_routers, proteins_routers
+from routers import accounts_routers, beverages_routers, dairies_routers, grains_routers, produces_routers, proteins_routers
 import os
+from authenticator import authenticator
 
 app = FastAPI()
 
@@ -28,10 +29,10 @@ def launch_details():
         }
     }
 
-app.include_router(chatgpt_routers.router)
-app.include_router(accounts_routers.router)
+app.include_router(authenticator.router, tags = ['AUTH'])
 app.include_router(beverages_routers.router)
 app.include_router(dairies_routers.router)
 app.include_router(grains_routers.router)
 app.include_router(produces_routers.router)
 app.include_router(proteins_routers.router)
+app.include_router(accounts_routers.router)

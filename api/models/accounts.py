@@ -1,7 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
+from jwtdown_fastapi.authentication import Token
 
-class AccountUserRequest(BaseModel):
+
+
+class AccountIn(BaseModel):
     """
     Represents a the parameters needed to create a new user
     """
@@ -9,22 +12,29 @@ class AccountUserRequest(BaseModel):
     username: str
     password: str
 
+class AccountForm(BaseModel):
+    username: str
+    password: str
 
-class AccountUserResponse(BaseModel):
+class AccountOut(BaseModel):
     """
     Represents a user, with the password not included
     """
 
     id: int
     username: str
-    token: Optional[str]
+    
 
-
-class AccountUserWithPassword(BaseModel):
+class Account(AccountOut):
     """
     Represents a user with password included
     """
+    hashed_password: str
 
-    id: int
-    username: str
-    password: str
+
+
+class AccountToken(Token):
+    account: AccountOut
+
+class HttpError(BaseModel):
+    detail: str

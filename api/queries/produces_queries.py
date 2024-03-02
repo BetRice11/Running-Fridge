@@ -1,150 +1,53 @@
-import os
-from typing import List, Optional, Union
-from psycopg_pool import ConnectionPool
-from models.produces import Error, ItemIn, ItemOut
+from queries.client import MongoQueries
+from bson.objectid import ObjectId
+from bson.errors import InvalidId
+from typing import Optional, Union, List
+from models.accounts import Account, AccountIn, AccountOut
+from models.produces import ItemIn, ItemOut, Error
 
-DATABASE_URL = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
+class DuplicateAccountError(ValueError):
+    pass
 
-pool = DATABASE_URL
+class AccountRepo:
+    collection_name = "produces"
 
 class ItemRepository:
     def get_produce(self, item_id: int) -> Optional[ItemOut]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        SELECT id,
-                              name,
-                              cost,
-                              measurement,
-                              expiration_date,
-                              store_name
-                        FROM produces
-                        WHERE id = %s
-                        """,
-                        [item_id]
-                    )
-                    record = result.fetchone()
-                    if record is None:
-                        return None
-                    return self.record_to_item_out(record)
-        except:
+        record = self.collection.find_one({"id": item_id})
+        if record:
+            return self.record_to_item_out(record)
+        else:
             return {"message": f"Could not find that {item_id}"}
 
     def delete_produce(self, item_id: int) -> bool:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        DELETE FROM produces
-                        WHERE id = %s
-                        """,
-                        [item_id]
-                    )
-                    return True
-        except:
-            return False
+        result = self.collection.delete_one({"id": item_id})
+        return result.deleted_count > 0
 
     def update_produce(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        UPDATE produces
-                        SET
-                           name = %s,
-                           cost = %s,
-                           measurement = %s,
-                           expiration_date = %s,
-                           store_name = %s
-                        WHERE id = %s
-                        """,
-                        [
-                            item.name,
-                            item.cost,
-                            item.measurement,
-                            item.expiration_date,
-                            item.store_name,
-                            item_id
-                        ]
-                    )
-                    return self.item_in_to_out(item_id, item)
-        except:
+        result = self.collection.update_one(
+            {"id": item_id},
+            {"$set": item.dict()}
+        )
+        if result.matched_count > 0:
+            return self.item_in_to_out(item_id, item)
+        else:
             return {"message": f"Could not update {item.name}"}
 
     def get_all(self) -> Union[Error, List[ItemOut]]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        SELECT
-                          id,
-                          name,
-                          cost,
-                          measurement,
-                          expiration_date,
-                          store_name
-                        FROM produces
-                        ORDER BY id
-                        """
-                    )
-                    return [
-                        self.record_to_item_out(record)
-                        for record in result
-                    ]
-        except:
-            return {"message": "Could not retrive all items"}
+        records = self.collection.find().sort("id", 1)
+        return [self.record_to_item_out(record) for record in records]
 
     def add_produce(self, item: ItemIn) -> Union[ItemOut, Error]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        INSERT INTO produces(
-                            name,
-                            cost,
-                            measurement,
-                            expiration_date,
-                            store_name )
-                        VALUES(
-                            %s,
-                            %s,
-                            %s,
-                            %s,
-                            %s
-                            )
-                        RETURNING id
-                        """,
-                        [
-                            item.name,
-                            item.cost,
-                            item.measurement,
-                            item.expiration_date,
-                            item.store_name
-                        ]
-                    )
-                    id = result.fetchone()[0]
-                    return self.item_in_to_out(id, item)
-        except:
+        result = self.collection.insert_one(item.dict())
+        if result.inserted_id:
+            return self.item_in_to_out(item.dict()["id"], item)  # Ensure your ItemIn model has an 'id' field or adjust accordingly
+        else:
             return {"message": "could not add to fridge inventory."}
 
-    def item_in_to_out(self, id: int, item: ItemIn):
-        old_data = item.dict()
-        return ItemOut(id=id, **old_data)
+    def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
+        return ItemOut(id=id, **item.dict())
 
-    def record_to_item_out(self, record):
-        return ItemOut(
-            id = record[0],
-            name = record[1],
-            cost = record[2],
-            measurement = record[3],
-            expiration_date = record[4],
-            store_name = record[5],
-        )
+    def record_to_item_out(self, record) -> ItemOut:
+        return ItemOut(**record)
+
+# Note: MongoDB uses ObjectId for unique identifiers by default. You may need to handle ObjectId to int conversion if you're using integer IDs.
