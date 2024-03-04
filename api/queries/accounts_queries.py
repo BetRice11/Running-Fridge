@@ -1,86 +1,30 @@
-import os
-import psycopg
-from psycopg_pool import ConnectionPool
-from psycopg.rows import class_row
-from typing import Optional
-from models.accounts import AccountUserWithPassword
-
-DATABASE_URL = os.environ.get("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
-
-pool = ConnectionPool(DATABASE_URL)
+from queries.client import MongoQueries
+from pymongo.errors import DuplicateKeyError
+from models.accounts import Account, AccountIn, AccountOut
 
 
-class AccountUserQueries:
+class DuplicateAccountError(ValueError):
+    pass
 
-    def get_by_username(self, username: str) -> Optional[AccountUserWithPassword]:
+class AccountRepo(MongoQueries):
+
+    def get(self, username: str) -> Account:
+        accounts_queries = MongoQueries(collection_name="accounts")
+        account = accounts_queries.collection.find_one({"username": username})
+        if account is not None:
+            account['id'] = str(account['_id'])
+            return Account(**account)
+        return None
+
+    def create(self, info: AccountIn, hashed_password: str) -> Account:
+        accounts_queries = MongoQueries(collection_name="accounts")
+        account = info.dict()
+        account['hashed_password'] = hashed_password
+        del account['password']
         try:
-            with pool.connection() as conn:
-                with conn.cursor(row_factory=class_row(AccountUserWithPassword)) as db:
-                    db.execute(
-                        """
-                            SELECT
-                                *
-                            FROM accounts
-                            WHERE username = %s
-                            """,
-                        [username],
-                    )
-                    user = db.fetchone()
-                    if not user:
-                        return None
-        except:
-            raise (f"Error getting user {username}")
-        return user
-
-    def get_by_id(self, id: int) -> Optional[AccountUserWithPassword]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor(row_factory=class_row(AccountUserWithPassword)) as db:
-                    db.execute(
-                        """
-                            SELECT
-                                *
-                            FROM accounts
-                            WHERE id = %s
-                            """,
-                        [id],
-                    )
-                    user = db.fetchone()
-                    if not user:
-                        return None
-        except:
-            raise (f"Error getting user with id {id}")
-
-        return user
-
-    def create_user(self, username: str, hashed_password: str) -> AccountUserWithPassword:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor(row_factory=class_row(AccountUserWithPassword)) as db:
-                    db.execute(
-                        """
-                        INSERT INTO accounts (
-                            username,
-                            password
-                        ) VALUES (
-                            %s, %s
-                        )
-                        RETURNING *;
-                        """,
-                        [
-                            username,
-                            hashed_password
-                        ],
-                    )
-                    user = db.fetchone()
-                    if not user:
-                        raise (
-                            f"Could not create user with username {username}"
-                        )
-        except psycopg.Error:
-            raise (
-                f"Could not create user with username {username}"
-            )
-        return user
+            accounts_queries.collection.insert_one(account)
+        except DuplicateKeyError:
+            raise DuplicateAccountError
+        account['id'] = str(account['_id'])
+        del account['_id']
+        return Account(**account)
