@@ -19,15 +19,15 @@ def get_all(
     return repo.get_all()
 
 @router.put("/produces/{item_id}", response_model=Union[ItemOut, Error])
-def update_produce(item_id: int, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
+def update_produce(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
     return repo.update_produce(item_id, item)
 
 @router.delete("/produces/{item_id}", response_model=bool)
-def delete_produce(item_id: int, repo: ItemRepository = Depends()) -> bool:
+def delete_produce(item_id: str, repo: ItemRepository = Depends()) -> bool:
     return repo.delete_produce(item_id)
 
 @router.get("/produces/{item_id}", response_model=Optional[ItemOut])
-def get_produce(item_id: int, response: Response, repo: ItemRepository = Depends()) -> ItemOut:
+def get_produce(item_id: str, response: Response, repo: ItemRepository = Depends()) -> ItemOut:
     item = repo.get_produce(item_id)
     if item is None:
         response.status_code = 404

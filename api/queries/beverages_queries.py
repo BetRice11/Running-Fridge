@@ -37,7 +37,7 @@ class ItemRepository(MongoQueries):
             return self.item_in_to_out(item_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
-
+        
     def get_all(self) -> Union[Error, List[ItemOut]]:
         beverage_queries = MongoQueries(collection_name="beverages")
         try:
