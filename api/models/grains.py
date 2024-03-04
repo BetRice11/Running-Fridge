@@ -14,7 +14,6 @@ class ItemIn(BaseModel):
 
 class ItemOut(BaseModel):
     id: int
-    account_id: str
     name: str
     cost: str
     measurement: str

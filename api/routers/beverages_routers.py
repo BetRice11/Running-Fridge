@@ -2,7 +2,7 @@ from queries.beverages_queries import ItemIn, ItemRepository, ItemOut, Error
 from typing import Union, Optional, List
 from fastapi import Depends, Response, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer
-from models.jwt import JWTUserData
+
 
 
 
