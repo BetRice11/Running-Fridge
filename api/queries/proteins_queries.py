@@ -3,54 +3,68 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from typing import Optional, Union, List
 from models.accounts import Account, AccountIn, AccountOut
-from models.proteins import ItemIn, ItemOut, Error
+from models.beverages import ItemIn, ItemOut, Error
+from datetime import datetime
+
 
 class DuplicateAccountError(ValueError):
     pass
 
-class AccountRepo:
-    collection_name = "proteins"
 
 
-class ItemRepository:
+
+class ItemRepository(MongoQueries):
+
     def get_protein(self, item_id: int) -> Optional[ItemOut]:
-        record = self.collection.find_one({"id": item_id})
+        proteins_queries = MongoQueries(collection_name="proteins")
+        record = proteins_queries.collection.find_one({"id": item_id})
         if record:
-            return self.record_to_item_out(record)
+            return proteins_queries.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
     def delete_protein(self, item_id: int) -> bool:
-        result = self.collection.delete_one({"id": item_id})
+        proteins_queries = MongoQueries(collection_name="proteins")
+        result = proteins_queries.collection.delete_one({"id": item_id})
         return result.deleted_count > 0
 
     def update_protein(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
-        result = self.collection.update_one(
+        proteins_queries = MongoQueries(collection_name="proteins")
+        result = proteins_queries.collection.update_one(
             {"id": item_id},
             {"$set": item.dict()}
         )
-        if result.matched_count > 0:
-            return self.item_in_to_out(item_id, item)
+        if result.matched_count:
+            return proteins_queries.item_in_to_out(item_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
 
-    def get_all(self) -> Union[Error, List[ItemOut]]:
-        records = self.collection.find().sort("id", 1)
-        return [self.record_to_item_out(record) for record in records]
+    def get_all(self, account_id: int) -> Union[Error, List[ItemOut]]:
+        proteins_queries = MongoQueries(collection_name="proteins")
+        records = proteins_queries.collection.find({"account_id": account_id}).sort("id", 1)
+        return [proteins_queries.record_to_item_out(record) for record in records]
 
     def add_protein(self, item: ItemIn) -> Union[ItemOut, Error]:
-        result = self.collection.insert_one(item.dict())
-        if result.inserted_id:
-            return self.item_in_to_out(item.dict()["id"], item)  # Assuming your ItemIn model can accept an 'id' field or adjust accordingly
-        else:
-            return {"message": "Could not add to fridge inventory."}
-
+        proteins_queries = MongoQueries(collection_name="proteins")
+        try:
+            item_dict = item.dict()
+            # Convert datetime.date to datetime.datetime
+            if 'expiration_date' in item_dict:
+                item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+            result = proteins_queries.collection.insert_one(item_dict)
+            item_dict["id"] = str(result.inserted_id)
+            del item_dict["_id"]
+            return ItemOut(**item_dict)
+        except Exception as e:
+            # Ensure all required fields for Error model are included
+            return Error(detail=str(e))
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
-        # Assuming your ItemIn model can accept an 'id' attribute
         return ItemOut(id=id, **item.dict())
 
     def record_to_item_out(self, record) -> ItemOut:
-        # If using MongoDB's default ObjectId, consider converting it to a string or your preferred format
         return ItemOut(**record)
 
-# Note: MongoDB uses ObjectId for unique identifiers by default. If you're using integer IDs (`item_id`), ensure to manage these IDs as per your application's requirements.
+    def generate_new_id(self) -> int:
+        # Implement logic to generate a new unique ID
+        # This could be an auto-increment strategy or using MongoDB's ObjectId
+        pass

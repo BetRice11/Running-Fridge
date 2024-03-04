@@ -1,11 +1,19 @@
 import os
-from pymongo import MongoClient
-
-client = MongoClient(os.environ.get("DATABASE_URL", ""))
-db = client["db-running-fridge-db"]
+import pymongo
 
 class MongoQueries:
+    def __init__(self, db_name="db-running-fridge-db", collection_name=None):
+        self.MONGO_URL = os.environ.get("DATABASE_URL", "mongodb://localhost:27017")  # Fallback to local MongoDB if not set
+        self.client = pymongo.MongoClient(self.MONGO_URL)
+        self.DB_NAME = db_name
+        self.COLLECTION_NAME = collection_name
+
+    @property
+    def db(self):
+        return self.client[self.DB_NAME]
+
     @property
     def collection(self):
-        db = client[self.DB_NAME]
-        return db[self.collection_name]
+        if self.COLLECTION_NAME is None:
+            raise ValueError("Collection name is not set.")
+        return self.db[self.COLLECTION_NAME]

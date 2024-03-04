@@ -4,3 +4,4 @@ pytest
 passlib[brcypt]
 pymongo==4.3.3
 jwtdown-fastapi>=0.5.0
+requests>=2.28.1

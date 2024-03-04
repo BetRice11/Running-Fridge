@@ -1,27 +1,30 @@
 from queries.client import MongoQueries
-from typing import Optional
+from pymongo.errors import DuplicateKeyError
 from models.accounts import Account, AccountIn, AccountOut
+
 
 class DuplicateAccountError(ValueError):
     pass
 
 class AccountRepo(MongoQueries):
-    DB_NAME = "db-running-fridge-db"
-    collection = "accounts"
 
-    def get(self, username: str) -> Optional[AccountOut]:
-        account = self.collection.find_one({"username": username})
-        if account is None:
-            return None
-        account['id'] = str(account['_id'])
-        return Account(**account)
+    def get(self, username: str) -> Account:
+        accounts_queries = MongoQueries(collection_name="accounts")
+        account = accounts_queries.collection.find_one({"username": username})
+        if account is not None:
+            account['id'] = str(account['_id'])
+            return Account(**account)
+        return None
 
-    def create(self, info: AccountIn, hashed_password: str) -> AccountOut:
-        if self.get(info.username) is not None:
-            raise DuplicateAccountError
+    def create(self, info: AccountIn, hashed_password: str) -> Account:
+        accounts_queries = MongoQueries(collection_name="accounts")
         account = info.dict()
         account['hashed_password'] = hashed_password
         del account['password']
-        self.collection.insert_one(account)
+        try:
+            accounts_queries.collection.insert_one(account)
+        except DuplicateKeyError:
+            raise DuplicateAccountError
         account['id'] = str(account['_id'])
+        del account['_id']
         return Account(**account)

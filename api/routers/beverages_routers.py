@@ -4,17 +4,17 @@ from fastapi import Depends, Response, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer
 from models.jwt import JWTUserData
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 router = APIRouter()
 
 router = APIRouter(tags=["Beverages"], prefix="/api/beverages")
 
-
+def get_item_repository():
+    return ItemRepository()
 
 @router.post("/beverages", response_model=Union[ItemOut, Error])
-def add_beverage(item: ItemIn, response: Response, repo: ItemRepository = Depends()):
-
+def add_beverage(item: ItemIn, response: Response, repo: ItemRepository = Depends(get_item_repository)):
     itemss = repo.add_beverage(item)
     if itemss is None:
         response.status_code = 400

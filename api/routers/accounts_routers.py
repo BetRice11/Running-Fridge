@@ -15,8 +15,8 @@ from authenticator import authenticator
 router = APIRouter(tags=["Authentication"], prefix="/api/auth")
 
 
-@router.post("/api/accounts", response_model=AccountToken)
-async def create_account(
+@router.post("/accounts", response_model=AccountToken)
+async def create(
     info: AccountIn,
     request: Request,
     response: Response,
@@ -35,9 +35,9 @@ async def create_account(
     return AccountToken(account=account, **token.dict())
 
 @router.get("/token", response_model=AccountToken | None)
-async def get_token(
+async def get(
     request: Request,
-    account: Account = Depends(authenticator.try_get_current_account_data)
+    account: AccountOut = Depends(authenticator.try_get_current_account_data)
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
         return {

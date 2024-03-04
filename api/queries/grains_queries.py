@@ -3,53 +3,68 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from typing import Optional, Union, List
 from models.accounts import Account, AccountIn, AccountOut
-from models.grains import ItemIn, ItemOut, Error
+from models.beverages import ItemIn, ItemOut, Error
+from datetime import datetime
 
 
 class DuplicateAccountError(ValueError):
     pass
 
-class AccountRepo:
-    collection_name = "grains"
 
-class ItemRepository:
+
+
+class ItemRepository(MongoQueries):
+
     def get_grain(self, item_id: int) -> Optional[ItemOut]:
-        record = self.collection.find_one({"id": item_id})
-        if record is None:
-            return None
-        return self.record_to_item_out(record)
+        grains_queries = MongoQueries(collection_name="grains")
+        record = grains_queries.collection.find_one({"id": item_id})
+        if record:
+            return grains_queries.record_to_item_out(record)
+        else:
+            return {"message": f"Could not find that {item_id}"}
 
     def delete_grain(self, item_id: int) -> bool:
-        result = self.collection.delete_one({"id": item_id})
+        grains_queries = MongoQueries(collection_name="grains")
+        result = grains_queries.collection.delete_one({"id": item_id})
         return result.deleted_count > 0
 
     def update_grain(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
-        result = self.collection.update_one(
+        grains_queries = MongoQueries(collection_name="grains")
+        result = grains_queries.collection.update_one(
             {"id": item_id},
             {"$set": item.dict()}
         )
         if result.matched_count:
-            return self.item_in_to_out(item_id, item)
+            return grains_queries.item_in_to_out(item_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
 
-    def get_all(self) -> Union[Error, List[ItemOut]]:
-        records = self.collection.find({})
-        return [self.record_to_item_out(record) for record in records]
+    def get_all(self, account_id: int) -> Union[Error, List[ItemOut]]:
+        grains_queries = MongoQueries(collection_name="grains")
+        records = grains_queries.collection.find({"account_id": account_id}).sort("id", 1)
+        return [grains_queries.record_to_item_out(record) for record in records]
 
     def add_grain(self, item: ItemIn) -> Union[ItemOut, Error]:
-        result = self.collection.insert_one(item.dict())
-        if result.inserted_id:
-            return self.item_in_to_out(result.inserted_id, item)
-        else:
-            return {"message": "Could not add to fridge inventory."}
-
+        grains_queries = MongoQueries(collection_name="grains")
+        try:
+            item_dict = item.dict()
+            # Convert datetime.date to datetime.datetime
+            if 'expiration_date' in item_dict:
+                item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+            result = grains_queries.collection.insert_one(item_dict)
+            item_dict["id"] = str(result.inserted_id)
+            del item_dict["_id"]
+            return ItemOut(**item_dict)
+        except Exception as e:
+            # Ensure all required fields for Error model are included
+            return Error(detail=str(e))
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
         return ItemOut(id=id, **item.dict())
 
     def record_to_item_out(self, record) -> ItemOut:
         return ItemOut(**record)
 
-# Note: MongoDB uses its own ObjectId type for unique identifiers.
-# You may need to handle conversion between MongoDB's ObjectId and
-# your application's representation of `id`.
+    def generate_new_id(self) -> int:
+        # Implement logic to generate a new unique ID
+        # This could be an auto-increment strategy or using MongoDB's ObjectId
+        pass
