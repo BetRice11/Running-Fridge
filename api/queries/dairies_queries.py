@@ -39,10 +39,13 @@ class ItemRepository(MongoQueries):
         else:
             return {"message": f"Could not update {item.name}"}
 
-    def get_all(self, account_id: int) -> Union[Error, List[ItemOut]]:
+    def get_all(self) -> Union[Error, List[ItemOut]]:
         dairies_queries = MongoQueries(collection_name="dairies")
-        records = dairies_queries.collection.find({"account_id": account_id}).sort("id", 1)
-        return [dairies_queries.record_to_item_out(record) for record in records]
+        try:
+            records = dairies_queries.collection.find().sort("id", 1)
+            return [self.record_to_item_out(record) for record in records]
+        except Exception as e:
+            return Error(message=str(e))
 
     def add_dairy(self, item: ItemIn) -> Union[ItemOut, Error]:
         dairies_queries = MongoQueries(collection_name="dairies")
@@ -62,6 +65,9 @@ class ItemRepository(MongoQueries):
         return ItemOut(id=id, **item.dict())
 
     def record_to_item_out(self, record) -> ItemOut:
+        if '_id' in record:
+            record['id'] = str(record['_id'])
+            del record['_id']
         return ItemOut(**record)
 
     def generate_new_id(self) -> int:
