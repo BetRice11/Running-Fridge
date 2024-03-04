@@ -25,15 +25,15 @@ def get_all(repo: ItemRepository=Depends()):
     return repo.get_all()
 
 @router.put("/beverages/{item_id}", response_model=Union[ItemOut, Error])
-def update_beverage(item_id: int, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
+def update_beverage(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
     return repo.update_beverage(item_id, item)
 
 @router.delete("/beverages/{item_id}", response_model=bool)
-def delete_beverage(item_id: int, repo: ItemRepository = Depends()) -> bool:
+def delete_beverage(item_id: str, repo: ItemRepository = Depends()) -> bool:
     return repo.delete_beverage(item_id)
 
 @router.get("/beverages/{item_id}", response_model=Optional[ItemOut])
-def get_beverage(item_id: int, response: Response, repo: ItemRepository = Depends()) -> ItemOut:
+def get_beverage(item_id: str, response: Response, repo: ItemRepository = Depends()) -> ItemOut:
     item = repo.get_beverage(item_id)
     if item is None:
         response.status_code = 404

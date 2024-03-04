@@ -1,6 +1,5 @@
 from queries.client import MongoQueries
-from bson.objectid import ObjectId
-from bson.errors import InvalidId
+from bson import ObjectId
 from typing import Optional, Union, List
 from models.accounts import Account, AccountIn, AccountOut
 from models.beverages import ItemIn, ItemOut, Error
@@ -17,25 +16,25 @@ class ItemRepository(MongoQueries):
 
     def get_beverage(self, item_id: str) -> Optional[ItemOut]:
         beverage_queries = MongoQueries(collection_name="beverages")
-        record = beverage_queries.collection.find_one({"id": item_id})
+        record = beverage_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
-            return beverage_queries.record_to_item_out(record)
+            return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
     def delete_beverage(self, item_id: int) -> bool:
         beverage_queries = MongoQueries(collection_name="beverages")
-        result = beverage_queries.collection.delete_one({"id": item_id})
+        result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
     def update_beverage(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
         beverage_queries = MongoQueries(collection_name="beverages")
         result = beverage_queries.collection.update_one(
-            {"id": item_id},
+            {"_id": ObjectId(item_id)},
             {"$set": item.dict()}
         )
         if result.matched_count:
-            return beverage_queries.item_in_to_out(item_id, item)
+            return self.item_in_to_out(item_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
 
@@ -72,10 +71,12 @@ class ItemRepository(MongoQueries):
             record['cost'] = str(record['cost'])
         if 'measurement' in record:
             record['measurement'] = str(record['measurement'])
-        if 'expiration_date' in record:
-            record['expiration_date'] = str(record['expiration_date'])
         if 'store_name' in record:
             record['store_name'] = str(record['store_name'])
+        required_fields = ['id', 'name', 'cost', 'expiration_date', 'measurement']
+        for field in required_fields:
+            if field not in record:
+                print(f'Missing field: {field}')
 
         return ItemOut(**record)
 

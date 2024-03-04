@@ -10,4 +10,11 @@ this makes up the bare bones for the backend of our project had a little trouble
 added login authentication
 got the login authentication to work which was challenging, but eventually got it to work.
 started working on login locks authentications for all the services
-
+12/29/2024
+having issues with carrying over the token to get authenticated trying to fix the issue.
+4/01/2024
+couldn't get authentication to work, switching from postgreSQL to mongo database since there is more examples and help with mongo.
+4/03/2024
+got the login and authentication to work with a mongo database and changed all our queries from a postgreSQL format to a mongo format.
+4/04/2024
+working on getting every function in queries to work, then will work on implementing the login security features for all of our features.
