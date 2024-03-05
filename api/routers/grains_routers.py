@@ -7,26 +7,24 @@ router = APIRouter()
 router = APIRouter(tags=["Grains"], prefix="/api/grains")
 
 @router.post("/grains", response_model=Union[ItemOut, Error])
-def add_grain(item: ItemIn, response: Response, repo: ItemRepository = Depends()):
+def add_grain(item: ItemIn,  response: Response, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()):
     itemss = repo.add_grain(item)
     if itemss is None:
         response.status_code = 400
     return itemss
 
-@router.get("/grains", response_model=Union[List[ItemOut], Error])
-def get_all(
+@router.get("/grains",  response_model=Union[List[ItemOut], Error])
+def get_all( account_data: dict = Depends(authenticator.get_current_account_data),
     repo: ItemRepository=Depends(),
 ):
     return repo.get_all()
 
 @router.put("/grains/{item_id}", response_model=Union[ItemOut, Error])
-def update_grain(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
-def update_grain(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
+def update_grain(item_id: str, item: ItemIn, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
     return repo.update_grain(item_id, item)
 
 @router.delete("/grains/{item_id}", response_model=bool)
-def delete_grain(item_id: str, repo: ItemRepository = Depends()) -> bool:
-def delete_grain(item_id: str, repo: ItemRepository = Depends()) -> bool:
+def delete_grain(item_id: str, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> bool:
     return repo.delete_grain(item_id)
 
 @router.get("/grains/{item_id}", response_model=Optional[ItemOut])
