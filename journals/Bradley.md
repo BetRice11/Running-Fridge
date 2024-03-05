@@ -18,3 +18,5 @@ couldn't get authentication to work, switching from postgreSQL to mongo database
 got the login and authentication to work with a mongo database and changed all our queries from a postgreSQL format to a mongo format.
 4/04/2024
 working on getting every function in queries to work, then will work on implementing the login security features for all of our features.
+4/05/2024
+fixed all the queries functions, every operation within each category properly works now. Finding a work around the date time was difficult since mongo and python don't see eye to eye with date time. New issue we are starting today is implementing login authorization to access the different operations.
