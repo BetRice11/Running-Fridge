@@ -15,27 +15,27 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_grain(self, item_id: int) -> Optional[ItemOut]:
+    def get_grain(self, item_id: str) -> Optional[ItemOut]:
         grains_queries = MongoQueries(collection_name="grains")
-        record = grains_queries.collection.find_one({"id": item_id})
+        record = grains_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
-            return grains_queries.record_to_item_out(record)
+            return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_grain(self, item_id: int) -> bool:
+    def delete_grain(self, item_id: str) -> bool:
         grains_queries = MongoQueries(collection_name="grains")
-        result = grains_queries.collection.delete_one({"id": item_id})
+        result = grains_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_grain(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_grain(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         grains_queries = MongoQueries(collection_name="grains")
         result = grains_queries.collection.update_one(
-            {"id": item_id},
+            {"_id": ObjectId(item_id)},
             {"$set": item.dict()}
         )
         if result.matched_count:
-            return grains_queries.item_in_to_out(item_id, item)
+            return self.item_in_to_out(item_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
 
@@ -51,7 +51,6 @@ class ItemRepository(MongoQueries):
         grains_queries = MongoQueries(collection_name="grains")
         try:
             item_dict = item.dict()
-            # Convert datetime.date to datetime.datetime
             if 'expiration_date' in item_dict:
                 item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
             result = grains_queries.collection.insert_one(item_dict)
@@ -59,8 +58,22 @@ class ItemRepository(MongoQueries):
             del item_dict["_id"]
             return ItemOut(**item_dict)
         except Exception as e:
-            # Ensure all required fields for Error model are included
             return Error(detail=str(e))
+
+    def update_grain(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
+        grains_queries = MongoQueries(collection_name="grains")
+        item_dict = item.dict()
+        if 'expiration_date' in item_dict:
+            item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+        result = grains_queries.collection.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": item_dict}
+        )
+        if result.matched_count:
+            return self.item_in_to_out(item_id, item)
+        else:
+            return {"message": f"Could not update {item.name}"}
+
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
         return ItemOut(id=id, **item.dict())
 
@@ -68,9 +81,20 @@ class ItemRepository(MongoQueries):
         if '_id' in record:
             record['id'] = str(record['_id'])
             del record['_id']
+        if 'expiration_date' in record and isinstance(record['expiration_date'], datetime):
+            record['expiration_date'] = record['expiration_date'].date()
+        if 'cost' in record:
+            record['cost'] = str(record['cost'])
+        if 'measurement' in record:
+            record['measurement'] = str(record['measurement'])
+        if 'store_name' in record:
+            record['store_name'] = str(record['store_name'])
+        required_fields = ['id', 'name', 'cost', 'expiration_date', 'measurement']
+        for field in required_fields:
+            if field not in record:
+                print(f'Missing field: {field}')
+
         return ItemOut(**record)
 
     def generate_new_id(self) -> int:
-        # Implement logic to generate a new unique ID
-        # This could be an auto-increment strategy or using MongoDB's ObjectId
         pass

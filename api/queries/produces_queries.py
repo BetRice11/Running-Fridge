@@ -23,12 +23,12 @@ class ItemRepository(MongoQueries):
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_produce(self, item_id: int) -> bool:
+    def delete_produce(self, item_id: str) -> bool:
         produces_queries = MongoQueries(collection_name="produces")
         result = produces_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_produce(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         produces_queries = MongoQueries(collection_name="produces")
         result = produces_queries.collection.update_one(
             {"_id": ObjectId(item_id)},
@@ -59,6 +59,21 @@ class ItemRepository(MongoQueries):
             return ItemOut(**item_dict)
         except Exception as e:
             return Error(detail=str(e))
+
+    def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
+        produces_queries = MongoQueries(collection_name="produces")
+        item_dict = item.dict()
+        if 'expiration_date' in item_dict:
+            item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+        result = produces_queries.collection.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": item_dict}
+        )
+        if result.matched_count:
+            return self.item_in_to_out(item_id, item)
+        else:
+            return {"message": f"Could not update {item.name}"}
+
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
         return ItemOut(id=id, **item.dict())
 
@@ -82,6 +97,4 @@ class ItemRepository(MongoQueries):
         return ItemOut(**record)
 
     def generate_new_id(self) -> int:
-        # Implement logic to generate a new unique ID
-        # This could be an auto-increment strategy or using MongoDB's ObjectId
         pass
