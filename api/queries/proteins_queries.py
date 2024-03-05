@@ -15,20 +15,20 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_protein(self, item_id: int) -> Optional[ItemOut]:
+    def get_protein(self, item_id: str) -> Optional[ItemOut]:
         proteins_queries = MongoQueries(collection_name="proteins")
-        record = proteins_queries.collection.find_one({"id": item_id})
+        record = proteins_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
-            return proteins_queries.record_to_item_out(record)
+            return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_protein(self, item_id: int) -> bool:
+    def delete_protein(self, item_id: str) -> bool:
         proteins_queries = MongoQueries(collection_name="proteins")
-        result = proteins_queries.collection.delete_one({"id": item_id})
+        result = proteins_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_protein(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_protein(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         proteins_queries = MongoQueries(collection_name="proteins")
         result = proteins_queries.collection.update_one(
             {"id": item_id},

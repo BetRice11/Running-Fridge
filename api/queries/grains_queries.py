@@ -15,20 +15,20 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_grain(self, item_id: int) -> Optional[ItemOut]:
-        grains_queries = MongoQueries(collection_name="grains")
-        record = grains_queries.collection.find_one({"id": item_id})
+    def get_grain(self, item_id: str) -> Optional[ItemOut]:
+        beverage_queries = MongoQueries(collection_name="grains")
+        record = beverage_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
-            return grains_queries.record_to_item_out(record)
+            return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_grain(self, item_id: int) -> bool:
-        grains_queries = MongoQueries(collection_name="grains")
-        result = grains_queries.collection.delete_one({"id": item_id})
+    def delete_grain(self, item_id: str) -> bool:
+        beverage_queries = MongoQueries(collection_name="grains")
+        result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_grain(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_grain(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         grains_queries = MongoQueries(collection_name="grains")
         result = grains_queries.collection.update_one(
             {"id": item_id},

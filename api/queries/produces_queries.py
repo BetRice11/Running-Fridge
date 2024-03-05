@@ -15,20 +15,20 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_produce(self, item_id: int) -> Optional[ItemOut]:
+    def get_produce(self, item_id: str) -> Optional[ItemOut]:
         produces_queries = MongoQueries(collection_name="produces")
-        record = produces_queries.collection.find_one({"id": item_id})
+        record = produces_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
-            return produces_queries.record_to_item_out(record)
+            return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_produce(self, item_id: int) -> bool:
+    def delete_produce(self, item_id: str) -> bool:
         produces_queries = MongoQueries(collection_name="produces")
-        result = produces_queries.collection.delete_one({"id": item_id})
+        result = produces_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_produce(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         produces_queries = MongoQueries(collection_name="produces")
         result = produces_queries.collection.update_one(
             {"id": item_id},

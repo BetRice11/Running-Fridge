@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from queries.dairies_queries import ItemIn, ItemRepository, ItemOut, Error
 from typing import Union, Optional, List
+from authenticator import authenticator
 router = APIRouter()
 
 router = APIRouter(tags=["Dairies"], prefix="/api/dairies")
@@ -19,15 +20,16 @@ def get_all(
     return repo.get_all()
 
 @router.put("/dairies/{item_id}", response_model=Union[ItemOut, Error])
-def update_dairy(item_id: int, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
+def update_dairy(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
     return repo.update_dairy(item_id, item)
 
 @router.delete("/dairies/{item_id}", response_model=bool)
-def delete_dairy(item_id: int, repo: ItemRepository = Depends()) -> bool:
+def delete_dairy(item_id: str, repo: ItemRepository = Depends()) -> bool:
     return repo.delete_dairy(item_id)
 
 @router.get("/dairies/{item_id}", response_model=Optional[ItemOut])
-def get_dairy(item_id: int, response: Response, repo: ItemRepository = Depends()) -> ItemOut:
+def get_dairy(item_id: str, response: Response, account_data: dict = Depends(authenticator.get_current_account_data),
+repo: ItemRepository = Depends()) -> ItemOut:
     item = repo.get_dairy(item_id)
     if item is None:
         response.status_code = 404

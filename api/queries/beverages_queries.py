@@ -22,12 +22,12 @@ class ItemRepository(MongoQueries):
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_beverage(self, item_id: int) -> bool:
+    def delete_beverage(self, item_id: str) -> bool:
         beverage_queries = MongoQueries(collection_name="beverages")
         result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_beverage(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_beverage(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         beverage_queries = MongoQueries(collection_name="beverages")
         result = beverage_queries.collection.update_one(
             {"_id": ObjectId(item_id)},
