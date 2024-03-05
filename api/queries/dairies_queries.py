@@ -1,5 +1,5 @@
 from queries.client import MongoQueries
-from bson.objectid import ObjectId
+from bson import ObjectId
 from bson.errors import InvalidId
 from typing import Optional, Union, List
 from models.accounts import Account, AccountIn, AccountOut
@@ -16,28 +16,18 @@ class DuplicateAccountError(ValueError):
 class ItemRepository(MongoQueries):
 
     def get_dairy(self, item_id: str) -> Optional[ItemOut]:
-        beverage_queries = MongoQueries(collection_name="dairies")
-        record = beverage_queries.collection.find_one({"_id": ObjectId(item_id)})
+        dairies_queries = MongoQueries(collection_name="dairies")
+        record = dairies_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
             return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_dairy(self, item_id: str) -> bool:
-        beverage_queries = MongoQueries(collection_name="dairies")
-        result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id)})
+    def delete_dairy(self, item_id: int) -> bool:
+        dairies_queries = MongoQueries(collection_name="dairies")
+        result = dairies_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
-    def update_dairy(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
-        beverage_queries = MongoQueries(collection_name="dairies")
-        result = beverage_queries.collection.update_one(
-            {"_id": ObjectId(item_id)},
-            {"$set": item.dict()}
-        )
-        if result.matched_count:
-            return self.item_in_to_out(item_id, item)
-        else:
-            return {"message": f"Could not update {item.name}"}
 
     def get_all(self) -> Union[Error, List[ItemOut]]:
         beverage_queries = MongoQueries(collection_name="dairies")
@@ -62,6 +52,20 @@ class ItemRepository(MongoQueries):
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
         return ItemOut(id=id, **item.dict())
 
+    def update_dairy(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+        dairies_queries = MongoQueries(collection_name="dairies")
+        item_dict = item.dict()
+        if 'expiration_date' in item_dict:
+            item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+        result = dairies_queries.collection.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": item_dict}
+        )
+        if result.matched_count:
+            return self.item_in_to_out(item_id, item)
+        else:
+            return {"message": f"Could not update {item.name}"}
+
     def record_to_item_out(self, record) -> ItemOut:
         if '_id' in record:
             record['id'] = str(record['_id'])
@@ -82,6 +86,4 @@ class ItemRepository(MongoQueries):
         return ItemOut(**record)
 
     def generate_new_id(self) -> int:
-        # Implement logic to generate a new unique ID
-        # This could be an auto-increment strategy or using MongoDB's ObjectId
         pass

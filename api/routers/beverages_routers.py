@@ -15,22 +15,22 @@ def get_item_repository():
     return ItemRepository()
 
 @router.post("/beverages", response_model=Union[ItemOut, Error])
-def add_beverage(item: ItemIn, response: Response, repo: ItemRepository = Depends(get_item_repository)):
+def add_beverage(item: ItemIn, response: Response, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends(get_item_repository)):
     itemss = repo.add_beverage(item)
     if itemss is None:
         response.status_code = 400
     return itemss
 
 @router.get("/beverages", response_model=Union[List[ItemOut], Error])
-def get_all(repo: ItemRepository=Depends()):
+def get_all(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
     return repo.get_all()
 
 @router.put("/beverages/{item_id}", response_model=Union[ItemOut, Error])
-def update_beverage(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
+def update_beverage(item_id: str, item: ItemIn, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
     return repo.update_beverage(item_id, item)
 
 @router.delete("/beverages/{item_id}", response_model=bool)
-def delete_beverage(item_id: str, repo: ItemRepository = Depends()) -> bool:
+def delete_beverage(item_id: str, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> bool:
     return repo.delete_beverage(item_id)
 
 @router.get("/beverages/{item_id}", response_model=Optional[ItemOut])

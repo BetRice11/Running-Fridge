@@ -21,9 +21,11 @@ def get_all(
 
 @router.put("/grains/{item_id}", response_model=Union[ItemOut, Error])
 def update_grain(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
+def update_grain(item_id: str, item: ItemIn, repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
     return repo.update_grain(item_id, item)
 
 @router.delete("/grains/{item_id}", response_model=bool)
+def delete_grain(item_id: str, repo: ItemRepository = Depends()) -> bool:
 def delete_grain(item_id: str, repo: ItemRepository = Depends()) -> bool:
     return repo.delete_grain(item_id)
 

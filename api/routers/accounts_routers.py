@@ -46,43 +46,14 @@ async def get(
             "account": account,
         }
 
-# @router.post("/signin")
-# async def signin(user_request: AccountUserRequest, request: Request, response: Response, queries: AccountUserQueries = Depends()) -> AccountUserResponse:
-#     user = queries.get_by_username(user_request.username)
-#     if not user:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Incorrect username or password",
-#         )
-#     if not verify_password(user_request.password, user.password):
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Incorrect username or password",
-#         )
-#     token = generate_jwt(user)
-#     secure = True if request.headers.get("origin") == "localhost" else False
-#     response.set_cookie(
-#         key="fast_api_token",
-#         value=token,
-#         httponly=True,
-#         samesite="lax",
-#         secure=secure,
-#     )
-#     return AccountUserResponse(id=user.id, username=user.username, token=token)
-
-
-# @router.get("/authenticate")
-# async def authenticate_user(user: AccountUserResponse = Depends(try_get_jwt_user_data)) -> AccountUserResponse:
-
-#     if not user:
-#         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token or expired")
-#     return user
-
-
-# @router.delete("/signout")
-# async def signout(request: Request, response: Response):
-#     secure = True if request.headers.get("origin") == "localhost" else False
-#     response.delete_cookie(
-#         key="fast_api_token", httponly=True, samesite="lax", secure=secure
-#     )
-#     return
+@router.get("/token", response_model=AccountToken | None)
+async def get_token(
+    request: Request,
+    account: Account = Depends(authenticator.try_get_current_account_data)
+) -> AccountToken | None:
+    if account and authenticator.cookie_name in request.cookies:
+        return {
+            "access_token": request.cookies[authenticator.cookie_name],
+            "type": "Bearer",
+            "account": account,
+        }  

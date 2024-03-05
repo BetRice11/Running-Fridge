@@ -25,6 +25,7 @@ def update_protein(item_id: str, item: ItemIn, repo: ItemRepository = Depends())
 
 @router.delete("/proteins/{item_id}", response_model=bool)
 def delete_protein(item_id: str, repo: ItemRepository = Depends()) -> bool:
+def delete_protein(item_id: str, repo: ItemRepository = Depends()) -> bool:
     return repo.delete_protein(item_id)
 
 @router.get("/proteins/{item_id}", response_model=Optional[ItemOut])

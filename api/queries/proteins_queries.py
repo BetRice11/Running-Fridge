@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from typing import Optional, Union, List
 from models.accounts import Account, AccountIn, AccountOut
-from models.beverages import ItemIn, ItemOut, Error
+from models.proteins import ItemIn, ItemOut, Error
 from datetime import datetime
 
 
@@ -16,15 +16,19 @@ class DuplicateAccountError(ValueError):
 class ItemRepository(MongoQueries):
 
     def get_protein(self, item_id: str) -> Optional[ItemOut]:
+    def get_protein(self, item_id: str) -> Optional[ItemOut]:
         proteins_queries = MongoQueries(collection_name="proteins")
         record = proteins_queries.collection.find_one({"_id": ObjectId(item_id)})
+        record = proteins_queries.collection.find_one({"_id": ObjectId(item_id)})
         if record:
+            return self.record_to_item_out(record)
             return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
     def delete_protein(self, item_id: str) -> bool:
         proteins_queries = MongoQueries(collection_name="proteins")
+        result = proteins_queries.collection.delete_one({"_id": ObjectId(item_id)})
         result = proteins_queries.collection.delete_one({"_id": ObjectId(item_id)})
         return result.deleted_count > 0
 
@@ -51,7 +55,6 @@ class ItemRepository(MongoQueries):
         proteins_queries = MongoQueries(collection_name="proteins")
         try:
             item_dict = item.dict()
-            # Convert datetime.date to datetime.datetime
             if 'expiration_date' in item_dict:
                 item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
             result = proteins_queries.collection.insert_one(item_dict)
@@ -59,18 +62,42 @@ class ItemRepository(MongoQueries):
             del item_dict["_id"]
             return ItemOut(**item_dict)
         except Exception as e:
-            # Ensure all required fields for Error model are included
             return Error(detail=str(e))
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
         return ItemOut(id=id, **item.dict())
+
+    def update_protein(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+        proteins_queries = MongoQueries(collection_name="proteins")
+        item_dict = item.dict()
+        if 'expiration_date' in item_dict:
+            item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+        result = proteins_queries.collection.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": item_dict}
+        )
+        if result.matched_count:
+            return self.item_in_to_out(item_id, item)
+        else:
+            return {"message": f"Could not update {item.name}"}
 
     def record_to_item_out(self, record) -> ItemOut:
         if '_id' in record:
             record['id'] = str(record['_id'])
             del record['_id']
+        if 'expiration_date' in record and isinstance(record['expiration_date'], datetime):
+            record['expiration_date'] = record['expiration_date'].date()
+        if 'cost' in record:
+            record['cost'] = str(record['cost'])
+        if 'measurement' in record:
+            record['measurement'] = str(record['measurement'])
+        if 'store_name' in record:
+            record['store_name'] = str(record['store_name'])
+        required_fields = ['id', 'name', 'cost', 'expiration_date', 'measurement']
+        for field in required_fields:
+            if field not in record:
+                print(f'Missing field: {field}')
+
         return ItemOut(**record)
 
     def generate_new_id(self) -> int:
-        # Implement logic to generate a new unique ID
-        # This could be an auto-increment strategy or using MongoDB's ObjectId
         pass

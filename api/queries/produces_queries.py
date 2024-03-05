@@ -31,11 +31,11 @@ class ItemRepository(MongoQueries):
     def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         produces_queries = MongoQueries(collection_name="produces")
         result = produces_queries.collection.update_one(
-            {"id": item_id},
+            {"_id": ObjectId(item_id)},
             {"$set": item.dict()}
         )
         if result.matched_count:
-            return produces_queries.item_in_to_out(item_id, item)
+            return self.item_in_to_out(item_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
 
@@ -47,12 +47,10 @@ class ItemRepository(MongoQueries):
         except Exception as e:
             return Error(message=str(e))
 
-
     def add_produce(self, item: ItemIn) -> Union[ItemOut, Error]:
         produces_queries = MongoQueries(collection_name="produces")
         try:
             item_dict = item.dict()
-            # Convert datetime.date to datetime.datetime
             if 'expiration_date' in item_dict:
                 item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
             result = produces_queries.collection.insert_one(item_dict)
@@ -60,8 +58,22 @@ class ItemRepository(MongoQueries):
             del item_dict["_id"]
             return ItemOut(**item_dict)
         except Exception as e:
-            # Ensure all required fields for Error model are included
             return Error(detail=str(e))
+
+    def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
+        produces_queries = MongoQueries(collection_name="produces")
+        item_dict = item.dict()
+        if 'expiration_date' in item_dict:
+            item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
+        result = produces_queries.collection.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": item_dict}
+        )
+        if result.matched_count:
+            return self.item_in_to_out(item_id, item)
+        else:
+            return {"message": f"Could not update {item.name}"}
+
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
         return ItemOut(id=id, **item.dict())
 
@@ -69,9 +81,20 @@ class ItemRepository(MongoQueries):
         if '_id' in record:
             record['id'] = str(record['_id'])
             del record['_id']
+        if 'expiration_date' in record and isinstance(record['expiration_date'], datetime):
+            record['expiration_date'] = record['expiration_date'].date()
+        if 'cost' in record:
+            record['cost'] = str(record['cost'])
+        if 'measurement' in record:
+            record['measurement'] = str(record['measurement'])
+        if 'store_name' in record:
+            record['store_name'] = str(record['store_name'])
+        required_fields = ['id', 'name', 'cost', 'expiration_date', 'measurement']
+        for field in required_fields:
+            if field not in record:
+                print(f'Missing field: {field}')
+
         return ItemOut(**record)
 
     def generate_new_id(self) -> int:
-        # Implement logic to generate a new unique ID
-        # This could be an auto-increment strategy or using MongoDB's ObjectId
         pass
