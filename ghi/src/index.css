@@ -1,4 +1,7 @@
 /* You should probably replace with with your own CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
