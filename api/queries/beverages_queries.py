@@ -14,17 +14,17 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_beverage(self, item_id: str) -> Optional[ItemOut]:
+    def get_beverage(self, item_id: str, account_id: str) -> Optional[ItemOut]:
         beverage_queries = MongoQueries(collection_name="beverages")
-        record = beverage_queries.collection.find_one({"_id": ObjectId(item_id)})
+        record = beverage_queries.collection.find_one({"_id": ObjectId(item_id), "account_id": account_id})
         if record:
             return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_beverage(self, item_id: str) -> bool:
+    def delete_beverage(self, item_id: str, account_id: str) -> bool:
         beverage_queries = MongoQueries(collection_name="beverages")
-        result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id)})
+        result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id), "account_id": account_id})
         return result.deleted_count > 0
 
     def get_all(self) -> Union[Error, List[ItemOut]]:
@@ -35,10 +35,19 @@ class ItemRepository(MongoQueries):
         except Exception as e:
             return Error(message=str(e))
 
-    def add_beverage(self, item: ItemIn) -> Union[ItemOut, Error]:
+    def get_all_for_account(self, account_id: str) -> Union[Error, List[ItemOut]]:
+        beverage_queries = MongoQueries(collection_name="beverages")
+        try:
+            records = beverage_queries.collection.find({'account_id': account_id})
+            return [self.record_to_item_out(record) for record in records]
+        except Exception as e:
+            return Error(message=str(e))
+
+    def add_beverage(self, item: ItemIn, account_id: str) -> Union[ItemOut, Error]:
         beverage_queries = MongoQueries(collection_name="beverages")
         try:
             item_dict = item.dict()
+            item_dict['account_id']=account_id
             if 'expiration_date' in item_dict:
                 item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
             result = beverage_queries.collection.insert_one(item_dict)
@@ -47,12 +56,13 @@ class ItemRepository(MongoQueries):
             return ItemOut(**item_dict)
         except Exception as e:
             return Error(detail=str(e))
-    def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
-        return ItemOut(id=id, **item.dict())
+    def item_in_to_out(self, id: int, account_id:str ,item: ItemIn) -> ItemOut:
+        return ItemOut(id=id, account_id=account_id ,**item.dict())
 
-    def update_beverage(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_beverage(self, item_id: int, account_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         beverage_queries = MongoQueries(collection_name="beverages")
         item_dict = item.dict()
+        item_dict['account_id']=account_id
         if 'expiration_date' in item_dict:
             item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
         result = beverage_queries.collection.update_one(
@@ -60,7 +70,7 @@ class ItemRepository(MongoQueries):
             {"$set": item_dict}
         )
         if result.matched_count:
-            return self.item_in_to_out(item_id, item)
+            return self.item_in_to_out(item_id, account_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
 
