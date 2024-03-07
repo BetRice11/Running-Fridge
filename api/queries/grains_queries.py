@@ -27,14 +27,6 @@ class ItemRepository(MongoQueries):
         result = grains_queries.collection.delete_one({"_id": ObjectId(item_id), "account_id": account_id})
         return result.deleted_count > 0
 
-    def get_all(self) -> Union[Error, List[GrainItemOut]]:
-        grains_queries = MongoQueries(collection_name="grains")
-        try:
-            records = grains_queries.collection.find().sort("id", 1)
-            return [self.record_to_item_out(record) for record in records]
-        except Exception as e:
-            return Error(message=str(e))
-
     def get_all_for_account(self, account_id: str) -> Union[Error, List[GrainItemOut]]:
         grains_queries = MongoQueries(collection_name="grains")
         try:

@@ -1,6 +1,5 @@
 from queries.client import MongoQueries
-from bson.objectid import ObjectId
-from bson.errors import InvalidId
+from bson import ObjectId
 from typing import Optional, Union, List
 from models.accounts import Account, AccountIn, AccountOut
 from models.beverages import ItemIn, ItemOut, Error
@@ -15,42 +14,34 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_produce(self, item_id: str) -> Optional[ItemOut]:
+    def get_produces(self, item_id: str, account_id: str) -> Optional[ItemOut]:
         produces_queries = MongoQueries(collection_name="produces")
-        record = produces_queries.collection.find_one({"_id": ObjectId(item_id)})
+        record = produces_queries.collection.find_one({"_id": ObjectId(item_id), "account_id": account_id})
         if record:
             return self.record_to_item_out(record)
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_produce(self, item_id: str) -> bool:
+    def delete_produces(self, item_id: str, account_id: str) -> bool:
         produces_queries = MongoQueries(collection_name="produces")
-        result = produces_queries.collection.delete_one({"_id": ObjectId(item_id)})
+        result = produces_queries.collection.delete_one({"_id": ObjectId(item_id), "account_id": account_id})
         return result.deleted_count > 0
 
-    def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
-        produces_queries = MongoQueries(collection_name="produces")
-        result = produces_queries.collection.update_one(
-            {"_id": ObjectId(item_id)},
-            {"$set": item.dict()}
-        )
-        if result.matched_count:
-            return self.item_in_to_out(item_id, item)
-        else:
-            return {"message": f"Could not update {item.name}"}
-
-    def get_all(self) -> Union[Error, List[ItemOut]]:
+    def get_all_for_account(self, account_id: str) -> Union[Error, List[ItemOut]]:
         produces_queries = MongoQueries(collection_name="produces")
         try:
-            records = produces_queries.collection.find().sort("id", 1)
+            records = produces_queries.collection.find({'account_id': account_id})
             return [self.record_to_item_out(record) for record in records]
         except Exception as e:
             return Error(message=str(e))
 
-    def add_produce(self, item: ItemIn) -> Union[ItemOut, Error]:
+
+
+    def add_produces(self, item: ItemIn, account_id: str) -> Union[ItemOut, Error]:
         produces_queries = MongoQueries(collection_name="produces")
         try:
             item_dict = item.dict()
+            item_dict['account_id']=account_id
             if 'expiration_date' in item_dict:
                 item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
             result = produces_queries.collection.insert_one(item_dict)
@@ -59,10 +50,13 @@ class ItemRepository(MongoQueries):
             return ItemOut(**item_dict)
         except Exception as e:
             return Error(detail=str(e))
+    def item_in_to_out(self, id: int, account_id:str ,item: ItemIn) -> ItemOut:
+        return ItemOut(id=id, account_id=account_id ,**item.dict())
 
-    def update_produce(self, item_id: str, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_produces(self, item_id: int, account_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         produces_queries = MongoQueries(collection_name="produces")
         item_dict = item.dict()
+        item_dict['account_id']=account_id
         if 'expiration_date' in item_dict:
             item_dict['expiration_date'] = datetime.combine(item_dict['expiration_date'], datetime.min.time())
         result = produces_queries.collection.update_one(
@@ -70,12 +64,9 @@ class ItemRepository(MongoQueries):
             {"$set": item_dict}
         )
         if result.matched_count:
-            return self.item_in_to_out(item_id, item)
+            return self.item_in_to_out(item_id, account_id, item)
         else:
             return {"message": f"Could not update {item.name}"}
-
-    def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
-        return ItemOut(id=id, **item.dict())
 
     def record_to_item_out(self, record) -> ItemOut:
         if '_id' in record:

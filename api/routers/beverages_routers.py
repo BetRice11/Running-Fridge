@@ -1,7 +1,6 @@
 from queries.beverages_queries import ItemIn, ItemRepository, ItemOut, Error
 from typing import Union, Optional, List
 from fastapi import Depends, Response, HTTPException, status, APIRouter
-from fastapi.security import OAuth2PasswordBearer
 from authenticator import authenticator
 
 
@@ -20,10 +19,6 @@ def add_beverage(item: ItemIn, response: Response, account_data: dict = Depends(
     if itemss is None:
         response.status_code = 400
     return itemss
-@router.get("/beverages", response_model=Union[List[ItemOut], Error])
-def get_all(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
-    return repo.get_all()
-
 
 @router.get("/beverages/mine", response_model=Union[List[ItemOut], Error])
 def get_all_for_account(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
@@ -31,7 +26,7 @@ def get_all_for_account(account_data: dict = Depends(authenticator.get_current_a
 
 @router.put("/beverages/{item_id}", response_model=Union[ItemOut, Error])
 def update_beverage(item_id: str, item: ItemIn, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
-    beverage = repo.update_beverage(item_id, account_data['id'] ,item)
+    beverage = repo.update_beverage(item_id, account_data['id'], item)
     if beverage is None:
         raise HTTPException(status_code = 404, detail="beverage not found")
     return beverage

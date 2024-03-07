@@ -13,9 +13,9 @@ def add_grain(item: GrainItemIn,  response: Response, account_data: dict = Depen
         response.status_code = 400
     return itemss
 
-@router.get("/grains", response_model=Union[List[GrainItemOut], Error])
-def get_all(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
-    return repo.get_all()
+# @router.get("/grains", response_model=Union[List[GrainItemOut], Error])
+# def get_all(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
+#     return repo.get_all()
 
 @router.get("/grains/mine", response_model=Union[List[GrainItemOut], Error])
 def get_all_for_account(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
@@ -23,7 +23,7 @@ def get_all_for_account(account_data: dict = Depends(authenticator.get_current_a
 
 @router.put("/grains/{item_id}", response_model=Union[GrainItemOut, Error])
 def update_grain(item_id: str, item: GrainItemIn, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> Union[Error, GrainItemOut]:
-    grain = repo.update_grain(item_id, account_data['id'] ,item)
+    grain = repo.update_grain(item_id, account_data['id'], item)
     if grain is None:
         raise HTTPException(status_code = 404, detail="beverage not found")
     return grain
