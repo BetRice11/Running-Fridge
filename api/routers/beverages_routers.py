@@ -43,7 +43,7 @@ def delete_beverage(item_id: str, account_data: dict = Depends(authenticator.get
 @router.get("/beverages/{item_id}", response_model=Optional[ItemOut])
 def get_beverage(item_id: str, response: Response, account_data: dict = Depends(authenticator.get_current_account_data),
 repo: ItemRepository = Depends()) -> ItemOut:
-    item = repo.get_beverage(item_id)
+    item = repo.get_beverage(item_id, account_id=account_data['id'])
     if item is None:
         response.status_code = 404
     return item

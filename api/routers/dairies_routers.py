@@ -15,7 +15,7 @@ def add_dairy(item: ItemIn, response: Response, account_data: dict = Depends(aut
 
 @router.get("/dairies", response_model=Union[List[ItemOut], Error])
 def get_all(account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: ItemRepository=Depends(),
+    repo: ItemRepository=Depends()
 ):
     return repo.get_all()
 

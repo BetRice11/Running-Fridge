@@ -50,7 +50,7 @@ class ItemRepository(MongoQueries):
         except Exception as e:
             return Error(detail=str(e))
     def item_in_to_out(self, id: int, item: ItemIn) -> ItemOut:
-        return ItemOut(id=id, **item.dict())
+        return ItemOut(id=id, account_id=account_id ,**item.dict())
 
     def update_dairy(self, item_id: int, item: ItemIn) -> Union[ItemOut, Error]:
         dairies_queries = MongoQueries(collection_name="dairies")
