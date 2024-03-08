@@ -7,6 +7,7 @@ import './index.css'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Error from './pages/Error.jsx'
+import Login from './pages/Login.jsx';
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "about", element: <About /> },
+            { path: "login", element: <Login />}
         ]
     },
 ]);
