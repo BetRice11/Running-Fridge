@@ -8,6 +8,8 @@ import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Error from './pages/Error.jsx'
 import Login from './pages/Login.jsx';
+import Signup from './pages/SignUp.jsx';
+import GrainList from './pages/GrainList.jsx'
 
 const router = createBrowserRouter([
     {
@@ -17,7 +19,9 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "about", element: <About /> },
-            { path: "login", element: <Login />}
+            { path: "login", element: <Login />},
+            { path: "signup", element: <Signup />},
+            { path: "grains", element: <GrainList />}
         ]
     },
 ]);

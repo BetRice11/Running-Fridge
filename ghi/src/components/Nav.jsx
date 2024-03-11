@@ -15,6 +15,7 @@ const Nav = () => {
                             placeholder="Search"
                             className="input input-bordered w-24 md:w-auto"
                         />
+                        <div></div>
                     </div>
                     <div className="dropdown dropdown-end">
                         <div
@@ -37,7 +38,10 @@ const Nav = () => {
                                 </a>
                             </li>
                             <li>
-                                <NavLink to={'/about'}>About</NavLink>
+                                <NavLink to={'/signup'}>Sign Up</NavLink>
+                            </li>
+                            <li>
+                                <Link to={'/grains'}>Grains</Link>
                             </li>
                             <li>
                                 <Link to={'/'}>Homepage</Link>
