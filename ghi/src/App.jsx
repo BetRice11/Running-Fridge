@@ -1,15 +1,15 @@
-import { Outlet } from 'react-router-dom';
 import Nav from './components/Nav'
+import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 const App = () => {
     return (
         <div>
-            <Nav/>
+            <Nav />
 
             <Outlet />
-            {/* footer */}
         </div>
     )
 }
 
-export default App
+export default App;
