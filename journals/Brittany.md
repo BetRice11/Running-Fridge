@@ -1,3 +1,28 @@
+## MAR 11, 2024
+* starting the frontend auth
+* watching the lecture again to see how to implement our frontend with auth 
+Ah-ha: 
+## MAR 8, 2024
+* frontend code is starting to look like our website!
+* starting to add styling and able to view what we want to website to have.
+Ah-ha: 
+## MAR 7, 2024
+* went back to frontend started to add pages
+* able to link the login and signup page/ still need to figure out how we want our pages to look
+Ah-ha: Tailwinds has a lot of things we want to incorporate
+## MAR 6, 2024
+* finished the endpoints mostly with the authentication
+* Each end point now has to have an authorized user
+Ah-ha: each model is all the same with the auth
+## MAR 5, 2024
+Today, I worked on:
+* started adding the auth to endpoints, created the password account_data to each add, create, delete, update
+Ah-ha: watched the lecture and implemented the rules 
+## MAR 4, 2024
+Today, I worked on:
+* fixed the backend with the team, pairing with the backend auth complete.
+* Connecting the files to make the endpoints almost complete
+Ah-ha: 
 ## MAR 2, 2024
 Today, I worked on:
 * Started the frontend code with minimal jsx files
