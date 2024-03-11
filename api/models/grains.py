@@ -5,17 +5,18 @@ from datetime import date
 class Error(BaseModel):
     message: str
 
-class ItemIn(BaseModel):
+class GrainItemIn(BaseModel):
     name: str
     cost: str
-    measurement: str
     expiration_date: date
+    measurement: str
     store_name: Optional[str]
 
-class ItemOut(BaseModel):
-    id: int
+class GrainItemOut(BaseModel):
+    id: str
+    account_id: str
     name: str
     cost: str
-    measurement: str
     expiration_date: date
+    measurement: str
     store_name: Optional[str]

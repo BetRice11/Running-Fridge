@@ -24,10 +24,6 @@ class DuplicateAccountError(ValueError):
 
 
 class AccountIn(BaseModel):
-    """
-    Represents a the parameters needed to create a new user
-    """
-
     username: str
     password: str
 
@@ -36,21 +32,11 @@ class AccountForm(BaseModel):
     password: str
 
 class AccountOut(BaseModel):
-    """
-    Represents a user, with the password not included
-    """
-
     id: str
     username: str
 
-
 class Account(AccountOut):
-    """
-    Represents a user with password included
-    """
     hashed_password: str
-
-
 
 class AccountToken(Token):
     account: AccountOut
