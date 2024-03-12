@@ -45,7 +45,7 @@ const Signup = () => {
                                 />
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">
+                                <button className="btn btn-primary ring hover:ring-yellow-400">
                                     Create Account
                                 </button>
                             </div>

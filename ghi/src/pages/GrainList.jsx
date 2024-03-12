@@ -27,7 +27,6 @@ function GrainList() {
                 {/* head */}
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Name</th>
                         <th>Cost</th>
                         <th>Exp Date</th>
@@ -46,6 +45,7 @@ function GrainList() {
                                 <td>{grain.store_name}</td>
                                 <td><button className="btn glass" onClick={() => {handleDelete(grain.id)}}>
                                     Delete</button></td>
+
                             </tr>
                         )
                     })}

@@ -44,6 +44,9 @@ const Nav = () => {
                                 <Link to={'/grains'}>Grains</Link>
                             </li>
                             <li>
+                                <Link to={'/beverages'}>Beverage</Link>
+                            </li>
+                            <li>
                                 <Link to={'/'}>Homepage</Link>
                             </li>
                             <li>

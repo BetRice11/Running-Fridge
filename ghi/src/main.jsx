@@ -10,6 +10,7 @@ import Error from './pages/Error.jsx'
 import Login from './pages/Login.jsx';
 import Signup from './pages/SignUp.jsx';
 import GrainList from './pages/GrainList.jsx'
+import BeverageList from './pages/BeverageList.jsx';
 
 const router = createBrowserRouter([
     {
@@ -21,10 +22,11 @@ const router = createBrowserRouter([
             { path: "about", element: <About /> },
             { path: "login", element: <Login />},
             { path: "signup", element: <Signup />},
-            { path: "grains", element: <GrainList />}
+            { path: "grains", element: <GrainList />},
+            { path: "beverages", element: <BeverageList />}
         ]
     },
-]);
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

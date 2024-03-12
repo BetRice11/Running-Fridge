@@ -32,28 +32,22 @@ const Home = () => {
 
     return (
         <nav>
-            <div className="flex items-center justify-center h-screen bg-base-200">
-                {showSlider ? (
-                    <div className="diff aspect-[16/9]">
-                        <div className="diff-item-1"></div>
-                        <div className="diff-item-2">
-                            <img alt="daisy" src="RFD.jpg" />
-                        </div>
-                        <div className="diff-resizer"></div>
-                    </div>
-                ) : (
-                    <div className="hero-content text-center">
-                        <div className="max-w-md">
-                            <h1 className="text-5xl font-bold">Hello there</h1>
-                            <p className="py-6">
-                                Welcome to your Fridge lets get started!
-                            </p>
-                            <button className="btn btn-primary">
-                                Get Started
-                            </button>
-                        </div>
-                    </div>
-                )}
+            <div className="flex w-full">
+                <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
+                    Expires Soon
+                </div>
+                <div className="divider divider-horizontal">
+                </div>
+                <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
+                    Suggested Recipes
+                </div>
+                <div className="relative h-32 w-32">
+                        <table className="absolute inset-x-0 bottom-0 h-16">
+                            <thead>
+                                <th>Food Item</th>
+                            </thead>
+                        </table>
+                </div>
             </div>
         </nav>
     )
