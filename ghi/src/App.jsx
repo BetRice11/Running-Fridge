@@ -5,11 +5,14 @@ import Sidebar from './components/sidebar/sidebar'
 
 const App = () => {
     return (
-        <div className='h-screen'>
+        <div>
             <Nav />
-            <Sidebar />
-
-            <Outlet />
+            <div className="flex">
+                <div className="flex-1">
+                    <Outlet />
+                </div>
+                <Sidebar />
+            </div>
         </div>
     )
 }
