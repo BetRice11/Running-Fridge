@@ -1,11 +1,11 @@
-/* You should probably replace with with your own CSS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
 }
+
+/* You should probably replace with with your own CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

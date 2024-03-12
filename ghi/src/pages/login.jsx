@@ -1,42 +1,60 @@
-// // src/Login.js
-// import React, { useState } from 'react';
-// import axios from 'axios';
+import { useState } from "react";
+import { useLoginMutation } from "../app/apiSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-// const Login = ({ onLoginSuccess }) => {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [error, setError] = useState('');
+const Login = () => {
+    const navigate = useNavigate();
+    const [login, loginResponse] = useLoginMutation();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post('/api/auth/login', { username, password });
-//       onLoginSuccess(response.data); // Pass the token to the parent component
-//     } catch (error) {
-//       setError('Failed to login');
-//     }
-//   };
+    useEffect(() => {
+        if (loginResponse.isSuccess) navigate('/');
+        if (loginResponse.isError) {
+            setErrorMessage(loginResponse.error.data.detail)
+        }
+    }, [loginResponse])
 
-//   return (
-//     <div>
-//       <form onSubmit={handleLogin}>
-//         <input
-//           type="text"
-//           placeholder="Username"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//         />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//         />
-//         <button type="submit">Login</button>
-//         {error && <p>{error}</p>}
-//       </form>
-//     </div>
-//   );
-// };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        login({username, password});
+    }
 
-// export default Login;
+    return (
+        <div className="row">
+            <div className="col-md-6 offset-md-3">
+                <h1>Login</h1>
+                {errorMessage && <div className="alert alert-danger" role="alert">
+                    {errorMessage}
+                </div>}
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="Login__username" className="form-label">Username</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="Login__username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="Login__password" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="Login__password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    )
+}
+
+export default Login;

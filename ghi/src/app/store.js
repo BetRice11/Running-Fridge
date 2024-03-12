@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import queryReducer from './querySlice'
+
+import { beverageApi } from './apiSlice';
+import searchReducer from './searchSlice';
+
 
 export const store = configureStore({
-    reducer: {
-        query: queryReducer
-    },
+  reducer: {
+    search: searchReducer, // front end state
+    [beverageApi.reducerPath]: beverageApi.reducer // api state
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(beverageApi.middleware)
 })
