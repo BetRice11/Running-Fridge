@@ -15,10 +15,7 @@ def get_item_repository():
 
 @router.post("/beverages", response_model=Union[ItemOut, Error])
 def add_beverage(item: ItemIn, response: Response, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends(get_item_repository)):
-    itemss = repo.add_beverage(item, account_id=account_data['id'])
-    if itemss is None:
-        response.status_code = 400
-    return itemss
+    return repo.add_beverage(item, account_id=account_data['id'])
 
 @router.get("/beverages/mine", response_model=Union[List[ItemOut], Error])
 def get_all_for_account(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):

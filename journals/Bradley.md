@@ -20,3 +20,9 @@ got the login and authentication to work with a mongo database and changed all o
 working on getting every function in queries to work, then will work on implementing the login security features for all of our features.
 4/05/2024
 fixed all the queries functions, every operation within each category properly works now. Finding a work around the date time was difficult since mongo and python don't see eye to eye with date time. New issue we are starting today is implementing login authorization to access the different operations.
+4/06/2024
+working on authorization for all queries.
+4/07/2024
+got all authentication to work on all the queries and added new code so that logged in user can only access their own data, also decided to get rid of get all on the queries because we thought it would be a security risk because no one needs access to all the inputs to the queries. we replaced get all with get all for account so they can only pull their own data.
+4/08/2024
+going to fix authorization key so the auth function refers to the .env file instead of having the key inside the code, we will also start writing our backend test.
