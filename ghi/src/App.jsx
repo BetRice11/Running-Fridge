@@ -2,9 +2,11 @@ import Nav from './components/Nav'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react"
 
 const App = () => {
     return (
+        <AuthProvider>
         <div>
             <Nav />
             <div className="flex">
@@ -14,6 +16,7 @@ const App = () => {
                 <Sidebar />
             </div>
         </div>
+        </AuthProvider>
     )
 }
 
