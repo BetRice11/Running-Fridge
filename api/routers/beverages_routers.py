@@ -21,7 +21,7 @@ def add_beverage(item: ItemIn, response: Response, repo: ItemRepository = Depend
     return itemss
 
 @router.get("/beverages", response_model=Union[List[ItemOut], Error])
-def get_all(repo: ItemRepository=Depends()):
+def get_all_beverages(repo: ItemRepository=Depends()):
     return repo.get_all()
 
 @router.put("/beverages/{item_id}", response_model=Union[ItemOut, Error])

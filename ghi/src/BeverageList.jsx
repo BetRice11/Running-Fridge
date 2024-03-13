@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react'
+import { useGetAllBeveragesQuery } from './app/apiSlice'
 
 function BeverageList() {
     const [beverages, setBeverages] = useState([])
 
     const getData = async () => {
-        const response = await fetch('http://localhost:8000/api/beverages/beverages')
+        const response = await fetch(
+            'http://localhost:8000/api/beverages/beverages'
+        )
         if (response.ok) {
             const { beverages } = await response.json()
             setBeverages(beverages)
         }
     }
+
+    const { data } = useGetAllBeveragesQuery()
+    console.log({ data })
 
     const handleDelete = async (id) => {
         const deleteUrl = `http://localhost:8000/api/beverages/beverages/${id}`
