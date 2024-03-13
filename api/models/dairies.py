@@ -13,9 +13,9 @@ class ItemIn(BaseModel):
     store_name: Optional[str]
 
 class ItemOut(BaseModel):
-    id: int
+    id: str
     name: str
     cost: str
-    measurement: str
     expiration_date: date
+    measurement: str
     store_name: Optional[str]
