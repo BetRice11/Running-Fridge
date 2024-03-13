@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const beverageApi = createApi({
     reducerPath: 'beverageApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.LOCALHOST8000
+        baseUrl: import.meta.env.VITE_API_HOST
     }),
     endpoints: (builder) => ({
         getAllBeverages: builder.query({
