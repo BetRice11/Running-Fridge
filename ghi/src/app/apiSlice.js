@@ -1,45 +1,64 @@
-// apiSlice.js
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+export const accountApi = createApi({
+    reducerPath: 'accountApi',
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_API_HOST,
+        credentials: 'include',
+    }),
+    endpoints: (builder) => ({
+        createAccount: builder.mutation({
+            query: (body) => {
+                return {
+                    url: '/api/auth/accounts',
+                    method: 'POST',
+                    body,
+                }
+            },
+        }),
+        login: builder.mutation({
+            query: (info) => {
+                let formData = null
+                if (info instanceof HTMLElement) {
+                    formData = new FormData(info)
+                } else {
+                    formData = new FormData()
+                    formData.append('username', info.username)
+                    formData.append('password', info.password)
+                }
+                return {
+                    url: '/token',
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include',
+                }
+            },
+            invalidatesTags: (result) => {
+                return (result && ['Account']) || []
+            },
+        }),
+        logout: builder.mutation({
+            query: () => {
+                return {
+                    url: '/token',
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: ['Account'],
+        }),
+        getToken: builder.query({
+            query: () => ({
+                url: '/token',
+            }),
+            providesTags: ['Account'],
+        }),
+    }),
+})
 
-// Define the initial state
-const initialState = {
-  data: [],
-  loading: false,
-  error: null,
-};
-
-// Define the async thunk to fetch data from the API
-export const fetchData = createAsyncThunk('api/fetchData', async () => {
-  try {
-    const response = await axios.get('https://api.example.com/data');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-});
-
-// Define the API slice
-const apiSlice = createSlice({
-  name: 'api',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchData.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(fetchData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
-  },
-});
-
-export default apiSlice.reducer;
+export const {
+    useCreateAccountMutation,
+    useLoginMutation,
+    useGetTokenQuery,
+    useLogoutMutation,
+    
+} = accountApi
