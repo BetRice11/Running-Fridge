@@ -48,6 +48,9 @@ const Nav = () => {
                             <li>
                                 <Link to={'/signUp'}>Sign Up</Link>
                             </li>
+                            <li>
+                                <Link to={'/beverages'}>Beverages</Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

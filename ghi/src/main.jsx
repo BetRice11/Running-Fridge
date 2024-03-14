@@ -11,6 +11,7 @@ import About from './pages/About.jsx'
 import Error from './pages/Error.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
+import Beverages from './pages/Beverages.jsx'
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
             { path: 'about', element: <About /> },
             { path: 'signUp', element: <SignUp /> },
             { path: 'login', element: <Login /> },
+            { path: 'beverages', element: <Beverages /> },
         ],
     },
 ])
