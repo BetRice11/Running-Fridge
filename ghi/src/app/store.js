@@ -1,13 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { beverageApi } from './apiSlice';
-import searchReducer from './searchSlice';
+import { configureStore } from '@reduxjs/toolkit'
+import queryReducer from './querySlice'
+import { accountApi } from './apiSlice'
 
-const store = configureStore({
-  reducer: {
-    search: searchReducer,
-    [beverageApi.reducerPath]: beverageApi.reducer
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(beverageApi.middleware)
-});
+export default configureStore({
+    reducer: {
+        query: queryReducer,
+        [accountApi.reducerPath]: accountApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(accountApi.middleware),
+})
 
-export default store;
+// Global state for entire app... create query or api in file and import into store

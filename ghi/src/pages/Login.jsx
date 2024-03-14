@@ -1,38 +1,70 @@
+import { useState } from 'react'
+import { useLoginMutation } from '../app/apiSlice'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Login = () => {
+    const navigate = useNavigate()
+    const [login, loginResponse] = useLoginMutation()
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+
+    useEffect(() => {
+        if (loginResponse.isSuccess) navigate('/')
+        if (loginResponse.isError) {
+            setErrorMessage(loginResponse.error.data.detail)
+        }
+    }, [loginResponse])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log('login')
+        console.log({ username, password })
+        e.preventDefault()
+        login({ username, password })
+    }
+
     return (
-        <nav>
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="text-center lg:text-left">
-                <h1 className="text-5xl font-bold">Login now!</h1>
-                <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                </div>
-                <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                <form className="card-body">
-                    <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
-                    <input type="email" placeholder="email" className="input input-bordered" required />
+        <div className="row">
+            <div className="col-md-6 offset-md-3">
+                <h1>Login</h1>
+                {errorMessage && (
+                    <div className="alert alert-danger" role="alert">
+                        {errorMessage}
                     </div>
-                    <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Password</span>
-                    </label>
-                    <input type="password" placeholder="password" className="input input-bordered" required />
-                    <label className="label">
-                        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                    </label>
+                )}
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="Login__username" className="form-label">
+                            Username
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="Login__username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
                     </div>
-                    <div className="form-control mt-6">
-                    <button className="btn btn-primary">Login</button>
+                    <div className="mb-3">
+                        <label htmlFor="Login__password" className="form-label">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="Login__password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                     </div>
+                    <button type="submit" className="btn btn-success">
+                        Submit
+                    </button>
                 </form>
-                </div>
             </div>
         </div>
-        </nav>
     )
 }
 

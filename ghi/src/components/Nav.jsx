@@ -37,6 +37,9 @@ const Nav = () => {
                         {!account && <li className="nav-item">
                             <NavLink to={'/beverages'} className={'nav-link'}>Beverages</NavLink>
                         </li>}
+                            <li>
+                                <Link to={'/signUp'}>Sign Up</Link>
+                            </li>
                     </ul>
                     {account && <button className="btn btn-outline-danger" onClick={logout}>
                         Logout
