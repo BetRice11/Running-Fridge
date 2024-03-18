@@ -1,60 +1,96 @@
-const Signup = () => {
+import { useState } from 'react'
+import { useCreateAccountMutation } from '../app/apiSlice'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+
+const SignUp = () => {
+    const navigate = useNavigate()
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setPasswordConfirmation] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+
+    const [signup, signupResponse] = useCreateAccountMutation()
+
+    useEffect(() => {
+        if (signupResponse.isSuccess) navigate('/')
+    }, [signupResponse])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log('sign up')
+        console.log({ username, password, passwordConfirmation })
+        if (password !== passwordConfirmation) {
+            setErrorMessage('Password and confirmation do not match.')
+            return
+        }
+        signup({ username, password })
+    }
+
     return (
-        <nav>
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Sign Up Now!</h1>
-                        <p className="py-6">
-                            Create a account and keep track out all the things that your fridge can't run without
-                        </p>
+        <div className="row">
+            <div className="col-md-6 offset-md-3">
+                <h1>Sign Up</h1>
+                {errorMessage && (
+                    <div className="alert alert-danger" role="alert">
+                        {errorMessage}
                     </div>
-                    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <form className="card-body">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Username</span>
-                                </label>
-                                <input
-                                    type="username"
-                                    placeholder="username"
-                                    className="input input-bordered"
-                                    required
-                                />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Email</span>
-                                </label>
-                                <input
-                                    type="email"
-                                    placeholder="email"
-                                    className="input input-bordered"
-                                    required
-                                />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Password</span>
-                                </label>
-                                <input
-                                    type="password"
-                                    placeholder="password"
-                                    className="input input-bordered"
-                                    required
-                                />
-                            </div>
-                            <div className="form-control mt-6">
-                                <button className="btn btn-primary ring hover:ring-yellow-400">
-                                    Create Account
-                                </button>
-                            </div>
-                        </form>
+                )}
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label
+                            htmlFor="SignUp__username"
+                            className="form-label"
+                        >
+                            Username
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="Login__username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
                     </div>
-                </div>
+                    <div className="mb-3">
+                        <label
+                            htmlFor="SignUp__password"
+                            className="form-label"
+                        >
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="Login__password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label
+                            htmlFor="SignUp__password_confirmation"
+                            className="form-label"
+                        >
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="SignUp__password_confirmation"
+                            value={passwordConfirmation}
+                            onChange={(e) =>
+                                setPasswordConfirmation(e.target.value)
+                            }
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-success">
+                        Submit
+                    </button>
+                </form>
             </div>
-        </nav>
+        </div>
     )
 }
 
-export default Signup
+export default SignUp

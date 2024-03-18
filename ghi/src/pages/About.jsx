@@ -1,22 +1,21 @@
 const About = () => {
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+
     }
     return (
         <>
-            <h1 className="text-3x1">About</h1>
+            <h1 className='text-3x1'>About</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>
-                        Name
-                        <br />
+                        Name<br />
                         <input type="text" placeholder="Name" />
                     </label>
                 </div>
                 <div>
                     <label>
-                        Email
-                        <br />
+                        Email<br />
                         <input type="email" placeholder="Email" />
                     </label>
                 </div>
@@ -25,4 +24,4 @@ const About = () => {
         </>
     )
 }
-export default About
+export default About;

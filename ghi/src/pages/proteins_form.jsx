@@ -17,7 +17,7 @@ function ProteinForm() {
     data.measurement = measurement;
     data.store_name = store_name;
 
-    const ProteinUrl = `http://localhost:8100/api/manufacturers/`
+    const ProteinUrl = 'http://localhost:8000/api/proteins/proteins'
     const fetchOptions = {
       method: 'post',
       body: JSON.stringify(data),

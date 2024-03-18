@@ -1,31 +1,21 @@
 import { useEffect, useState } from 'react'
-import { useGetAllBeveragesQuery } from './app/apiSlice'
+import { useSelector } from 'react-redux'
+import { useGetAllBeveragesQuery } from './app/fridgeSlice'
 
 function BeverageList() {
-    const [beverages, setBeverages] = useState([])
+    const query = useSelector((state) => state.query.value)
+    const { data, isLoading } = useGetAllBeveragesQuery()
+    console.log({data})
 
-    const getData = async () => {
-        const response = await fetch(
-            'http://localhost:8000/api/beverages/beverages'
-        )
-        if (response.ok) {
-            const { beverages } = await response.json()
-            setBeverages(beverages)
-        }
+    if (isLoading) return <>Loading...</>
+
+    const filteredData = () => {
+        if (query)
+            return data.beverage.filter(b =>
+                b.name.includes(query)
+            )
+        return data.beverage
     }
-
-    const { data } = useGetAllBeveragesQuery()
-    console.log({ data })
-
-    const handleDelete = async (id) => {
-        const deleteUrl = `http://localhost:8000/api/beverages/beverages/${id}`
-        await fetch(deleteUrl, { method: 'delete' })
-        getData()
-    }
-
-    useEffect(() => {
-        getData
-    }, [])
 
     return (
         <div className="overflow-x-auto">
@@ -41,27 +31,9 @@ function BeverageList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {beverages.map((beverage) => {
-                        return (
-                            <tr key={beverage.id}>
-                                <td>{beverage.name}</td>
-                                <td>{beverage.cost}</td>
-                                <td>{beverage.expiration_date}</td>
-                                <td>{beverage.measurement}</td>
-                                <td>{beverage.store_name}</td>
-                                <td>
-                                    <button
-                                        className="btn glass"
-                                        onClick={() => {
-                                            handleDelete(beverage.id)
-                                        }}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        )
-                    })}
+                    {filteredData().map(b =>
+                    <Beverages key={b.name} name={b.name} />)
+                    }
                 </tbody>
             </table>
         </div>

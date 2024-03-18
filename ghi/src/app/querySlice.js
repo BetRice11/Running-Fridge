@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    value: '',
+    value: ''
 }
 
 export const querySlice = createSlice({
@@ -11,12 +11,12 @@ export const querySlice = createSlice({
         reset: (state) => {
             state.value = ""
         },
-        setQuery: (state, action) => {
+        query: (state, action) => {
             state.value = action.payload
         }
     }
 })
 
-export const { reset, setQuery} = querySlice.actions
+export const { reset, query} = querySlice.actions
 
 export default querySlice.reducer
