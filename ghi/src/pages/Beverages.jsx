@@ -5,16 +5,26 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 const Beverages = () => {
     const { item_id } = useParams()
-    const { data: beverage, isLoading } = useGetBeverageQuery(item_id)
-    console.log({beverage})
+    const { data, isLoading, isError } = useGetBeverageQuery(item_id)
+    console.log({data})
 
     if (isLoading) return <div>loading</div>
-    
+
+    if (isError) return <div>Error occurred while fetching data</div>
+
+    if (!data || !data.data || data.data.length === 0) {
+        return <div>Data not available</div>}
+
+    const beverage = data.data[0]
+
+    if (!beverage) {
+        return <div>Beverage not found</div>}
+
     return (
         <div>
             <div className="row">
                 <div className="col-8">
-                    <h1>{beverage.name}</h1>
+                    <h1>{beverage.item_id}</h1>
                 </div>
                 <div className="col-4 text-end">
                 </div>

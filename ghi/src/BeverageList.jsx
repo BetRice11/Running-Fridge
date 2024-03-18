@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useGetAllBeveragesQuery } from './app/fridgeSlice'
+import Beverages from './pages/Beverages'
 
 function BeverageList() {
     const query = useSelector((state) => state.query.value)
@@ -11,10 +12,10 @@ function BeverageList() {
 
     const filteredData = () => {
         if (query)
-            return data.beverage.filter(b =>
-                b.name.includes(query)
+            return data.filter(p =>
+                p.item_id.includes(query)
             )
-        return data.beverage
+        return data
     }
 
     return (
@@ -31,8 +32,8 @@ function BeverageList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData().map(b =>
-                    <Beverages key={b.name} name={b.name} />)
+                    {filteredData().map(p =>
+                    <Beverages key={p.name} item_id={p.item_id} />)
                     }
                 </tbody>
             </table>

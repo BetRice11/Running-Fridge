@@ -9,11 +9,11 @@ export const fridgeApi = createApi({
 
     endpoints: (builder) => ({
         getAllBeverages: builder.query({
-            query: () => '/api/beverages',
+            query: () => '/api/beverages/beverages/mine',
         }),
 
         getBeverage: builder.query({
-            query: (item_id) => `/api/beverages/${item_id}`,
+            query: (item_id) => item_id ? `/api/beverages/beverages/${item_id}` : '',
         }),
     }),
 })
