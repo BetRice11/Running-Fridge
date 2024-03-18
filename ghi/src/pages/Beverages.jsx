@@ -1,16 +1,18 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useGetBeveragesByNameQuery } from './app/apiSlice';
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useGetBeverageQuery } from '../app/fridgeSlice'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const Beverages = () => {
-    const { name } = useParams();
-    const { data: beverage, isLoading } = useGetBeveragesByNameQuery(name);
+    const { item_id } = useParams()
+    const { data, isLoading } = useGetBeverageQuery(item_id)
 
+    if (isLoading) return <div>loading</div>
     return (
         <div>
             <div className="row">
                 <div className="col-8">
-                    <h1>{beverage.name.toUpperCase()}</h1>
+                    <h1>{data.item_id}</h1>
                 </div>
                 <div className="col-4 text-end">
                     <button
@@ -29,31 +31,14 @@ const Beverages = () => {
             </div>
             <ul className="list-group">
                 <li className="list-group-item">
-                    Beverage item: {beverage.item}
+                    Beverage item: {data.item}
                 </li>
+                <li className="list-group-item">Cost: {data.cost}</li>
                 <li className="list-group-item">
-                    Cost: {beverage.cost}
-                </li>
-                <li className="list-group-item">
-                    Expiration: {beverage.expiration}
+                    Expiration: {data.expiration}
                 </li>
             </ul>
         </div>
     )
 }
-
-export default Beverages;
-
-// import React from 'react';
-// import CategoryPage from './CategoryPage';
-
-// const Beverages = () => {
-//     return (
-//         <div>
-//             <h1>Beverages</h1>
-//             <p>Explore our selection of refreshing beverages!</p>
-//         </div>
-//     );
-// };
-
-// export default Beverages;
+export default Beverages

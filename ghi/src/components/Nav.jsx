@@ -40,6 +40,11 @@ const Nav = () => {
                             <li>
                                 <Link to={'/signUp'}>Sign Up</Link>
                             </li>
+                            <li>
+                                <Link to={'/beverages'}>Beverages</Link>
+                            </li>
+                        </ul>
+                    </div>
                     </ul>
                     {account && <button className="btn btn-outline-danger" onClick={logout}>
                         Logout
