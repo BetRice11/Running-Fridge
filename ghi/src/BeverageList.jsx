@@ -10,18 +10,25 @@ function BeverageList() {
 
     if (isLoading) return <>Loading...</>
 
-    const filteredData = () => {
-        if (query)
-            return data.filter(p =>
-                p.item_id.includes(query)
-            )
-        return data
-    }
+    
+
+    // const filteredData = () => {
+    //     if (query)
+    //         return data.filter(p =>
+    //             p._id.includes(query)
+    //         )
+    //     return data
+    // }
 
     return (
         <div className="overflow-x-auto">
             <h1>Beverages</h1>
-            <table className="table">
+            {data.map((p) => (
+                <div key={p.id} id={p.id}>
+                    <p>{p.name}</p>
+                </div>
+            ))}
+            {/* <table className="table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -32,11 +39,8 @@ function BeverageList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData().map(p =>
-                    <Beverages key={p.name} item_id={p.item_id} />)
-                    }
                 </tbody>
-            </table>
+            </table> */}
         </div>
     )
 }
