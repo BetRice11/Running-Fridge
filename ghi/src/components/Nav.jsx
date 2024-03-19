@@ -4,8 +4,8 @@ import { Link, NavLink } from 'react-router-dom'
 const Nav = () => {
     return (
         <nav>
-            <div className="navbar bg-base-100 shadow-lg">
-                <div className="flex-1">
+            <div className="items-center gap-x-4 hover: opacity-75 transition navbar bg-base-100 shadow-lg">
+                <div className="flex-1 bg-white rounded-full p-1 mr-12 shrink-0 lg:mr-0 lg:shrink">
                     <img src="/logo.png" alt="Logo" height="32" width="150" />
                 </div>
                 <div className="flex-none gap-2">
@@ -15,6 +15,7 @@ const Nav = () => {
                             placeholder="Search"
                             className="input input-bordered w-24 md:w-auto"
                         />
+                        <div></div>
                     </div>
                     <div className="dropdown dropdown-end">
                         <div
@@ -37,7 +38,13 @@ const Nav = () => {
                                 </a>
                             </li>
                             <li>
-                                <NavLink to={'/about'}>About</NavLink>
+                                <NavLink to={'/signup'}>Sign Up</NavLink>
+                            </li>
+                            <li>
+                                <Link to={'/grains'}>Grains</Link>
+                            </li>
+                            <li>
+                                <Link to={'/beverage/:item_id'}>Beverage</Link>
                             </li>
                             <li>
                                 <Link to={'/'}>Homepage</Link>

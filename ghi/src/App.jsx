@@ -1,20 +1,23 @@
-import { Outlet } from 'react-router-dom'
 import Nav from './components/Nav'
-import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Sidebar from './components/sidebar/sidebar'
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react"
 
-
-
-
-    const App = () => (
+const App = () => {
+    return (
         <AuthProvider>
-        <div className="container">
+        <div>
             <Nav />
-            <div className="mt-5">
-                <Outlet />
+            <div className="flex">
+                <div className="flex-1">
+                    <Outlet />
+                </div>
+                <Sidebar />
             </div>
         </div>
         </AuthProvider>
     )
-
+}
 
 export default App

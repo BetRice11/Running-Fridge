@@ -1,6 +1,4 @@
 volumes:
-    jwtdown-db-data:
-        external: true
     mongo-data:
         external: true
 services:
@@ -22,7 +20,7 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: example
     fastapi:
         environment:
-            DATABASE_URL: mongodb://example_user:secret@mongo
+            DATABASE_URL: mongodb://root:example@mongo:27017/
             DB_NAME: db-running-fridge-db
             CORS_HOST: http://localhost:5173
             SIGNING_KEY: ${SIGNING_KEY}

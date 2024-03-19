@@ -1,34 +1,37 @@
+import { useSelector, useDispatch } from 'react-redux'
+import { useGetAllBeveragesQuery } from './app/fridgeSlice'
 import Beverages from './Beverages'
-import { useSelector } from 'react-redux'
-import { useGetAllBeveragesQuery } from '../app/fridgeSlice'
 
-const BeveragesList = () => {
-    const searchCriteria = useSelector((state) => state.search.value)
-    const { data, isLoading } = useGetAllBeveragesQuery()
-    if (isLoading) return <>Loading...</>
-    const filteredData = () => {
-        if (searchCriteria)
-            return data.filter((beverage) =>
-                beverage.name.includes(searchCriteria)
-            )
-        return data
-    }
-    return (
-        <>
-            <h1 className="mt-3">
-                Beverage{' '}
-                {searchCriteria && (
-                    <small className="text-body-secondary">
-                        "{searchCriteria}"
-                    </small>
-                )}
-            </h1>
-            <div className="row mt-3">
-                {filteredData().map((p) => (
-                    <Beverage key={p.name} name={p.name} />
-                ))}
-            </div>
-        </>
-    )
-}
-export default BeveragesList
+// const BeverageList = () => {
+//     // const query = useSelector((state) => state.query)
+//     // const { data, isLoading } = useGetAllBeveragesQuery()
+//     // console.log({data})
+
+//     if (isLoading) return <>Loading...</>
+
+//     // const filteredData = () => {
+//     //         if (query && data)
+//     //         return data.filter(beverage =>
+//     //             beverage.name.includes(query)
+//     //     )
+//     //     return data
+//     // }
+//     return (
+//         // <>
+//         //     <h1 className="mt-3">
+//         //         Beverage{` `}
+//         //         {query && (
+//         //             <small className="text-body-secondary">
+//         //                 "{query}"
+//         //             </small>
+//         //         )}
+//         //     </h1>
+//         //     <div className="row mt-3">
+//         //         {/* {filteredData().map(b =>
+//         //             <Beverages key={b.name} name={b.name} />
+//         //         )} */}
+//         //     </div>
+//         // </>
+//     )
+// }
+// export default BeverageList

@@ -3,42 +3,52 @@ import { useParams } from 'react-router-dom'
 import { useGetBeverageQuery } from '../app/fridgeSlice'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-const Beverages = () => {
+const Beverage = () => {
     const { item_id } = useParams()
-    const { data, isLoading } = useGetBeverageQuery(item_id)
+    const { data, isLoading, isError } = useGetBeverageQuery(item_id)
+    console.log({data})
 
-    if (isLoading) return <div>loading</div>
+    // const beverage = data[0].name
+    // console.log(data[0].name)
+    if (isLoading) return <>Loading...</>
+
+    // if (!beverage) {
+    //     return <div>Beverage not found</div>}
+
     return (
         <div>
             <div className="row">
                 <div className="col-8">
-                    <h1>{beverages.item_id}</h1>
+                    <h1>
+                        Beverages
+                    </h1>
                 </div>
-                <div className="col-4 text-end">
-                    <button
-                        className="btn btn-success"
-                        onClick={() => console.log('favorite')}
-                    >
-                        Favorite
-                    </button>
-                    <button
-                        className="btn btn-danger"
-                        onClick={() => console.log('unfavorite')}
-                    >
-                        Unfavorite
-                    </button>
+                <div>
+                    <p>
+                        {data.name}
+                        {data.cost}
+                        {data.store_name}
+                    </p>
                 </div>
+                {/* <div className="col-4 text-end">
+                    {data.map((p) => (
+                        <div key={p.id} id={p.id}>
+                            <p>{p.name}</p>
+                        </div>
+                    ))}
+                </div> */}
             </div>
-            <ul className="list-group">
+            {/* <ul className="list-group">
                 <li className="list-group-item">
-                    Beverage item: {data.item}
+                    Beverage item: {data}
                 </li>
                 <li className="list-group-item">Cost: {data.cost}</li>
                 <li className="list-group-item">
-                    Expiration: {data.expiration}
+                    Expiration: {data.expiration_date}
                 </li>
-            </ul>
+            </ul> */}
         </div>
     )
 }
 export default Beverages
+>>>>>>>>> Temporary merge branch 2

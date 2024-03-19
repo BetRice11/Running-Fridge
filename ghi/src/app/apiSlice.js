@@ -60,5 +60,5 @@ export const {
     useLoginMutation,
     useGetTokenQuery,
     useLogoutMutation,
-    
+
 } = accountApi

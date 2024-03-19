@@ -28,7 +28,7 @@ class ItemRepository(MongoQueries):
         return result.deleted_count > 0
 
 
-    def get_all_for_account(self, account_id: str) -> Union[Error, List[ItemOut]]:
+    def get_all_beverages(self, account_id: str) -> Union[Error, List[ItemOut]]:
         beverage_queries = MongoQueries(collection_name="beverages")
         try:
             records = beverage_queries.collection.find({'account_id': account_id})

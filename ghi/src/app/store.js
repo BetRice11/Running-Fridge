@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import queryReducer from './querySlice'
-import { accountApi }  from './apiSlice'
+import { accountApi } from './apiSlice'
 import { fridgeApi } from './fridgeSlice'
 
-export default configureStore({
+export const store = configureStore({
     reducer: {
         query: queryReducer,
         [accountApi.reducerPath]: accountApi.reducer,
         [fridgeApi.reducerPath]: fridgeApi.reducer,
     },
-    middleware: (getDefaultMiddleware) =>
+    middleware: (getDefaultMiddleware) => //this is async await
         getDefaultMiddleware().concat(accountApi.middleware, fridgeApi.middleware)
 })
 
