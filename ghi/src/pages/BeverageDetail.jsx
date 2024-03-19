@@ -8,12 +8,8 @@ const Beverage = () => {
     const { data, isLoading, isError } = useGetBeverageQuery(item_id)
     console.log({data})
 
-    // const beverage = data[0].name
-    // console.log(data[0].name)
     if (isLoading) return <>Loading...</>
 
-    // if (!beverage) {
-    //     return <div>Beverage not found</div>}
 
     return (
         <div>

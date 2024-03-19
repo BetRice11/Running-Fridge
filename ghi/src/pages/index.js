@@ -1,20 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { store } from "app/store";
-import { Provider } from "react-redux";
-import App from "App";
-import Home from "./Home";
-import BeverageForm from "./BeverageList";
-import BeverageList from "./Beverages";
-import DairyForm from "./dairies_form";
-import DairyList from "./dairies_list";
-import GrainForm from "./grains_form";
-import GrainList from "./grains_list";
-import ProduceForm from "./produces_form";
-import ProduceList from "./produces_list";
-import ProteinForm from "./proteins_form";
-import ProteinList from "./proteins_list";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { store } from 'app/store'
+import { Provider } from 'react-redux'
+import App from 'App'
+import Home from './Home'
+import BeverageForm from './BeverageList'
+import BeverageList from './BeverageDetail'
+import DairyForm from './dairies_form'
+import DairyList from './dairies_list'
+import GrainForm from './grains_form'
+import GrainList from './grains_list'
+import ProduceForm from './produces_form'
+import ProduceList from './produces_list'
+import ProteinForm from './proteins_form'
+import ProteinList from './proteins_list'
 
 const router = createBrowserRouter([
     {
@@ -30,48 +30,48 @@ const router = createBrowserRouter([
             },
             {
                 path: '/beveragelist',
-                element: <BeverageList />
+                element: <BeverageList />,
             },
             {
                 path: '/dairyform',
-                element: <DairyForm />
+                element: <DairyForm />,
             },
             {
                 path: '/dairylist',
-                element: <DairyList />
+                element: <DairyList />,
             },
             {
                 path: '/grainform',
-                element: <GrainForm />
+                element: <GrainForm />,
             },
             {
                 path: '/grainlist',
-                element: <GrainList />
+                element: <GrainList />,
             },
             {
                 path: '/produceform',
-                element: <ProduceForm />
+                element: <ProduceForm />,
             },
             {
                 path: '/producelist',
-                element: <ProduceList />
+                element: <ProduceList />,
             },
             {
                 path: '/proteinform',
-                element: <ProteinForm />
+                element: <ProteinForm />,
             },
             {
                 path: '/proteinlist',
-                element: <ProteinList />
+                element: <ProteinList />,
             },
-        ]
-    }
+        ],
+    },
 ])
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <React.StrictMode>
         <Provider store={store}>
             <RouterProvider router={router} />
         </Provider>
     </React.StrictMode>
-);
+)
