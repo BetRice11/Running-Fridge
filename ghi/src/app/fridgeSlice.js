@@ -13,7 +13,7 @@ export const fridgeApi = createApi({
         }),
 
         getBeverage: builder.query({
-            query: (_id) => `/api/beverages/beverages/${_id}`,
+            query: (item_id) => `/api/beverages/beverages/${item_id}`,
             credentials: 'include',
         }),
     }),

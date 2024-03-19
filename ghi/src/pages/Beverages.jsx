@@ -4,14 +4,13 @@ import { useGetBeverageQuery } from '../app/fridgeSlice'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 const Beverage = () => {
-    const { _id } = useParams()
-    const { data, isLoading, isError } = useGetBeverageQuery(_id)
+    const { item_id } = useParams()
+    const { data, isLoading, isError } = useGetBeverageQuery(item_id)
     console.log({data})
 
-    
-    }
-
-    // const beverage = data.data[0]
+    // const beverage = data[0].name
+    // console.log(data[0].name)
+    if (isLoading) return <>Loading...</>
 
     // if (!beverage) {
     //     return <div>Beverage not found</div>}
@@ -24,13 +23,20 @@ const Beverage = () => {
                         Beverages
                     </h1>
                 </div>
-                <div className="col-4 text-end">
+                <div>
+                    <p>
+                        {data.name}
+                        {data.cost}
+                        {data.store_name}
+                    </p>
+                </div>
+                {/* <div className="col-4 text-end">
                     {data.map((p) => (
-                        <div key={p._id} id={p.id}>
+                        <div key={p.id} id={p.id}>
                             <p>{p.name}</p>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </div>
             {/* <ul className="list-group">
                 <li className="list-group-item">

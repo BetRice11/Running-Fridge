@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useGetAllBeveragesQuery } from './app/fridgeSlice'
 import Beverages from './pages/Beverages'
+import { Link } from 'react-router-dom'
 
 function BeverageList() {
     const query = useSelector((state) => state.query.value)
@@ -10,7 +11,7 @@ function BeverageList() {
 
     if (isLoading) return <>Loading...</>
 
-    
+
 
     // const filteredData = () => {
     //     if (query)
@@ -26,6 +27,7 @@ function BeverageList() {
             {data.map((p) => (
                 <div key={p.id} id={p.id}>
                     <p>{p.name}</p>
+                    <Link to={`/beverages/${p.id}`}>Details</Link>
                 </div>
             ))}
             {/* <table className="table">
