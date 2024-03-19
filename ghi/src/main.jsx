@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
@@ -11,10 +11,10 @@ import About from './pages/About.jsx'
 import Error from './pages/Error.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
-import Beverages from './pages/Beverages.jsx'
-import Signup from './pages/SignUp.jsx';
+import Beverages from './pages/BeverageDetail.jsx'
+import Signup from './pages/SignUp.jsx'
 import GrainList from './pages/GrainList.jsx'
-import BeverageList from './BeverageList.jsx';
+import BeverageList from './BeverageList.jsx'
 
 const router = createBrowserRouter([
     {
@@ -27,11 +27,10 @@ const router = createBrowserRouter([
             { path: 'signUp', element: <SignUp /> },
             { path: 'login', element: <Login /> },
             { path: 'beverages/:item_id', element: <Beverages /> },
-            { path: 'beverages', element: <BeverageList />}
+            { path: 'beverages', element: <BeverageList /> },
         ],
     },
 ])
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -39,7 +38,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <RouterProvider router={router} />
         </Provider>
         <Provider store={store}>
-            <RouterProvider router={router}/>
+            <RouterProvider router={router} />
         </Provider>
     </React.StrictMode>
 )

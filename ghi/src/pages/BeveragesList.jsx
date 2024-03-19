@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useGetAllBeveragesQuery } from './app/fridgeSlice'
-import Beverages from './Beverages'
+import Beverages from './BeverageDetail'
 
 // const BeverageList = () => {
 //     // const query = useSelector((state) => state.query)

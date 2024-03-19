@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useGetAllBeveragesQuery } from './app/fridgeSlice'
-import Beverages from './pages/Beverages'
+import Beverages from './pages/BeverageDetail'
 import { Link } from 'react-router-dom'
 
 function BeverageList() {
     const query = useSelector((state) => state.query.value)
     const { data, isLoading } = useGetAllBeveragesQuery()
-    console.log({data})
+    console.log({ data })
 
     if (isLoading) return <>Loading...</>
-
-
 
     // const filteredData = () => {
     //     if (query)
