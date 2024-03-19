@@ -1,99 +1,74 @@
-import { Link, NavLink } from "react-router-dom";
-import { useGetTokenQuery, useLogoutMutation } from "../app/apiSlice";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, NavLink } from 'react-router-dom'
 
 
 const Nav = () => {
-    const navigate = useNavigate();
-    const { data: account } = useGetTokenQuery();
-    const [logout, logoutResponse] = useLogoutMutation();
-
-    useEffect(() => {
-        if (logoutResponse.data) navigate('/');
-    }, [logoutResponse])
-
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div className="container-fluid">
-                <Link to={'/'} className="navbar-brand">Beverages</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <NavLink to={'/'} className={'nav-link'}>Home</NavLink>
-                        </li>
-                        {!account && <li className="nav-item">
-                            <NavLink to={'/login'} className={'nav-link'}>Login</NavLink>
-                        </li>}
-                        {!account && <li className="nav-item">
-                            <NavLink to={'/signup'} className={'nav-link'}>Sign Up</NavLink>
-                        </li>}
-                        {!account && <li className="nav-item">
-                            <NavLink to={'/about'} className={'nav-link'}>About</NavLink>
-                        </li>}
-                        {!account && <li className="nav-item">
-                            <NavLink to={'/beverages'} className={'nav-link'}>Beverages</NavLink>
-                        </li>}
+        <nav>
+            <div className="navbar bg-base-100 shadow-lg">
+                <div className="flex-1">
+                    <img src="/logo.png" alt="Logo" height="32" width="150" />
+                </div>
+                <div className="flex-none gap-2">
+                    <div className="form-control">
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            className="input input-bordered w-24 md:w-auto"
+                        />
+                    </div>
+                    <div className="dropdown dropdown-end">
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className="btn btn-ghost btn-circle avatar"
+                        >
+                            <div className="w-10 rounded-full">
+                                <div className="skeleton w-32 h-32"></div>
+                            </div>
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                        >
+                            <li>
+                                <a className="justify-between">
+                                    Profile
+                                    <span className="badge">New</span>
+                                </a>
+                            </li>
+                            <li>
+                                <NavLink to={'/about'}>About</NavLink>
+                            </li>
+                            <li>
+                                <Link to={'/'}>Homepage</Link>
+                            </li>
+                            <li>
+                                <Link to={'/login'}>Login</Link>
+                            </li>
                             <li>
                                 <Link to={'/signUp'}>Sign Up</Link>
                             </li>
-                            <li>
+                            {!account && <li>
                                 <Link to={'/beverages'}>Beverages</Link>
-                            </li>
+                            </li>}
+                            {!account && <button className="btn btn-outline-danger" onClick={logout}>
+                            Logout
+                            </button>}
                         </ul>
                     </div>
-                    </ul>
-                    {account && <button className="btn btn-outline-danger" onClick={logout}>
-                        Logout
-                    </button>}
                 </div>
             </div>
         </nav>
+
+        // <ul>
+        //     <li>
+        //         <Link to={'/'}>Homepage</Link>
+        //     </li>
+        //     <li>
+        //         <NavLink to={'/about'}>About</NavLink>
+        //     </li>
+        // </ul>
     )
 }
 
-export default Nav;
-
-// import { Link, NavLink } from "react-router-dom";
-// import { useGetTokenQuery, useLogoutMutation } from "../app/apiSlice";
-// import { useNavigate } from "react-router-dom";
-// import { useEffect } from "react";
-// import { Provider } from 'react-redux';
-// const Nav = () => {
-//     const navigate = useNavigate();
-//     const { data: account } = useGetTokenQuery();
-//     const [logout, logoutResponse] = useLogoutMutation();
-//     useEffect(() => {
-//         if (logoutResponse.data) navigate('/');
-//     }, [logoutResponse])
-//     return (
-//         <nav className="navbar navbar-expand-lg bg-body-tertiary">
-//             <div className="container-fluid">
-//                 <Link to={'/'} className="navbar-brand">Pokemon</Link>
-//                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-//                 <span className="navbar-toggler-icon"></span>
-//                 </button>
-//                 <div className="collapse navbar-collapse" id="navbarNav">
-//                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-//                         <li className="nav-item">
-//                             <NavLink to={'/'} className={'nav-link'}>Home</NavLink>
-//                         </li>
-//                         {!account && <li className="nav-item">
-//                             <NavLink to={'/login'} className={'nav-link'}>Login</NavLink>
-//                         </li>}
-//                         {!account && <li className="nav-item">
-//                             <NavLink to={'/signup'} className={'nav-link'}>Sign Up</NavLink>
-//                         </li>}
-//                     </ul>
-//                     {account && <button className="btn btn-outline-danger" onClick={logout}>
-//                         Logout
-//                     </button>}
-//                 </div>
-//             </div>
-//         </nav>
-//     )
-// }
-// export default Nav;
+export default Nav

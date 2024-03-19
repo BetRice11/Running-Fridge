@@ -30,7 +30,6 @@ const SignUp = () => {
     return (
         <div className="row">
             <div className="col-md-6 offset-md-3">
-                <h1>SignUp</h1>
                 <h1>Sign Up</h1>
                 {errorMessage && (
                     <div className="alert alert-danger" role="alert">

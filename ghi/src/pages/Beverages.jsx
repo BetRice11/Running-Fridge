@@ -12,7 +12,7 @@ const Beverages = () => {
         <div>
             <div className="row">
                 <div className="col-8">
-                    <h1>{data.item_id}</h1>
+                    <h1>{beverages.item_id}</h1>
                 </div>
                 <div className="col-4 text-end">
                     <button

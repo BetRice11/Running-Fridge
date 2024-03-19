@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import queryReducer from './querySlice'
-import { accountApi } from './apiSlice'
+import { accountApi }  from './apiSlice'
 import { fridgeApi } from './fridgeSlice'
 
 export default configureStore({
