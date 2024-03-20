@@ -8,14 +8,7 @@ router = APIRouter(tags=["Grains"], prefix="/api/grains")
 
 @router.post("/grains", response_model=Union[GrainItemOut, Error])
 def add_grain(item: GrainItemIn,  response: Response, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()):
-    itemss = repo.add_grain(item, account_id=account_data['id'])
-    if itemss is None:
-        response.status_code = 400
-    return itemss
-
-# @router.get("/grains", response_model=Union[List[GrainItemOut], Error])
-# def get_all(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):
-#     return repo.get_all()
+    return repo.add_grain(item, account_id=account_data['id'])
 
 @router.get("/grains/mine", response_model=Union[List[GrainItemOut], Error])
 def get_all_for_account(account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository=Depends()):

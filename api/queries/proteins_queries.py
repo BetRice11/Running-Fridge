@@ -14,7 +14,7 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_proteins(self, item_id: str, account_id: str) -> Optional[ItemOut]:
+    def get_protein(self, item_id: str, account_id: str) -> Optional[ItemOut]:
         proteins_queries = MongoQueries(collection_name="proteins")
         record = proteins_queries.collection.find_one({"_id": ObjectId(item_id), "account_id": account_id})
         if record:
@@ -22,7 +22,7 @@ class ItemRepository(MongoQueries):
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_proteins(self, item_id: str, account_id: str) -> bool:
+    def delete_protein(self, item_id: str, account_id: str) -> bool:
         proteins_queries = MongoQueries(collection_name="proteins")
         result = proteins_queries.collection.delete_one({"_id": ObjectId(item_id), "account_id": account_id})
         return result.deleted_count > 0
@@ -37,7 +37,7 @@ class ItemRepository(MongoQueries):
 
 
 
-    def add_proteins(self, item: ItemIn, account_id: str) -> Union[ItemOut, Error]:
+    def add_protein(self, item: ItemIn, account_id: str) -> Union[ItemOut, Error]:
         proteins_queries = MongoQueries(collection_name="proteins")
         try:
             item_dict = item.dict()
@@ -53,7 +53,7 @@ class ItemRepository(MongoQueries):
     def item_in_to_out(self, id: int, account_id:str ,item: ItemIn) -> ItemOut:
         return ItemOut(id=id, account_id=account_id ,**item.dict())
 
-    def update_proteins(self, item_id: int, account_id: str, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_protein(self, item_id: int, account_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         proteins_queries = MongoQueries(collection_name="proteins")
         item_dict = item.dict()
         item_dict['account_id']=account_id
