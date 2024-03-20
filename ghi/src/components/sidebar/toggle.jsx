@@ -52,6 +52,9 @@ export const Toggle = () => {
                         <li>
                             <Link to={'/proteins'}>Proteins</Link>
                         </li>
+                        <li>
+                            <Link to={'/produce'}>Produce</Link>
+                        </li>
 
                     </ul>
                 </nav>

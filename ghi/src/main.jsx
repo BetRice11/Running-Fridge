@@ -20,9 +20,9 @@ import DairiesList from './pages/DairiesList.jsx'
 import Dairies from './pages/Dairies.jsx'
 import Proteins from './pages/ProteinDetail.jsx'
 import ProteinList from './pages/ProteinList.jsx'
+import Produce from './pages/ProduceDetail.jsx'
+import ProduceList from './pages/ProduceList.jsx'
 // import Profile from './pages/Profile';
-
-
 const router = createBrowserRouter([
     {
         path: '/',
@@ -42,11 +42,12 @@ const router = createBrowserRouter([
             { path: 'grains/:item_id', element: <Grains />},
             { path: 'proteins', element: <ProteinList />},
             { path: 'proteins/:item_id', element: <Proteins />},
+            { path: 'produce', element: <ProduceList />},
+            { path: 'produce/:item_id', element: <Produce />},
             // { path: 'profile', element: <Profile />}
         ],
     },
 ])
-
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <Provider store={store}>
