@@ -1,13 +1,26 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useGetAllBeveragesQuery } from './app/fridgeSlice'
-import Beverages from './pages/BeverageDetail'
+import { useSelector, useDispatch } from 'react-redux'
+import { useGetAllBeveragesQuery, useDeleteBeverageMutation } from './app/fridgeSlice'
+import { deleteItem } from './app/itemSlice'
 import { Link } from 'react-router-dom'
 
 function BeverageList() {
-    const query = useSelector((state) => state.query.value)
+    // const query = useSelector((state) => state.query.value)
     const { data, isLoading } = useGetAllBeveragesQuery()
+    const [deleteBeverage] = useDeleteBeverageMutation()
     console.log({ data })
+
+    const dispatch = useDispatch()
+
+    const handleDelete = async (item_id) => {
+        try{
+            await deleteBeverage(item_id)
+            refetch()
+        } catch (error) {
+
+        }
+        console.log('Deleting item with ID:', item_id)
+    }
 
     if (isLoading) return <>Loading...</>
 
@@ -22,13 +35,7 @@ function BeverageList() {
     return (
         <div className="overflow-x-auto">
             <h1>Beverages</h1>
-            {data.map((p) => (
-                <div key={p.id} id={p.id}>
-                    <p>{p.name}</p>
-                    <Link to={`/beverages/${p.id}`}>Details</Link>
-                </div>
-            ))}
-            {/* <table className="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -38,10 +45,35 @@ function BeverageList() {
                         <th>Store</th>
                     </tr>
                 </thead>
+                {/* {data.map((p) => ( */}
                 <tbody>
+                    {data.map((p) => (
+                        <tr key={p.id} id={p.id}>
+                            <td>{p.name}</td>
+                            <td>{p.cost}</td>
+                            <td>{p.expiration_date}</td>
+                            <td>{p.measurement}</td>
+                            <td>{p.store_name}</td>
+                            <td>
+                                <button className="btn btn-info">
+                                    <Link to={`/beverages/${p.id}`}>
+                                        Details
+                                    </Link>
+                                </button>
+                                <button
+                                    className="btn btn-error"
+                                    onClick={() => handleDelete(p.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
-            </table> */}
+                {/* ))} */}
+            </table>
         </div>
     )
 }
+
 export default BeverageList
