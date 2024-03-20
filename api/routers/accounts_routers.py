@@ -1,11 +1,4 @@
-from fastapi import (
-    Depends,
-    HTTPException,
-    status,
-    Response,
-    APIRouter,
-    Request,
-)
+from fastapi import (Depends, HTTPException, status, Response, APIRouter, Request)
 from queries.accounts_queries import AccountRepo, DuplicateAccountError
 from models.accounts import AccountIn, AccountOut, AccountToken, AccountForm, Account
 from authenticator import authenticator
@@ -56,4 +49,4 @@ async def get_token(
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",
             "account": account,
-        }  
+        }
