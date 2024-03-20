@@ -14,7 +14,7 @@ class DuplicateAccountError(ValueError):
 
 class ItemRepository(MongoQueries):
 
-    def get_dairies(self, item_id: str, account_id: str) -> Optional[ItemOut]:
+    def get_dairy(self, item_id: str, account_id: str) -> Optional[ItemOut]:
         dairies_queries = MongoQueries(collection_name="dairies")
         record = dairies_queries.collection.find_one({"_id": ObjectId(item_id), "account_id": account_id})
         if record:
@@ -22,7 +22,7 @@ class ItemRepository(MongoQueries):
         else:
             return {"message": f"Could not find that {item_id}"}
 
-    def delete_dairies(self, item_id: str, account_id: str) -> bool:
+    def delete_dairy(self, item_id: str, account_id: str) -> bool:
         dairies_queries = MongoQueries(collection_name="dairies")
         result = dairies_queries.collection.delete_one({"_id": ObjectId(item_id), "account_id": account_id})
         return result.deleted_count > 0
@@ -36,7 +36,7 @@ class ItemRepository(MongoQueries):
         except Exception as e:
             return Error(message=str(e))
 
-    def add_dairies(self, item: ItemIn, account_id: str) -> Union[ItemOut, Error]:
+    def add_dairy(self, item: ItemIn, account_id: str) -> Union[ItemOut, Error]:
         dairies_queries = MongoQueries(collection_name="dairies")
         try:
             item_dict = item.dict()
@@ -52,7 +52,7 @@ class ItemRepository(MongoQueries):
     def item_in_to_out(self, id: int, account_id:str ,item: ItemIn) -> ItemOut:
         return ItemOut(id=id, account_id=account_id ,**item.dict())
 
-    def update_dairies(self, item_id: int, account_id: str, item: ItemIn) -> Union[ItemOut, Error]:
+    def update_dairy(self, item_id: int, account_id: str, item: ItemIn) -> Union[ItemOut, Error]:
         dairies_queries = MongoQueries(collection_name="dairies")
         item_dict = item.dict()
         item_dict['account_id']=account_id

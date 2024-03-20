@@ -1,7 +1,6 @@
-from api.routers import produce_routers
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts_routers, beverages_routers, dairies_routers, grains_routers, proteins_routers
+from routers import accounts_routers, beverages_routers, dairies_routers, grains_routers, proteins_routers, produce_routers
 import os
 from authenticator import authenticator
 
