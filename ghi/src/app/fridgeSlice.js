@@ -57,6 +57,14 @@ export const fridgeApi = createApi({
                 method: 'DELETE',
             }),
         }),
+         createProtein: builder.mutation({
+            query: (proteinData) => ({
+                url: '/api/proteins/proteins',
+                method: 'POST',
+                body: proteinData,
+                credentials: 'include',
+            }),
+        }),
     }),
 })
 
@@ -69,5 +77,6 @@ export const {
     useGetGrainQuery,
     useDeleteProteinMutation,
     useGetAllProteinsQuery,
-    useGetProteinQuery
+    useGetProteinQuery,
+    useCreateProteinMutation
 } = fridgeApi
