@@ -24,6 +24,23 @@ export const fridgeApi = createApi({
                 method: 'DELETE',
             }),
         }),
+
+        getAllGrains: builder.query({
+            query: () => '/api/grains/grains/mine',
+            refetchOnMountOrArgChange: true,
+        }),
+
+        getGrain: builder.query({
+            query: (item_id) => `/api/grains/grains/${item_id}`,
+            credentials: 'include',
+            }),
+
+        deleteGrain: builder.mutation({
+            query: (item_id) => ({
+                url: `api/grains/grains/${item_id}`,
+                method: 'DELETE',
+            }),
+        })
     }),
 })
 
@@ -31,4 +48,7 @@ export const {
     useGetAllBeveragesQuery,
     useGetBeverageQuery,
     useDeleteBeverageMutation,
+    useDeleteGrainMutation,
+    useGetAllGrainsQuery,
+    useGetGrainQuery
 } = fridgeApi

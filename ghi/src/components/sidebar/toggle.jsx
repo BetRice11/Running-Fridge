@@ -44,18 +44,6 @@ export const Toggle = () => {
                             <Link to={'/grains'}>Grains</Link>
                         </li>
                         <li>
-                            <Link to={'/beverage/:item_id'}>Beverage</Link>
-                        </li>
-                        <li>
-                            <Link to={'/'}>Homepage</Link>
-                        </li>
-                        <li>
-                            <Link to={'/login'}>Login</Link>
-                        </li>
-                        <li>
-                            <Link to={'/signUp'}>Sign Up</Link>
-                        </li>
-                        <li>
                             <Link to={'/beverages'}>Beverages</Link>
                         </li>
                     </ul>
