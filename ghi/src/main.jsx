@@ -15,6 +15,7 @@ import Beverages from './pages/BeverageDetail.jsx'
 import Signup from './pages/SignUp.jsx'
 import GrainList from './pages/GrainList.jsx'
 import BeverageList from './BeverageList.jsx'
+import Grains from './pages/Grains.jsx'
 import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
@@ -29,6 +30,8 @@ const router = createBrowserRouter([
             { path: 'login', element: <Login /> },
             { path: 'beverages/:item_id', element: <Beverages /> },
             { path: 'beverages', element: <BeverageList /> },
+            { path: 'grains', element: <GrainList />},
+            { path: 'grains/:item_id', element: <Grains />}
             { path: 'profile', element: <Profile />}
         ],
     },

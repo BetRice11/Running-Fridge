@@ -1,6 +1,7 @@
-import { CircleChevronLeft } from 'lucide-react'
+import { CircleChevronLeft, CircleChevronRight } from 'lucide-react'
 import { Hint } from './hint'
 import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 export const Toggle = () => {
     const [collapsed, setCollapsed] = useState(false)
@@ -23,9 +24,31 @@ export const Toggle = () => {
                     onClick={toggleCollapse}
                     className="p-4 w-full bg-gray-700 text-gray"
                 >
-                    {collapsed ? 'Expand' : 'Collapse'}
+                    <span className="text-lg font-semibold">My Fridge</span>
+                    <Hint label={collapsed ? 'Expand' : 'Collapse'}>
+                        {collapsed ? (
+                            <CircleChevronRight size="24" className="mr-2" />
+                        ) : (
+                            <CircleChevronLeft size="24" className="mr-2" />
+                        )}
+                        {/* {collapsed ? 'Expand' : 'Collapse'} */}
+                    </Hint>
                 </button>
-                <div className="flex-1 bg-gray-500">
+                <nav
+                    className={`bg-gray-600 text-gray flex-grow ${
+                        collapsed ? 'hidden' : 'block'
+                    }`}
+                >
+                    <ul className="p-4">
+                        <li>
+                            <Link to={'/grains'}>Grains</Link>
+                        </li>
+                        <li>
+                            <Link to={'/beverages'}>Beverages</Link>
+                        </li>
+                    </ul>
+                </nav>
+                <div className="flex bg-gray-600">
                 </div>
             </div>
         </div>

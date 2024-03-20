@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
+import { useDispatch } from 'react-redux'
+import { useGetAllGrainsQuery, useDeleteGrainMutation } from '../app/fridgeSlice'
+import { deleteItem } from '../app/itemSlice'
+import { Link } from 'react-router-dom'
 
 function GrainList() {
-    const [grains, setGrains] = useState([])
+    const { data, isLoading } = useGetAllGrainsQuery()
+    const [deleteBeverage] = useDeleteGrainMutation()
+    console.log({ data })
 
-    const getData = async ()=> {
-        const response = await fetch("http://localhost:8000/api/grains/grains")
-        if (response.ok) {
-            const {grains} = await response.json()
-            setGrains(grains)
-        }
+    const dispatch = useDispatch()
+
+    const handleDelete = async (item_id) => {
+        try {
+            await deleteBeverage(item_id)
+            refetch()
+        } catch (error) {}
+        console.log('Deleting item with ID:', item_id)
     }
 
-    const handleDelete = async (id) => {
-        const deleteUrl = `http://localhost:8000/api/grains/grains/${id}`
-        await fetch(deleteUrl, {method: 'delete'})
-        getData()
-    }
-
-    useEffect(()=> {
-        getData
-    }, [])
+    if (isLoading) return <>Loading...</>
 
     return (
         <div className="overflow-x-auto">
+            <h1>Grains</h1>
             <table className="table">
-                {/* head */}
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -34,29 +34,32 @@ function GrainList() {
                         <th>Store</th>
                     </tr>
                 </thead>
+                {/* {data.map((p) => ( */}
                 <tbody>
-                    {grains.map(grain=> {
-                        return (
-                            <tr key={grain.id}>
-                                <td>{grain.name}</td>
-                                <td>{grain.cost}</td>
-                                <td>{grain.expiration_date}</td>
-                                <td>{grain.measurement}</td>
-                                <td>{grain.store_name}</td>
-                                <td><button className="btn glass" onClick={() => {handleDelete(grain.id)}}>
-                                    Delete</button></td>
-
-                            </tr>
-                        )
-                    })}
-                    <tr>
-
-                    </tr>
-                    {/* row 2 */}
-                    <tr className="hover">
-
-                    </tr>
+                    {data.map((p) => (
+                        <tr key={p.id} id={p.id}>
+                            <td>{p.name}</td>
+                            <td>{p.cost}</td>
+                            <td>{p.expiration_date}</td>
+                            <td>{p.measurement}</td>
+                            <td>{p.store_name}</td>
+                            <td>
+                                <button className="btn btn-info">
+                                    <Link to={`/grains/${p.id}`}>
+                                        Details
+                                    </Link>
+                                </button>
+                                <button
+                                    className="btn btn-error"
+                                    onClick={() => handleDelete(p.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
+                {/* ))} */}
             </table>
         </div>
     )
