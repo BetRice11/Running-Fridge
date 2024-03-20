@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             { path: 'grains', element: <GrainList />},
             { path: 'grains/:item_id', element: <Grains /> },
             { path: 'dairies', element: <DairiesList />},
-            { path: 'dairies/:item_id', element: <Dairies />}
+            { path: 'dairies/:item_id', element: <Dairies />},
             { path: 'grains/:item_id', element: <Grains />},
             { path: 'proteins', element: <ProteinList />},
             { path: 'proteins/:item_id', element: <Proteins />},
