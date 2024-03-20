@@ -48,6 +48,6 @@ def test_delete_dairies():
         "measurement": "string",
         "store_name": "string"
         }
-    res = client.post("/api/beverages/beverages", json=item)
+    res = client.post("/api/dairies/dairies", json=item)
     #assert
     assert res.status_code == 401

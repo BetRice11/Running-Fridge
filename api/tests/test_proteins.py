@@ -48,6 +48,6 @@ def test_delete_proteins():
         "measurement": "string",
         "store_name": "string"
         }
-    res = client.post("/api/beverages/beverages", json=item)
+    res = client.post("/api/proteins/proteins", json=item)
     #assert
     assert res.status_code == 401

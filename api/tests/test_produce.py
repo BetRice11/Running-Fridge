@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from queries.produces_queries import ItemRepository
+from api.queries.produce_queries import ItemRepository
 from authenticator import authenticator
 from main import app
 
@@ -26,18 +26,18 @@ def test_add_produce():
         "measurement": "string",
         "store_name": "string"
         }
-    res = client.post("/api/produces/produces", json=item)
+    res = client.post("/api/produce/produce", json=item)
     #assert
     assert res.status_code == 401
 
 class FakeItemRepository:
-    def delete_produces(self, item, account_id):
+    def delete_produce(self, item, account_id):
         items = item.dict()
         items["account_id"] = account_id
         items["id"] = "FAKE_ID"
         return items
 
-def test_delete_produces():
+def test_delete_produce():
     #arrange
     app.dependency_overrides[ItemRepository] = FakeItemRepository
     #act
@@ -48,6 +48,6 @@ def test_delete_produces():
         "measurement": "string",
         "store_name": "string"
         }
-    res = client.post("/api/beverages/beverages", json=item)
+    res = client.post("/api/produce/produce", json=item)
     #assert
     assert res.status_code == 401

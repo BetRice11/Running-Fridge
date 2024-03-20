@@ -1,7 +1,6 @@
 from queries.client import MongoQueries
 from bson import ObjectId
 from typing import Optional, Union, List
-from models.accounts import Account, AccountIn, AccountOut
 from models.beverages import ItemIn, ItemOut, Error
 from datetime import datetime
 
@@ -85,6 +84,3 @@ class ItemRepository(MongoQueries):
                 print(f'Missing field: {field}')
 
         return ItemOut(**record)
-
-    def generate_new_id(self) -> int:
-        pass
