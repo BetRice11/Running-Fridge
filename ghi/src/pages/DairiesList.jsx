@@ -23,12 +23,6 @@ function DairiesList() {
     }
 
     // Add this
-    const changeHandler = (e) => {
-        e.preventDefault()
-        setName(e.target.value)
-    }
-
-    // Add this
     const submitToRedux = (e, item_id) => {
         e.preventDefault()
         changeName(item_id)
