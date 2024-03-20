@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react"
 import { useDispatch } from 'react-redux';
-import { setUser } from './app/userSlice';
-import Profile from './pages/Profile';
+// import { setUser } from './app/userSlice';
+// import Profile from './pages/Profile';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const App = () => {
       // Add more user data as needed
     };
     // Dispatch action to update user state
-    dispatch(setUser(userData));
+    // dispatch(setUser(userData));
   }, [dispatch]);
     return (
         <AuthProvider>

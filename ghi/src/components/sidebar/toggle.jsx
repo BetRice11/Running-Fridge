@@ -46,6 +46,10 @@ export const Toggle = () => {
                         <li>
                             <Link to={'/beverages'}>Beverages</Link>
                         </li>
+                        <li>
+                            <Link to={'/proteins'}>Proteins</Link>
+                        </li>
+
                     </ul>
                 </nav>
                 <div className="flex bg-gray-600">

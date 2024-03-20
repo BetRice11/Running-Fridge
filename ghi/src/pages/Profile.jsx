@@ -1,42 +1,39 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+// import React, { useEffect } from 'react';
+// import { useGetUserQuery, useUpdateUserMutation } from '../app/userSlice.js';
 
-const Profile = () => {
-    const user = useSelector(state => state.user);
+// const ProfilePage = () => {
+//   const { data: user, isError, isLoading } = useGetUserQuery();
+//   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
-    const handleProfilePicUpdate = () => {
-        // Implement logic to update profile picture
-        console.log('Updating profile picture...');
-    };
+//   useEffect(() => {
+//     if (isError) {
+//       // Handle error
+//     }
+//   }, [isError]);
 
-    const handleProfileUpdate = () => {
-        // Implement logic to update profile details
-        console.log('Updating profile...');
-    };
+//   const handleUpdateUser = (updatedUserData) => {
+//     updateUser(updatedUserData);
+//   };
 
-    return (
-        <div className="profile">
-            <div className="profile-header">
-                <img src={user.profilePic || "default-profile-pic.jpg"} alt="Profile" className="profile-picture" />
-                <button className="update-pic-btn" onClick={handleProfilePicUpdate}>
-                    Change Picture
-                </button>
-            </div>
-            <div className="profile-details">
-                <h2 className="profile-name">{user.name}</h2>
-                <p className="profile-email">{user.email}</p>
-                {/* Additional user details */}
-            </div>
-            <div className="profile-actions">
-                <button className="update-profile-btn" onClick={handleProfileUpdate}>
-                    Edit Profile
-                </button>
-                <button className="logout-btn">
-                    Logout
-                </button>
-            </div>
-        </div>
-    );
-};
+//   return (
+//     <div>
+//       {isLoading && <div>Loading...</div>}
+//       {isUpdating && <div>Updating...</div>}
+//       {user && (
+//         <div>
+//           <h1>Profile Page</h1>
+//           <div>
+//             <strong>Name:</strong> {user.name}
+//           </div>
+//           <div>
+//             <strong>Email:</strong> {user.email}
+//           </div>
+//           {/* Add more user information here */}
+//           <button onClick={() => handleUpdateUser({ /* updated user data */ })}>Update Profile</button>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-export default Profile;
+// export default ProfilePage;

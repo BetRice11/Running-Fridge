@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { store } from './app/store'
+import  store  from './app/store'
 import { Provider } from 'react-redux'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
@@ -16,7 +16,10 @@ import Signup from './pages/SignUp.jsx'
 import GrainList from './pages/GrainList.jsx'
 import BeverageList from './BeverageList.jsx'
 import Grains from './pages/Grains.jsx'
-import Profile from './pages/Profile';
+import Proteins from './pages/ProteinDetail.jsx'
+import ProteinList from './pages/ProteinList.jsx'
+// import Profile from './pages/Profile';
+
 
 const router = createBrowserRouter([
     {
@@ -31,8 +34,10 @@ const router = createBrowserRouter([
             { path: 'beverages/:item_id', element: <Beverages /> },
             { path: 'beverages', element: <BeverageList /> },
             { path: 'grains', element: <GrainList />},
-            { path: 'grains/:item_id', element: <Grains />}
-            { path: 'profile', element: <Profile />}
+            { path: 'grains/:item_id', element: <Grains />},
+            { path: 'proteins', element: <ProteinList />},
+            { path: 'proteins/:item_id', element: <Proteins />},
+            // { path: 'profile', element: <Profile />}
         ],
     },
 ])
