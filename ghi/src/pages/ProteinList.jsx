@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from 'react-redux'
-import { useGetAllProteinsQuery, useDeleteProteinMutation, useCreateProteinMutation } from '../app/fridgeSlice'
+import { useGetAllProteinsQuery, useDeleteProteinMutation } from '../app/fridgeSlice'
 import { deleteItem } from '../app/itemSlice'
 import { Link } from 'react-router-dom'
 
 function ProteinList() {
-    const { data, isLoading, refetch } = useGetAllProteinsQuery();
-    const [deleteProtein] = useDeleteProteinMutation();
-    const [createProtein] = useCreateProteinMutation();
-    const dispatch = useDispatch();
+    const { data, isLoading } = useGetAllProteinsQuery()
+    const [deleteProtein] = useDeleteProteinMutation()
+    console.log({ data })
+
+    const dispatch = useDispatch()
 
     const handleDelete = async (item_id) => {
         try {
@@ -16,23 +17,13 @@ function ProteinList() {
             refetch()
         } catch (error) {}
         console.log('Deleting item with ID:', item_id)
-    };
-
-    const handleSubmit = async (proteinData) => {
-        try {
-            await createProtein(proteinData);
-            refetch();
-        } catch (error) {
-            console.error('Error adding protein:', error);
-        }
-    };
+    }
 
     if (isLoading) return <>Loading...</>
 
     return (
         <div className="overflow-x-auto">
             <h1>Proteins</h1>
-            <AddProteinForm onSubmit={handleSubmit} />
             <table className="table">
                 <thead>
                     <tr>
@@ -72,34 +63,5 @@ function ProteinList() {
             </table>
         </div>
     )
-}
-function AddProteinForm({ onSubmit }) {
-    const [name, setName] = useState('');
-    const [cost, setCost] = useState('');
-    const [expirationDate, setExpirationDate] = useState('');
-    const [measurement, setMeasurement] = useState('');
-    const [storeName, setStoreName] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit({ name, cost, expirationDate, measurement, storeName });
-        // Reset form fields after submission
-        setName('');
-        setCost('');
-        setExpirationDate('');
-        setMeasurement('');
-        setStoreName('');
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-            <input type="text" placeholder="Cost" value={cost} onChange={(e) => setCost(e.target.value)} required />
-            <input type="date" placeholder="Expiration Date" value={expirationDate} onChange={(e) => setExpirationDate(e.target.value)} required />
-            <input type="text" placeholder="Measurement" value={measurement} onChange={(e) => setMeasurement(e.target.value)} required />
-            <input type="text" placeholder="Store Name" value={storeName} onChange={(e) => setStoreName(e.target.value)} required />
-            <button type="submit">Add Protein</button>
-        </form>
-    );
 }
 export default ProteinList
