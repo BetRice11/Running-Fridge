@@ -46,10 +46,12 @@ export const Toggle = () => {
                         <li>
                             <Link to={'/beverages'}>Beverages</Link>
                         </li>
+                        <li>
+                            <Link to={'/dairies'}>Dairies</Link>
+                        </li>
                     </ul>
                 </nav>
-                <div className="flex bg-gray-600">
-                </div>
+                <div className="flex bg-gray-600"></div>
             </div>
         </div>
     )

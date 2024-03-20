@@ -33,14 +33,30 @@ export const fridgeApi = createApi({
         getGrain: builder.query({
             query: (item_id) => `/api/grains/grains/${item_id}`,
             credentials: 'include',
-            }),
+        }),
 
         deleteGrain: builder.mutation({
             query: (item_id) => ({
                 url: `api/grains/grains/${item_id}`,
                 method: 'DELETE',
             }),
-        })
+        }),
+        getAllGrains: builder.query({
+            query: () => '/api/dairies/dairies/mine',
+            refetchOnMountOrArgChange: true,
+        }),
+
+        getGrain: builder.query({
+            query: (item_id) => `/api/dairies/dairies/${item_id}`,
+            credentials: 'include',
+        }),
+
+        deleteGrain: builder.mutation({
+            query: (item_id) => ({
+                url: `api/dairies/dairies/${item_id}`,
+                method: 'DELETE',
+            }),
+        }),
     }),
 })
 

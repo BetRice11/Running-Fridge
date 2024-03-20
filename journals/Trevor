@@ -1,21 +1,70 @@
-Mobb coded with brad as a team, thoughout.
-02/27/2024
-added the following files to api
-001_fridge_inventory.py, and 002_accounts_table.py to migrations folder
-accounts.py, beverages.py, chatgpt.py, dairies.py, grains.py, jwt.py, produces.py, and proteins.py to models folder
-accounts_queries.py, beverages_queries.py, chatgpt_queries.py, dairies_queries.py, grains_queries.py, produces_queries.py, and proteins_queries.py to queries folder
-accounts_routers.py, beverages_routers.py, chatgpt_routers.py, dairies_routers.py, grains_routers.py, produces_routers.py, and proteins_routers.py to routers folder
-updated main.py, requirement.txt and docker-compose.yaml files
-this makes up the bare bones for the backend of our project had a little trouble with the docker-compose but after physically fighting my computer i was able to subdue it and got it to work.
-12/28/2024
-added login authentication
-got the login authentication to work which was challenging, but eventually got it to work.
-started working on login locks authentications for all the services
-12/29/2024
-having issues with carrying over the token to get authenticated trying to fix the issue.
-4/01/2024
-couldn't get authentication to work, switching from postgreSQL to mongo database since there is more examples and help with mongo.
-4/03/2024
-got the login and authentication to work with a mongo database and changed all our queries from a postgreSQL format to a mongo format.
-4/04/2024
-working on getting every function in queries to work, then will work on implementing the login security features for all of our features.
+## MAR 20, 2024
+semi rough of Dairies display done
+## MAR 19, 2024
+## MAR 18, 2024
+## MAR 17, 2024
+## MAR 16, 2024
+## MAR 15, 2024
+## MAR 14, 2024
+## MAR 13, 2024
+## MAR 12, 2024
+Reasearched and looked into how to implement frontend auth
+## MAR 11, 2024
+* starting the frontend auth
+* watching the lecture again to see how to implement our frontend with auth
+Ah-ha:
+## MAR 8, 2024
+* frontend code is starting to look like our website!
+* starting to add styling and able to view what we want to website to have.
+Ah-ha:
+## MAR 7, 2024
+* went back to frontend started to add pages
+* able to link the login and signup page/ still need to figure out how we want our pages to look
+Ah-ha: Tailwinds has a lot of things we want to incorporate
+## MAR 6, 2024
+* finished the endpoints mostly with the authentication
+* Each end point now has to have an authorized user
+Ah-ha: each model is all the same with the auth
+## MAR 5, 2024
+Today, I worked on:
+* started adding the auth to endpoints, created the password account_data to each add, create, delete, update
+Ah-ha: watched the lecture and implemented the rules
+## MAR 4, 2024
+Today, I worked on:
+* fixed the backend with the team, pairing with the backend auth complete.
+* Connecting the files to make the endpoints almost complete
+Ah-ha:
+## MAR 2, 2024
+Today, I worked on:
+* Started the frontend code with minimal jsx files
+* combined files with everyone to start fresh again
+ah-ha: Frontend is easier
+## MAR 1, 2024
+Today, I worked on:
+*fixed the backend code// switched to MONGO
+* Everyone was able to pull and update their code
+* ah-ha:MONGO was taught and easier to learn
+## FEB 29, 2024
+Today, I worked on:
+* watched one person drive the backend api while we assisted on advice
+* finalized the login and logout for react
+ah-ha:able to figure out how to handle the other forms
+## FEB 28, 2024
+Today, I worked on:
+*our first standup: We talked about what we did yesterday and what we are going to continue to work on today.
+*today we are going to finish the FastAPI for the backend.
+Ah-Ha: Re-watched the lecture to gain more information, understand it better now
+## FEB 27, 2024
+Today, I worked on:
+* Worked as a team to create the repo. Everyone has access and it is up and running.
+We made a game plan as to how we are going to start the project -copy backend from the practice repo
+Ah-Ha!: Cloned it down~
+<!-- In the journals, every day that you work on the project, you must make an entry in your journal after you've finished that day. At a minimum, you'll need to include the following information in each entry: -->
+
+
+
+<!-- The date of the entry
+A list of features/issues that you worked on and who you worked with, if applicable
+A reflection on any design conversations that you had
+At least one ah-ha! moment that you had during your coding, however small
+Keep your journal in reverse chronological order. Always put new entries at the top. -->
