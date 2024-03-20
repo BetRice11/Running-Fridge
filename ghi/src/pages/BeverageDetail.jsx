@@ -46,5 +46,4 @@ const Beverage = () => {
         </div>
     )
 }
-export default Beverages
->>>>>>>>> Temporary merge branch 2
+export default Beverage

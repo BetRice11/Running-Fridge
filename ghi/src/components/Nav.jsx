@@ -31,12 +31,12 @@ const Nav = () => {
                             tabIndex={0}
                             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                         >
-                            <li>
-                                <a className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </a>
-                            </li>
+                        <li>
+                        <NavLink to="/profile" className="justify-between">
+                            Profile
+                            <span className="badge">New</span>
+                        </NavLink>
+                        </li>
                             <li>
                                 <NavLink to={'/signup'}>Sign Up</NavLink>
                             </li>
@@ -55,12 +55,9 @@ const Nav = () => {
                             <li>
                                 <Link to={'/signUp'}>Sign Up</Link>
                             </li>
-                            {!account && <li>
+                            <li>
                                 <Link to={'/beverages'}>Beverages</Link>
-                            </li>}
-                            {!account && <button className="btn btn-outline-danger" onClick={logout}>
-                            Logout
-                            </button>}
+                            </li>
                         </ul>
                     </div>
                 </div>
