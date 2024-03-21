@@ -3,11 +3,6 @@ from typing import Union, Optional, List
 from fastapi import Depends, Response, HTTPException, status, APIRouter
 from authenticator import authenticator
 
-
-
-
-router = APIRouter()
-
 router = APIRouter(tags=["Beverages"], prefix="/api/beverages")
 
 def get_item_repository():

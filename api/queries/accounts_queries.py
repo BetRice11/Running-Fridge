@@ -2,7 +2,6 @@ from queries.client import MongoQueries
 from pymongo.errors import DuplicateKeyError
 from models.accounts import Account, AccountIn, AccountOut
 
-
 class DuplicateAccountError(ValueError):
     pass
 

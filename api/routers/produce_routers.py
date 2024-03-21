@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, Response,  HTTPException
 from queries.produce_queries import ItemIn, ItemRepository, ItemOut, Error
 from typing import Union, Optional, List
 from authenticator import authenticator
-router = APIRouter()
 
 router = APIRouter(tags=["Produce"], prefix="/api/produce")
 

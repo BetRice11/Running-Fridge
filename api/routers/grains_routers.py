@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, Response, HTTPException
 from queries.grains_queries import GrainItemIn, ItemRepository, GrainItemOut, Error
 from typing import Union, Optional, List
 from authenticator import authenticator
-router = APIRouter()
 
 router = APIRouter(tags=["Grains"], prefix="/api/grains")
 

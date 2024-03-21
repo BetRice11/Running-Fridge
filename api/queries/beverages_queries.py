@@ -4,12 +4,8 @@ from typing import Optional, Union, List
 from models.beverages import ItemIn, ItemOut, Error
 from datetime import datetime
 
-
 class DuplicateAccountError(ValueError):
     pass
-
-
-
 
 class ItemRepository(MongoQueries):
 
@@ -26,8 +22,7 @@ class ItemRepository(MongoQueries):
         result = beverage_queries.collection.delete_one({"_id": ObjectId(item_id), "account_id": account_id})
         return result.deleted_count > 0
 
-
-    def get_all_beverages(self, account_id: str) -> Union[Error, List[ItemOut]]:
+    def get_all_for_account(self, account_id: str) -> Union[Error, List[ItemOut]]:
         beverage_queries = MongoQueries(collection_name="beverages")
         try:
             records = beverage_queries.collection.find({'account_id': account_id})
@@ -48,6 +43,7 @@ class ItemRepository(MongoQueries):
             return ItemOut(**item_dict)
         except Exception as e:
             return Error(detail=str(e))
+
     def item_in_to_out(self, id: int, account_id:str ,item: ItemIn) -> ItemOut:
         return ItemOut(id=id, account_id=account_id ,**item.dict())
 
@@ -82,5 +78,4 @@ class ItemRepository(MongoQueries):
         for field in required_fields:
             if field not in record:
                 print(f'Missing field: {field}')
-
         return ItemOut(**record)

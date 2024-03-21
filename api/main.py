@@ -16,7 +16,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/api/launch-details")
 def launch_details():
     return {
@@ -29,7 +28,7 @@ def launch_details():
         }
     }
 
-app.include_router(authenticator.router, tags = ['AUTH'])
+app.include_router(authenticator.router, tags = ['Login'])
 app.include_router(beverages_routers.router)
 app.include_router(dairies_routers.router)
 app.include_router(grains_routers.router)
