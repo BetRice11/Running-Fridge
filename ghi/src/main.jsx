@@ -21,7 +21,6 @@ import Proteins from './pages/ProteinDetail.jsx'
 import ProteinList from './ProteinList.jsx'
 import Produce from './pages/ProduceDetail.jsx'
 import ProduceList from './ProduceList.jsx'
-// import Profile from './pages/Profile';
 import UpdateBeverage from './pages/BeverageUpdate.jsx'
 import BeverageForm from './pages/CreateBeverage.jsx'
 import Profile from './pages/Profile.jsx'
@@ -56,7 +55,6 @@ const router = createBrowserRouter([
             { path: 'produce/:item_id', element: <Produce />},
             { path: 'produce/:item_id/update', element: <UpdateProduce /> },
             { path: 'produce/create', element: <ProduceForm />},
-            // { path: 'profile', element: <Profile />}
             { path: 'grains/:item_id', element: <Grains />},
             { path: 'beverages/:item_id/update', element: <UpdateBeverage /> },
             { path: 'beverages/create', element: <BeverageForm />}
