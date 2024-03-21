@@ -57,6 +57,7 @@ export const fridgeApi = createApi({
         getAllProteins: builder.query({
             query: () => '/api/proteins/proteins/mine',
             refetchOnMountOrArgChange: true,
+            providesTags: ['ProteinList']
         }),
         getProtein: builder.query({
             query: (item_id) => `/api/proteins/proteins/${item_id}`,
@@ -87,6 +88,7 @@ export const fridgeApi = createApi({
         getAllProduce: builder.query({
             query: () => '/api/produce/produce/mine',
             refetchOnMountOrArgChange: true,
+            providesTags: ['ProduceList']
         }),
         getProduce: builder.query({
             query: (item_id) => `/api/produce/produce/${item_id}`,
