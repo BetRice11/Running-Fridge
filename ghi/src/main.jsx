@@ -18,13 +18,17 @@ import Grains from './pages/Grains.jsx'
 import DairiesList from './pages/DairiesList.jsx'
 import Dairies from './pages/Dairies.jsx'
 import Proteins from './pages/ProteinDetail.jsx'
-import ProteinList from './pages/ProteinList.jsx'
+import ProteinList from './ProteinList.jsx'
 import Produce from './pages/ProduceDetail.jsx'
-import ProduceList from './pages/ProduceList.jsx'
+import ProduceList from './ProduceList.jsx'
 // import Profile from './pages/Profile';
 import UpdateBeverage from './pages/BeverageUpdate.jsx'
 import BeverageForm from './pages/CreateBeverage.jsx'
 import Profile from './pages/Profile.jsx'
+import UpdateProduce from './pages/ProduceUpdate.jsx'
+import ProduceForm from './pages/CreateProduce.jsx'
+import UpdateProtein from './pages/ProteinUpdate.jsx'
+import ProteinForm from './pages/CreateProtein.jsx'
 
 const router = createBrowserRouter([
     {
@@ -46,8 +50,12 @@ const router = createBrowserRouter([
             { path: 'grains/:item_id', element: <Grains />},
             { path: 'proteins', element: <ProteinList />},
             { path: 'proteins/:item_id', element: <Proteins />},
+            { path: 'proteins/:item_id/update', element: <UpdateProtein /> },
+            { path: 'proteins/create', element: <ProteinForm />},
             { path: 'produce', element: <ProduceList />},
             { path: 'produce/:item_id', element: <Produce />},
+            { path: 'produce/:item_id/update', element: <UpdateProduce /> },
+            { path: 'produce/create', element: <ProduceForm />},
             // { path: 'profile', element: <Profile />}
             { path: 'grains/:item_id', element: <Grains />},
             { path: 'beverages/:item_id/update', element: <UpdateBeverage /> },

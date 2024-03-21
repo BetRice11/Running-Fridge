@@ -68,13 +68,21 @@ export const fridgeApi = createApi({
                 method: 'DELETE',
             }),
         }),
+        updateProtein: builder.mutation({
+            query: ({ item_id, updatedData }) => ({
+                url: `api/proteins/proteins/${item_id}`,
+                method: 'PUT',
+                body: updatedData,
+            }),
+            invalidatesTags: ['ProteinList']
+        }),
         createProtein: builder.mutation({
             query: (proteinData) => ({
                 url: '/api/proteins/proteins',
                 method: 'POST',
                 body: proteinData,
-                // credentials: 'include',
             }),
+            invalidatesTags: ['ProduceList'],
         }),
         getAllProduce: builder.query({
             query: () => '/api/produce/produce/mine',
@@ -90,16 +98,25 @@ export const fridgeApi = createApi({
                 method: 'DELETE',
             }),
         }),
+        updateProduce: builder.mutation({
+            query: ({ item_id, updatedData }) => ({
+                url: `api/produce/produce/${item_id}`,
+                method: 'PUT',
+                body: updatedData,
+            }),
+            invalidatesTags: ['ProduceList']
+        }),
         createProduce: builder.mutation({
             query: (produceData) => ({
                 url: '/api/produce/produce',
                 method: 'POST',
                 body: produceData,
-                // credentials: 'include',
-            }),
+                }),
+            invalidatesTags: ['ProduceList'],
         }),
-    }),
-});
+
+        }),
+    })
 export const {
     useGetAllBeveragesQuery,
     useGetBeverageQuery,
@@ -112,9 +129,11 @@ export const {
     useDeleteProteinMutation,
     useGetAllProteinsQuery,
     useGetProteinQuery,
+    useUpdateProteinMutation,
     useCreateProteinMutation,
     useDeleteProduceMutation,
     useGetAllProduceQuery,
     useGetProduceQuery,
+    useUpdateProduceMutation,
     useCreateProduceMutation
 } = fridgeApi;
