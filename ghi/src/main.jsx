@@ -17,6 +17,7 @@ import BeverageList from './BeverageList.jsx'
 import Grains from './pages/Grains.jsx'
 import UpdateBeverage from './pages/BeverageUpdate.jsx'
 import BeverageForm from './pages/CreateBeverage.jsx'
+import Profile from './pages/Profile.jsx'
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: 'about', element: <About /> },
+            { path: 'profile', element: <Profile/>},
             { path: 'signUp', element: <SignUp /> },
             { path: 'login', element: <Login /> },
             { path: 'beverages/:item_id', element: <Beverages /> },

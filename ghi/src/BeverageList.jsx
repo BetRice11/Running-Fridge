@@ -1,79 +1,84 @@
-import { useEffect, useState } from 'react'
-import { useGetAllBeveragesQuery, useDeleteBeverageMutation } from './app/fridgeSlice'
+import React from 'react'
+import {
+    useGetAllBeveragesQuery,
+    useDeleteBeverageMutation,
+} from './app/fridgeSlice'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 function BeverageList() {
-    // const query = useSelector((state) => state.query.value)
-    const { data, isLoading, refetch } = useGetAllBeveragesQuery()
+    const { data, isLoading } = useGetAllBeveragesQuery()
     const [deleteBeverage] = useDeleteBeverageMutation()
-    console.log({ data })
 
     const handleDelete = async (item_id) => {
-        try{
+        try {
             await deleteBeverage(item_id)
-            refetch()
+            // Optionally, trigger a refetch or manage state locally
         } catch (error) {
             console.error('Error deleting item:', error)
         }
-        console.log('Deleting item with ID:', item_id)
     }
 
+    const [lightOn, setLightOn] = useState(true)
+    const toggleLight = () => setLightOn(!lightOn)
 
-    if (isLoading) return <>Loading...</>
-
-    // const filteredData = () => {
-    //     if (query)
-    //         return data.filter(p =>
-    //             p._id.includes(query)
-    //         )
-    //     return data
-    // }
+    if (isLoading)
+        return <div className="text-center text-blue-500">Loading...</div>
 
     return (
-        <div className="overflow-x-auto">
-            <h1>Beverages</h1>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Cost</th>
-                        <th>Exp Date</th>
-                        <th>Measurement</th>
-                        <th>Store</th>
-                    </tr>
-                </thead>
-                {/* {data.map((p) => ( */}
-                <tbody>
-                    {data.map((p) => (
-                        <tr key={p.id} id={p.id}>
-                            <td>{p.name}</td>
-                            <td>{p.cost}</td>
-                            <td>{p.expiration_date}</td>
-                            <td>{p.measurement}</td>
-                            <td>{p.store_name}</td>
-                            <td>
-                                <button className="btn btn-info">
-                                    <Link to={`/beverages/${p.id}`}>
-                                        Details
-                                    </Link>
-                                </button>
-                                <button
-                                    className="btn btn-error"
-                                    onClick={() => handleDelete(p.id)}
-                                >
-                                    Delete
-                                </button>
-                                <button className='btn btn-warning'>
-                                    <Link to={`/beverages/${p.id}/update`}>
-                                        Update
-                                    </Link>
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-                {/* ))} */}
-            </table>
+        <div className="p-6 fridge-bg min-h-screen">
+            <h1 className="text-2xl font-bold mb-6 text-blue-800">
+                Beverages in the Fridge
+            </h1>
+            <div
+                className={`p-6 ${
+                    lightOn ? 'bg-blue-400' : 'bg-gray-800'
+                } min-h-screen transition duration-500`}
+            >
+                <button onClick={toggleLight} className="btn btn-sm">
+                    {lightOn ? 'Turn Light Off' : 'Turn Light On'}
+                </button>
+                {/* The rest of your component */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {data.map((beverage, index) => (
+                    <motion.div
+                        key={beverage.id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                        className={`p-4 bg-blue-800 rounded-lg shadow-lg ${
+                            index < data.length - 1 ? 'shelf' : ''
+                        }`}
+                    >
+                        <h3 className="font-bold">{beverage.name}</h3>
+                        <p>Cost: {beverage.cost}</p>
+                        <p>Expiration: {beverage.expiration_date}</p>
+                        <p>Measurement: {beverage.measurement}</p>
+                        <div className="flex justify-between mt-4">
+                            <Link
+                                to={`/beverages/${beverage.id}`}
+                                className="btn btn-sm btn-info"
+                            >
+                                Details
+                            </Link>
+                            <button
+                                onClick={() => handleDelete(beverage.id)}
+                                className="btn btn-sm btn-error"
+                            >
+                                Delete
+                            </button>
+                            <Link
+                                to={`/beverages/${beverage.id}/update`}
+                                className="btn btn-sm btn-warning"
+                            >
+                                Update
+                            </Link>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+            </div>
         </div>
     )
 }

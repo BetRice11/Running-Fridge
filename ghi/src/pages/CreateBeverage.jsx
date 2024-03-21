@@ -34,86 +34,123 @@ const BeverageForm = () => {
     }, [result])
     return (
         <>
-            <div className="my-5 container">
-                <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
-                        <h1>Create a New Beverage</h1>
-                        {errorMessage && (
-                            <div className="alert alert-danger" role="alert">
-                                {errorMessage}
-                            </div>
-                        )}
+            <div className="my-5 container mx-auto max-w-lg">
+                <div className="bg-blue-50 shadow-xl rounded-lg px-8 py-10 mb-6 border border-blue-200">
+                    <h1 className="text-2xl font-bold mb-6 text-blue-900">
+                        Add a New Beverage
+                    </h1>
+                    {errorMessage && (
+                        <div
+                            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                            role="alert"
+                        >
+                            {errorMessage}
+                        </div>
+                    )}
 
-                        <form onSubmit={handleSubmit} id="beverage-form">
-                            <div className="form-floating mb-3">
-                                <input
-                                    value={beverageForm.name}
-                                    onChange={handleFormChange}
-                                    placeholder="name"
-                                    required
-                                    type="text"
-                                    id="name"
-                                    className="form-control"
-                                    name="name"
-                                />
-                                <label htmlFor="name">Name</label>
-                            </div>
+                    <form
+                        onSubmit={handleSubmit}
+                        id="beverage-form"
+                        className="space-y-6"
+                    >
+                        <div className="mb-4">
+                            <label
+                                htmlFor="name"
+                                className="block text-sm font-medium text-blue-700"
+                            >
+                                Beverage Name
+                            </label>
+                            <input
+                                value={beverageForm.name}
+                                onChange={handleFormChange}
+                                placeholder="E.g., Arctic Water"
+                                required
+                                type="text"
+                                id="name"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-blue-300 rounded-md"
+                                name="name"
+                            />
+                        </div>
 
-                            <div className="form-floating mb-3">
-                                <input
-                                    value={beverageForm.cost}
-                                    onChange={handleFormChange}
-                                    placeholder="cost"
-                                    type="number"
-                                    id="cost"
-                                    className="form-control"
-                                    name="cost"
-                                />
-                                <label htmlFor="cost">Cost</label>
-                            </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="cost"
+                                className="block text-sm font-medium text-blue-700"
+                            >
+                                Cost ($)
+                            </label>
+                            <input
+                                value={beverageForm.cost}
+                                onChange={handleFormChange}
+                                placeholder="0.00"
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                id="cost"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-blue-300 rounded-md"
+                                name="cost"
+                            />
+                        </div>
 
-                            <div className="form-floating mb-3">
-                                <input
-                                    value={beverageForm.store_name}
-                                    onChange={handleFormChange}
-                                    placeholder="store name"
-                                    type="text"
-                                    id="store_name"
-                                    className="form-control"
-                                    name="store_name"
-                                />
-                                <label htmlFor="store_name">Store Name</label>
-                            </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="store_name"
+                                className="block text-sm font-medium text-blue-700"
+                            >
+                                Store Name
+                            </label>
+                            <input
+                                value={beverageForm.store_name}
+                                onChange={handleFormChange}
+                                placeholder="E.g., Frosty Mart"
+                                type="text"
+                                id="store_name"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-blue-300 rounded-md"
+                                name="store_name"
+                            />
+                        </div>
 
-                            <div className="form mb-3">
-                                <input
-                                    value={beverageForm.expiration_date}
-                                    onChange={handleFormChange}
-                                    type="date"
-                                    id="expiration_date"
-                                    className="form-control"
-                                    name="expiration_date"
-                                ></input>
-                                <label htmlFor="expiration_date">
-                                    Expiration Date
-                                </label>
-                            </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="expiration_date"
+                                className="block text-sm font-medium text-blue-700"
+                            >
+                                Expiration Date
+                            </label>
+                            <input
+                                value={beverageForm.expiration_date}
+                                onChange={handleFormChange}
+                                type="date"
+                                id="expiration_date"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-blue-300 rounded-md"
+                                name="expiration_date"
+                            />
+                        </div>
 
-                            <div className="form mb-3">
-                                <input
-                                    value={beverageForm.measurement}
-                                    onChange={handleFormChange}
-                                    placeholder="measurement"
-                                    id="measurement"
-                                    className="form-control"
-                                    name="measurement"
-                                ></input>
-                                <label htmlFor="measurement">Measurement</label>
-                            </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="measurement"
+                                className="block text-sm font-medium text-blue-700"
+                            >
+                                Measurement (L)
+                            </label>
+                            <input
+                                value={beverageForm.measurement}
+                                onChange={handleFormChange}
+                                placeholder="E.g., 1.5"
+                                id="measurement"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-blue-300 rounded-md"
+                                name="measurement"
+                            />
+                        </div>
 
-                            <button className="btn btn-primary">Create</button>
-                        </form>
-                    </div>
+                        <button
+                            type="submit"
+                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            Add to Fridge
+                        </button>
+                    </form>
                 </div>
             </div>
         </>
