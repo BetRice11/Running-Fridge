@@ -16,9 +16,7 @@ class FakeItemRepository:
         return items
 
 def test_add_beverage():
-    #arrange
     app.dependency_overrides[ItemRepository] = FakeItemRepository
-    #act
     item = {
         "name": "string",
         "cost": "string",
@@ -27,20 +25,10 @@ def test_add_beverage():
         "store_name": "string"
         }
     res = client.post("/api/beverages/beverages", json=item)
-    #assert
     assert res.status_code == 401
 
-class FakeItemRepository:
-    def delete_beverage(self, item, account_id):
-        items = item.dict()
-        items["account_id"] = account_id
-        items["id"] = "FAKE_ID"
-        return items
-
 def test_delete_beverage():
-    #arrange
     app.dependency_overrides[ItemRepository] = FakeItemRepository
-    #act
     item = {
         "name": "string",
         "cost": "string",
@@ -49,5 +37,40 @@ def test_delete_beverage():
         "store_name": "string"
         }
     res = client.post("/api/beverages/beverages", json=item)
-    #assert
+    assert res.status_code == 401
+
+def test_get_beverage():
+    app.dependency_overrides[ItemRepository] = FakeItemRepository
+    item = {
+        "name": "string",
+        "cost": "string",
+        "expiration_date": "2024-03-12",
+        "measurement": "string",
+        "store_name": "string"
+        }
+    res = client.post("/api/beverages/beverages", json=item)
+    assert res.status_code == 401
+
+def test_update_beverage():
+    app.dependency_overrides[ItemRepository] = FakeItemRepository
+    item = {
+        "name": "string",
+        "cost": "string",
+        "expiration_date": "2024-03-12",
+        "measurement": "string",
+        "store_name": "string"
+        }
+    res = client.post("/api/beverages/beverages", json=item)
+    assert res.status_code == 401
+
+def test_get_all_for_account():
+    app.dependency_overrides[ItemRepository] = FakeItemRepository
+    item = {
+        "name": "string",
+        "cost": "string",
+        "expiration_date": "2024-03-12",
+        "measurement": "string",
+        "store_name": "string"
+        }
+    res = client.post("/api/beverages/beverages", json=item)
     assert res.status_code == 401
