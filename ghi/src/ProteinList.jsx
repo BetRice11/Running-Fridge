@@ -57,7 +57,7 @@ function ProteinList() {
                         <p>Measurement: {protein.measurement}</p>
                         <div className="flex justify-between mt-4">
                             <Link
-                                to={`/Proteins/${protein.id}`}
+                                to={`/proteins/${protein.id}`}
                                 className="btn btn-sm btn-info"
                             >
                                 Details
@@ -69,7 +69,7 @@ function ProteinList() {
                                 Delete
                             </button>
                             <Link
-                                to={`/Proteins/${protein.id}/update`}
+                                to={`/proteins/${protein.id}/update`}
                                 className="btn btn-sm btn-warning"
                             >
                                 Update
