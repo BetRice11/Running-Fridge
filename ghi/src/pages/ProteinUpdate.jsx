@@ -8,7 +8,7 @@ function UpdateProtein() {
     const { item_id } = useParams()
     const navigate = useNavigate()
     // const dispatch = useDispatch
-    const { data: Protein, refetch, error } = useGetProteinQuery(item_id)
+    const { data: protein, refetch, error } = useGetProteinQuery(item_id)
     const [updateProtein] = useUpdateProteinMutation()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -23,16 +23,16 @@ function UpdateProtein() {
     // dispatch(ProteinUpdated(response.data))
 
     useEffect(() => {
-        if (Protein) {
+        if (protein) {
             setFormData({
-                name: Protein.name,
-                cost: Protein.cost,
-                expiration_date: Protein.expiration_date,
-                measurement: Protein.measurement,
-                store_name: Protein.store_name,
+                name: protein.name,
+                cost: protein.cost,
+                expiration_date: protein.expiration_date,
+                measurement: protein.measurement,
+                store_name: protein.store_name,
             })
         }
-    }, [Protein])
+    }, [protein])
 
     const handleChange = (e) => {
         setFormData({
@@ -50,12 +50,12 @@ function UpdateProtein() {
             await updateProtein({ item_id, updatedData: formData }).unwrap()
 
             // dispatchEvent(ProteinUpdated(response.data))
-            navigate('/Proteins')
+            navigate('/proteins')
             console.log('Calling refetch...')
             // Optionally, redirect to a different page after successful update
             // history.push('/Proteins');
         } catch (error) {
-            console.error('Error updating Protein:', error)
+            console.error('Error updating protein:', error)
         } finally {
             setIsLoading(false)
         }

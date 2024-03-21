@@ -8,7 +8,7 @@ function UpdateProduce() {
     const { item_id } = useParams()
     const navigate = useNavigate()
     // const dispatch = useDispatch
-    const { data: Produce, refetch, error } = useGetProduceQuery(item_id)
+    const { data: produce, refetch, error } = useGetProduceQuery(item_id)
     const [updateProduce] = useUpdateProduceMutation()
     const [isLoading, setIsLoading] = useState(false)
 
