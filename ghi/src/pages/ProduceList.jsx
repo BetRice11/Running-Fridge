@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useGetAllProduceQuery, useDeleteProduceMutation, useCreateProduceMutation } from '../app/fridgeSlice'
 import { deleteItem } from '../app/itemSlice'
 import { Link } from 'react-router-dom'
+import AddProduceForm from "./AddProduceForm"
 
 function ProduceList() {
     const { data, isLoading, refetch } = useGetAllProduceQuery()
@@ -73,33 +74,5 @@ function ProduceList() {
         </div>
     )
 }
-function AddProduceForm({ onSubmit }) {
-    const [name, setName] = useState('');
-    const [cost, setCost] = useState('');
-    const [expirationDate, setExpirationDate] = useState('');
-    const [measurement, setMeasurement] = useState('');
-    const [storeName, setStoreName] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit({ name, cost, expirationDate, measurement, storeName });
-        // Reset form fields after submission
-        setName('');
-        setCost('');
-        setExpirationDate('');
-        setMeasurement('');
-        setStoreName('');
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-            <input type="text" placeholder="Cost" value={cost} onChange={(e) => setCost(e.target.value)} required />
-            <input type="date" placeholder="Expiration Date" value={expirationDate} onChange={(e) => setExpirationDate(e.target.value)} required />
-            <input type="text" placeholder="Measurement" value={measurement} onChange={(e) => setMeasurement(e.target.value)} required />
-            <input type="text" placeholder="Store Name" value={storeName} onChange={(e) => setStoreName(e.target.value)} required />
-            <button type="submit">Add Produce</button>
-        </form>
-    );
-}
 export default ProduceList

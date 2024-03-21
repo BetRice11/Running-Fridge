@@ -53,7 +53,7 @@ export const fridgeApi = createApi({
                 url: '/api/proteins/proteins',
                 method: 'POST',
                 body: proteinData,
-                credentials: 'include',
+                // credentials: 'include',
             }),
         }),
         getAllProduce: builder.query({
@@ -75,7 +75,7 @@ export const fridgeApi = createApi({
                 url: '/api/produce/produce',
                 method: 'POST',
                 body: produceData,
-                credentials: 'include',
+                // credentials: 'include',
             }),
         }),
     }),

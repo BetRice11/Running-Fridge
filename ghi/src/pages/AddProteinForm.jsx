@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createProtein } from '../app/fridgeSlice';
+import { useCreateProteinMutation } from '../app/fridgeApi';
 
 function AddProteinForm() {
     const dispatch = useDispatch();
@@ -11,11 +11,13 @@ function AddProteinForm() {
     const [storeName, setStoreName] = useState('');
     const [isAdding, setIsAdding] = useState(false);
 
+    const [createProteinMutation] = useCreateProteinMutation();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsAdding(true);
         try {
-            await dispatch(createProtein({ name, cost, expirationDate, measurement, storeName }));
+            await createProteinMutation({ name, cost, expirationDate, measurement, storeName });
             // Reset form fields after successful submission
             setName('');
             setCost('');

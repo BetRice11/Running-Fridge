@@ -5,13 +5,13 @@ import { deleteItem } from '../app/itemSlice'
 import { Link } from 'react-router-dom'
 
 function ProteinList() {
-    const { data, isLoading } = useGetAllProteinsQuery()
+    const { data, isLoading, refetch } = useGetAllProteinsQuery()
     const [deleteProtein] = useDeleteProteinMutation()
     const [createProtein] = useCreateProteinMutation()
     const dispatch = useDispatch()
 
     const handleDelete = async (item_id) => {
-        try {
+        try { 
             await deleteProtein(item_id)
             refetch()
         } catch (error) {}
