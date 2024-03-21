@@ -1,39 +1,98 @@
-// import React, { useEffect } from 'react';
-// import { useGetUserQuery, useUpdateUserMutation } from '../app/userSlice.js';
+import React from 'react'
+import { UserCircle, Settings, PlusCircle } from 'lucide-react'
 
-// const ProfilePage = () => {
-//   const { data: user, isError, isLoading } = useGetUserQuery();
-//   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+const Profile = () => {
+    // Example state for active tab, replace with your own state management as needed
+    const [activeTab, setActiveTab] = React.useState('recipes')
 
-//   useEffect(() => {
-//     if (isError) {
-//       // Handle error
-//     }
-//   }, [isError]);
+    return (
+        <div className="min-h-screen bg-blue-400 p-4">
+            <div className="max-w-4xl mx-auto bg-white shadow rounded-lg overflow-hidden">
+                <div className="p-4 lg:p-8">
+                    <div className="flex items-center space-x-4 lg:space-x-8">
+                        <UserCircle className="w-16 h-16 lg:w-24 lg:h-24 text-blue-400" />
+                        <div>
+                            <h2 className="text-xl lg:text-2xl font-bold">
+                                Jane Doe
+                            </h2>
+                            <p className="text-blue-600">Culinary Enthusiast</p>
+                        </div>
+                    </div>
+                    <div className="mt-4 lg:mt-8">
+                        <ul className="flex space-x-2 lg:space-x-4">
+                            <li>
+                                <button
+                                    className={`py-2 px-4 rounded ${
+                                        activeTab === 'recipes'
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-blue-100'
+                                    }`}
+                                    onClick={() => setActiveTab('recipes')}
+                                >
+                                    My Recipes
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    className={`py-2 px-4 rounded ${
+                                        activeTab === 'inventory'
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-blue-100'
+                                    }`}
+                                    onClick={() => setActiveTab('inventory')}
+                                >
+                                    Fridge Inventory
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    className={`py-2 px-4 rounded ${
+                                        activeTab === 'settings'
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-blue-100'
+                                    }`}
+                                    onClick={() => setActiveTab('settings')}
+                                >
+                                    <Settings className="inline-block w-5 h-5" />
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    {/* Content based on active tab */}
+                    <div className="mt-4 lg:mt-8">
+                        {activeTab === 'recipes' && (
+                            <div>
+                                <p className="text-lg font-semibold mb-4">
+                                    My Favorite Recipes
+                                </p>
+                                {/* List recipes here */}
+                            </div>
+                        )}
+                        {activeTab === 'inventory' && (
+                            <div>
+                                <p className="text-lg font-semibold mb-4">
+                                    Fridge Inventory
+                                </p>
+                                {/* List inventory items here */}
+                                <button className="btn btn-primary mt-4">
+                                    <PlusCircle className="inline-block w-5 h-5 mr-2" />{' '}
+                                    Add Ingredient
+                                </button>
+                            </div>
+                        )}
+                        {activeTab === 'settings' && (
+                            <div>
+                                <p className="text-lg font-semibold mb-4">
+                                    Settings
+                                </p>
+                                {/* Settings form here */}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
 
-//   const handleUpdateUser = (updatedUserData) => {
-//     updateUser(updatedUserData);
-//   };
-
-//   return (
-//     <div>
-//       {isLoading && <div>Loading...</div>}
-//       {isUpdating && <div>Updating...</div>}
-//       {user && (
-//         <div>
-//           <h1>Profile Page</h1>
-//           <div>
-//             <strong>Name:</strong> {user.name}
-//           </div>
-//           <div>
-//             <strong>Email:</strong> {user.email}
-//           </div>
-//           {/* Add more user information here */}
-//           <button onClick={() => handleUpdateUser({ /* updated user data */ })}>Update Profile</button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default ProfilePage;
+export default Profile

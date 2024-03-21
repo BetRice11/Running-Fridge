@@ -10,7 +10,11 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-/* You should probably replace with with your own CSS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.fridge-bg {
+  background-color: #6a87b4ff; /* Light blue to simulate the inside of a fridge */
+}
+
+.shelf {
+  border-bottom: 2px solid #94a3b8; /* Darker line to represent the shelf */
+  margin-bottom: 20px;
+}
