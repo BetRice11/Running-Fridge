@@ -1,8 +1,5 @@
-import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetBeverageQuery } from '../app/fridgeSlice'
-import { BrowserRouter as Router } from 'react-router-dom'
-
 import { motion } from 'framer-motion'
 
 const Beverage = () => {

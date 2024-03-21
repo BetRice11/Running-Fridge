@@ -65,6 +65,12 @@ export const Toggle = () => {
                             >
                                 Add Beverages
                             </Link>
+                            <Link
+                                to={'/grains/create'}
+                                className="flex items-center"
+                            >
+                                Add Grains
+                            </Link>
                         </li>
                     </ul>
                 </motion.nav>

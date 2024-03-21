@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState , useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import {
-    useGetBeverageQuery,
-    useUpdateBeverageMutation,
-    useGetAllBeveragesQuery,
-} from '../app/fridgeSlice'
+import { useGetGrainQuery, useUpdateGrainMutation, useGetAllGrainsQuery } from '../app/fridgeSlice'
 import { query } from '../app/querySlice'
 import { useDispatch } from 'react-redux'
 
-function UpdateBeverage() {
+function UpdateGrain() {
     const { item_id } = useParams()
     const navigate = useNavigate()
-    const { data: beverage, refetch, error } = useGetBeverageQuery(item_id)
-    const [updateBeverage] = useUpdateBeverageMutation()
+    const { data: grain, error } = useGetGrainQuery(item_id)
+    const [updateGrain] = useUpdateGrainMutation()
     const [isLoading, setIsLoading] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -22,17 +18,18 @@ function UpdateBeverage() {
         measurement: '',
         store_name: '',
     })
+
     useEffect(() => {
-        if (beverage) {
+        if (grain) {
             setFormData({
-                name: beverage.name,
-                cost: beverage.cost,
-                expiration_date: beverage.expiration_date,
-                measurement: beverage.measurement,
-                store_name: beverage.store_name,
+                name: grain.name,
+                cost: grain.cost,
+                expiration_date: grain.expiration_date,
+                measurement: grain.measurement,
+                store_name: grain.store_name,
             })
         }
-    }, [beverage])
+    }, [grain])
 
     const handleChange = (e) => {
         setFormData({
@@ -41,15 +38,17 @@ function UpdateBeverage() {
         })
     }
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
         try {
-            await updateBeverage({ item_id, updatedData: formData }).unwrap()
-            navigate('/beverages')
+            await updateGrain({ item_id, updatedData: formData }).unwrap()
+            navigate('/grains')
             console.log('Calling refetch...')
         } catch (error) {
-            console.error('Error updating beverage:', error)
+            console.error('Error updating grain:', error)
         } finally {
             setIsLoading(false)
         }
@@ -61,11 +60,12 @@ function UpdateBeverage() {
 
     if (error) return <div>Error: {error.message}</div>
 
+
     return (
         <div className="bg-blue-950 min-h-screen flex items-center justify-center">
             <div className="bg-white shadow-xl rounded-lg p-8 border border-blue-300 max-w-md w-full">
                 <h1 className="text-2xl font-bold mb-6 text-blue-800">
-                    Update Beverage
+                    Update Grain
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -137,7 +137,7 @@ function UpdateBeverage() {
                         type="submit"
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
                     >
-                        Update Beverage
+                        Update Grain
                     </button>
                 </form>
             </div>
@@ -145,4 +145,4 @@ function UpdateBeverage() {
     )
 }
 
-export default UpdateBeverage
+export default UpdateGrain
