@@ -65,6 +65,12 @@ export const Toggle = () => {
                             >
                                 Add Beverages
                             </Link>
+                            <Link
+                                to={'/grains/create'}
+                                className="flex items-center"
+                            >
+                                Add Grains
+                            </Link>
                         </li>
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
                             <Link to={'/Dairies'} className="flex items-center">

@@ -2,7 +2,6 @@ import React from 'react'
 import { UserCircle, Settings, PlusCircle } from 'lucide-react'
 
 const Profile = () => {
-    // Example state for active tab, replace with your own state management as needed
     const [activeTab, setActiveTab] = React.useState('recipes')
 
     return (
@@ -65,7 +64,6 @@ const Profile = () => {
                                 <p className="text-lg font-semibold mb-4">
                                     My Favorite Recipes
                                 </p>
-                                {/* List recipes here */}
                             </div>
                         )}
                         {activeTab === 'inventory' && (
@@ -73,7 +71,6 @@ const Profile = () => {
                                 <p className="text-lg font-semibold mb-4">
                                     Fridge Inventory
                                 </p>
-                                {/* List inventory items here */}
                                 <button className="btn btn-primary mt-4">
                                     <PlusCircle className="inline-block w-5 h-5 mr-2" />{' '}
                                     Add Ingredient
@@ -85,7 +82,6 @@ const Profile = () => {
                                 <p className="text-lg font-semibold mb-4">
                                     Settings
                                 </p>
-                                {/* Settings form here */}
                             </div>
                         )}
                     </div>

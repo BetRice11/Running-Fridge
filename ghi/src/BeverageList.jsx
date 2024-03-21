@@ -14,7 +14,6 @@ function BeverageList() {
     const handleDelete = async (item_id) => {
         try {
             await deleteBeverage(item_id)
-            // Optionally, trigger a refetch or manage state locally
         } catch (error) {
             console.error('Error deleting item:', error)
         }
@@ -39,7 +38,6 @@ function BeverageList() {
                 <button onClick={toggleLight} className="btn btn-sm">
                     {lightOn ? 'Turn Light Off' : 'Turn Light On'}
                 </button>
-                {/* The rest of your component */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {data.map((beverage, index) => (
                     <motion.div

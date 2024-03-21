@@ -17,11 +17,13 @@ import BeverageList from './BeverageList.jsx'
 import Grains from './pages/Grains.jsx'
 import DairiesList from './pages/DairiesList.jsx'
 import Dairies from './pages/Dairies.jsx'
-import UpdateBeverage from './pages/BeverageUpdate.jsx'
+import UpdateBeverage from './pages/GrainUpdate.jsx'
 import BeverageForm from './pages/CreateBeverage.jsx'
 import DairyForm from './pages/CreateDairy.jsx'
 import UpdateDairy from './pages/DairyUpdate.jsx'
 import Profile from './pages/Profile.jsx'
+import UpdateGrain from './pages/GrainUpdate.jsx'
+import GrainForm from './pages/CreateGrain.jsx'
 
 const router = createBrowserRouter([
     {
@@ -44,6 +46,8 @@ const router = createBrowserRouter([
             { path: 'dairies', element: <DairiesList /> },
             { path: 'dairies/create', element: <DairyForm /> },
             { path: 'dairies/:item_id/update', element: <UpdateDairy /> },
+            { path: 'grains/:item_id/update', element: <UpdateGrain /> },
+            { path: 'grains/create', element: <GrainForm /> },
         ],
     },
 ])
