@@ -7,7 +7,7 @@ const ProduceForm = () => {
     const [createProduce, result] = useCreateProduceMutation()
     const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
-    const [ProduceForm, setProduceForm] = useState({
+    const [produceForm, setProduceForm] = useState({
         name: '',
         cost: '',
         store_name: '',
@@ -17,12 +17,12 @@ const ProduceForm = () => {
     const handleFormChange = (event) => {
         const key = event.target.name
         const value = event.target.value
-        setProduceForm({ ...ProduceForm, [key]: value })
+        setProduceForm({ ...produceForm, [key]: value })
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
         setErrorMessage('')
-        createProduce(ProduceForm)
+        createProduce(produceForm)
     }
     useEffect(() => {
         if (result.isSuccess) {
@@ -61,7 +61,7 @@ const ProduceForm = () => {
                                 Produce Name
                             </label>
                             <input
-                                value={ProduceForm.name}
+                                value={produceForm.name}
                                 onChange={handleFormChange}
                                 placeholder="E.g., Arctic Water"
                                 required
