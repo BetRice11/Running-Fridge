@@ -66,11 +66,18 @@ export const Toggle = () => {
                                 Add Beverages
                             </Link>
                         </li>
-                        <li>
-                            <Link to={'/dairies'}>Dairies</Link>
+                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
+                            <Link to={'/Dairies'} className="flex items-center">
+                                Dairy
+                            </Link>
                         </li>
-                        <li>
-                            <Link to={'/dairies'}>Dairies</Link>
+                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
+                            <Link
+                                to={'/dairies/create'}
+                                className="flex items-center"
+                            >
+                                Add Dairy
+                            </Link>
                         </li>
                     </ul>
                 </motion.nav>

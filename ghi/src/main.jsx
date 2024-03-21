@@ -19,6 +19,8 @@ import DairiesList from './pages/DairiesList.jsx'
 import Dairies from './pages/Dairies.jsx'
 import UpdateBeverage from './pages/BeverageUpdate.jsx'
 import BeverageForm from './pages/CreateBeverage.jsx'
+import DairyForm from './pages/CreateDairy.jsx'
+import UpdateDairy from './pages/DairyUpdate.jsx'
 import Profile from './pages/Profile.jsx'
 
 const router = createBrowserRouter([
@@ -29,15 +31,19 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: 'about', element: <About /> },
-            { path: 'profile', element: <Profile/>},
+            { path: 'profile', element: <Profile /> },
             { path: 'signUp', element: <SignUp /> },
             { path: 'login', element: <Login /> },
             { path: 'beverages/:item_id', element: <Beverages /> },
             { path: 'beverages', element: <BeverageList /> },
-            { path: 'grains', element: <GrainList />},
-            { path: 'grains/:item_id', element: <Grains />},
+            { path: 'grains', element: <GrainList /> },
+            { path: 'grains/:item_id', element: <Grains /> },
             { path: 'beverages/:item_id/update', element: <UpdateBeverage /> },
-            { path: 'beverages/create', element: <BeverageForm />}
+            { path: 'beverages/create', element: <BeverageForm /> },
+            { path: 'dairies/:item_id', element: <Dairies /> },
+            { path: 'dairies', element: <DairiesList /> },
+            { path: 'dairies/create', element: <DairyForm /> },
+            { path: 'dairies/:item_id/update', element: <UpdateDairy /> },
         ],
     },
 ])

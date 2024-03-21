@@ -1,84 +1,94 @@
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import {
-    useGetAllGrainsQuery,
-    useDeleteGrainMutation,
+    useGetAllDairyQuery,
+    useDeleteDairyMutation,
 } from '../app/fridgeSlice'
-import { deleteItem } from '../app/itemSlice'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 function DairiesList() {
-    const { data, isLoading } = useGetAllGrainsQuery()
-    const [deleteBeverage] = useDeleteGrainMutation()
-    console.log({ data })
-
-    const dispatch = useDispatch()
+    const { data, isLoading } = useGetAllDairyQuery()
+    const [deleteDairy] = useDeleteDairyMutation()
+    
 
     const handleDelete = async (item_id) => {
         try {
-            await deleteBeverage(item_id)
-            refetch()
-        } catch (error) {}
-        console.log('Deleting item with ID:', item_id)
+            await deleteDairy(item_id)
+            // Optionally, trigger a refetch or manage state locally
+        } catch (error) {
+            console.error('Error deleting item:', error)
+        }
     }
 
-    // Add this
     const submitToRedux = (e, item_id) => {
         e.preventDefault()
         changeName(item_id)
     }
 
-    if (isLoading) return <>Loading...</>
+
+    const [lightOn, setLightOn] = useState(true)
+    const toggleLight = () => setLightOn(!lightOn)
+
+    if (isLoading)
+        return <div className="text-center text-blue-500">Loading...</div>
 
     return (
-        <div className="overflow-x-auto">
-            <h1>Grains</h1>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Cost</th>
-                        <th>Exp Date</th>
-                        <th>Measurement</th>
-                        <th>Store</th>
-                    </tr>
-                </thead>
-                {/* {data.map((p) => ( */}
-                <tbody>
-                    {data.map((p) => (
-                        <tr key={p.id} id={p.id}>
-                            <td>{p.name}</td>
-                            <td>{p.cost}</td>
-                            <td>{p.expiration_date}</td>
-                            <td>{p.measurement}</td>
-                            <td>{p.store_name}</td>
-                            <td>
-                                {/* this handles the refresh on submit */}
-                                <form
-                                    onSubmit={(e) => submitToRedux(e, item_id)}
-                                >
-
-                                    <button className="btn btn-info">
-                                        <Link to={`/grains/${p.id}`}>
-                                            Details
-                                        </Link>
-                                    </button>
+        <div className="p-6 fridge-bg min-h-screen">
+            <h1 className="text-2xl font-bold mb-6 text-blue-800">
+                Dairies in the Fridge
+            </h1>
+            <div
+                className={`p-6 ${
+                    lightOn ? 'bg-blue-400' : 'bg-gray-800'
+                } min-h-screen transition duration-500`}
+            >
+                <button onClick={toggleLight} className="btn btn-sm">
+                    {lightOn ? 'Turn Light Off' : 'Turn Light On'}
+                </button>
+                {/* The rest of your component */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {data.map((dairy, index) => (
+                        <motion.div
+                            key={dairy.id}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: index * 0.1 }}
+                            className={`p-4 bg-blue-800 rounded-lg shadow-lg ${
+                                index < data.length - 1 ? 'shelf' : ''
+                            }`}
+                        >
+                            <h3 className="font-bold">{dairy.name}</h3>
+                            <p>Cost: {dairy.cost}</p>
+                            <p>Expiration: {dairy.expiration_date}</p>
+                            <p>Measurement: {dairy.measurement}</p>
+                            <form onSubmit={(e) => submitToRedux(e, item_id)}>
+                                <div className="flex justify-between mt-4">
+                                    <Link
+                                        to={`/dairies/${dairy.id}`}
+                                        className="btn btn-sm btn-info"
+                                    >
+                                        Details
+                                    </Link>
                                     <button
-                                        className="btn btn-error"
-                                        onClick={() => handleDelete(p.id)}
+                                        onClick={() => handleDelete(dairy.id)}
+                                        className="btn btn-sm btn-error"
                                     >
                                         Delete
                                     </button>
-
-                                    {/* this form ends it */}
-                                </form>
-                            </td>
-                        </tr>
+                                    <Link
+                                        to={`/dairies/${dairy.id}/update`}
+                                        className="btn btn-sm btn-warning"
+                                    >
+                                        Update
+                                    </Link>
+                                </div>
+                            </form>
+                        </motion.div>
                     ))}
-                </tbody>
-                {/* ))} */}
-            </table>
+                </div>
+            </div>
         </div>
     )
 }
+
 export default DairiesList

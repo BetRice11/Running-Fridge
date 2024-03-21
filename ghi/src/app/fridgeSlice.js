@@ -11,7 +11,7 @@ export const fridgeApi = createApi({
         getAllBeverages: builder.query({
             query: () => '/api/beverages/beverages/mine',
             refetchOnMountOrArgChange: true,
-            providesTags: ['BeverageList']
+            providesTags: ['BeverageList'],
         }),
 
         getBeverage: builder.query({
@@ -32,7 +32,7 @@ export const fridgeApi = createApi({
                 method: 'PUT',
                 body: updatedData,
             }),
-            invalidatesTags: ['BeverageList']
+            invalidatesTags: ['BeverageList'],
         }),
 
         createBeverage: builder.mutation({
@@ -60,22 +60,39 @@ export const fridgeApi = createApi({
                 method: 'DELETE',
             }),
         }),
-        getAllGrains: builder.query({
+        getAllDairy: builder.query({
             query: () => '/api/dairies/dairies/mine',
             refetchOnMountOrArgChange: true,
         }),
 
-        getGrain: builder.query({
+        getDairy: builder.query({
             query: (item_id) => `/api/dairies/dairies/${item_id}`,
             credentials: 'include',
         }),
 
-        deleteGrain: builder.mutation({
+        deleteDairy: builder.mutation({
             query: (item_id) => ({
                 url: `api/dairies/dairies/${item_id}`,
                 method: 'DELETE',
             }),
         }),
+        createDairy: builder.mutation({
+            query: (createData) => ({
+                url: '/api/dairies/dairies',
+                body: createData,
+                method: 'POST',
+            }),
+            invalidatesTags: ['DairyList'],
+        }),
+        updateDairy: builder.mutation({
+            query: ({ item_id, updatedData }) => ({
+                url: `api/dairies/dairies/${item_id}`,
+                method: 'PUT',
+                body: updatedData,
+            }),
+            invalidatesTags: ['DairyList'],
+        }),
+
     }),
 })
 
@@ -87,5 +104,10 @@ export const {
     useCreateBeverageMutation,
     useDeleteGrainMutation,
     useGetAllGrainsQuery,
-    useGetGrainQuery
+    useGetGrainQuery,
+    useGetDairyQuery,
+    useGetAllDairyQuery,
+    useDeleteDairyMutation,
+    useCreateDairyMutation,
+    useUpdateDairyMutation,
 } = fridgeApi

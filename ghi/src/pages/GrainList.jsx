@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from 'react-redux'
 import { useGetAllGrainsQuery, useDeleteGrainMutation } from '../app/fridgeSlice'
-import { deleteItem } from '../app/itemSlice'
 import { Link } from 'react-router-dom'
 
 function GrainList() {
