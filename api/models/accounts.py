@@ -16,12 +16,9 @@ class PydanticObjectId(ObjectId):
             except ValueError:
                 raise ValueError(f"Not a valid object id: {value}")
         return value
-
-
+    
 class DuplicateAccountError(ValueError):
     pass
-
-
 
 class AccountIn(BaseModel):
     username: str

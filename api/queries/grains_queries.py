@@ -4,12 +4,8 @@ from typing import Optional, Union, List
 from models.grains import GrainItemIn, GrainItemOut, Error
 from datetime import datetime
 
-
 class DuplicateAccountError(ValueError):
     pass
-
-
-
 
 class ItemRepository(MongoQueries):
 
@@ -47,6 +43,7 @@ class ItemRepository(MongoQueries):
             return GrainItemOut(**item_dict)
         except Exception as e:
             return Error(detail=str(e))
+
     def item_in_to_out(self, id: int, account_id:str ,item: GrainItemIn) -> GrainItemOut:
         return GrainItemOut(id=id, account_id=account_id ,**item.dict())
 
@@ -81,5 +78,4 @@ class ItemRepository(MongoQueries):
         for field in required_fields:
             if field not in record:
                 print(f'Missing field: {field}')
-
         return GrainItemOut(**record)

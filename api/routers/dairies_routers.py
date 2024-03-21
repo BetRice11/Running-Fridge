@@ -3,8 +3,6 @@ from queries.dairies_queries import ItemIn, ItemRepository, ItemOut, Error
 from typing import Union, Optional, List
 from authenticator import authenticator
 
-router = APIRouter()
-
 router = APIRouter(tags=["Dairies"], prefix="/api/dairies")
 
 def get_item_repository():
@@ -20,19 +18,19 @@ def get_all_for_account(account_data: dict = Depends(authenticator.get_current_a
 
 @router.put("/dairies/{item_id}", response_model=Union[ItemOut, Error])
 def update_dairy(item_id: str, item: ItemIn, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> Union[Error, ItemOut]:
-    dairy = repo.update_dairies(item_id, account_data['id'], item)
+    dairy = repo.update_dairy(item_id, account_data['id'], item)
     if dairy is None:
         raise HTTPException(status_code = 404, detail="dairy not found")
     return dairy
 
 @router.delete("/dairies/{item_id}", response_model=bool)
 def delete_dairy(item_id: str, account_data: dict = Depends(authenticator.get_current_account_data), repo: ItemRepository = Depends()) -> bool:
-    return repo.delete_dairies(item_id=item_id, account_id=account_data['id'])
+    return repo.delete_dairy(item_id=item_id, account_id=account_data['id'])
 
 @router.get("/dairies/{item_id}", response_model=Optional[ItemOut])
 def get_dairy(item_id: str, response: Response, account_data: dict = Depends(authenticator.get_current_account_data),
 repo: ItemRepository = Depends()) -> ItemOut:
-    item = repo.get_dairies(item_id, account_id=account_data['id'])
+    item = repo.get_dairy(item_id, account_id=account_data['id'])
     if item is None:
         response.status_code = 404
     return item
