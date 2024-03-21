@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { useGetAllBeveragesQuery, useDeleteBeverageMutation } from './app/fridgeSlice'
-import { deleteItem } from './app/itemSlice'
 import { Link } from 'react-router-dom'
 
 function BeverageList() {
     // const query = useSelector((state) => state.query.value)
-    const { data, isLoading } = useGetAllBeveragesQuery()
+    const { data, isLoading, refetch } = useGetAllBeveragesQuery()
     const [deleteBeverage] = useDeleteBeverageMutation()
     console.log({ data })
-
-    const dispatch = useDispatch()
 
     const handleDelete = async (item_id) => {
         try{
             await deleteBeverage(item_id)
             refetch()
         } catch (error) {
-
+            console.error('Error deleting item:', error)
         }
         console.log('Deleting item with ID:', item_id)
     }
+
 
     if (isLoading) return <>Loading...</>
 
@@ -65,6 +62,11 @@ function BeverageList() {
                                     onClick={() => handleDelete(p.id)}
                                 >
                                     Delete
+                                </button>
+                                <button className='btn btn-warning'>
+                                    <Link to={`/beverages/${p.id}/update`}>
+                                        Update
+                                    </Link>
                                 </button>
                             </td>
                         </tr>
