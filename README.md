@@ -1,128 +1,77 @@
-# Module3 Project Gamma
+# Running Fridge
+Running Fridge is an application for tracking current inventory of your refrigerator. The application tracks inventory in five categories beverages, dairies, grains, produce, and proteins. It allows a user who is signed up and logged in to log items that pertain to each category and alter said item such as updating information, finding a specific item, and deleting an item.
 
-## Getting started
+## Team
+* Bradley Mendel
+* Deane Logan
+* Trevor Venditti
+* Brittany Robarge
 
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
+## Design
+
+Running Fridge backend is made up of four catagories models, queries, routes, and authorization. Models sets the catagories for data coming in and going out. Queries sets functions to process data for the frontend. Routes sets up the routes that the frontend uses to call the functions in queries. And finally authorization signs people up logs them in and tracks tokens to secure the website to give users access to only the data they input.
+
+## Integration - How we put the "team" in "team"
+
+All of our catagories (beverages, dairies, grains, produce, proteins) are stand alone catagories they do not speak to each other since they are meant to keep track of inventory in that category. accounts and authorization communicate wit the other categories since the user has to be signed up and logged in to input data or manipulate the data.
+
+## Getting Started
 
 ## Install Extensions
 
 -   Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
 -   Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
 
-## Deliverables
+**Make sure you have Docker, Git, and Node.js 18.2 or above**
 
--   [ ] Wire-frame diagrams
--   [ ] API documentation
--   [ ] Project is deployed to Caprover (BE, DB) & GitLab-pages (FE)
--   [ ] GitLab issue board is setup and in use (or project management tool of choice)
--   [ ] Journals
+1. Fork this repository
 
-## Project layout
+2. Clone the forked repository onto your local computer:
+git clone <<https://gitlab.com/12tier/running-fridge.git>>
 
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
-
-### Directories
-
-Several directories have been added to your project. The
-directories `docs` and `journals` are places for you and
-your team-mates to, respectively, put any documentation
-about your project that you create and to put your
-project-journal entries. See the _README.md_ file in each
-directory for more info.
-
-The other directories, `ghi` and `api`, are services, that
-you can start building off of.
-
-Inside of `ghi` is a minimal React app that has an "under construction" page.
-This app is written using the [Vite](https://vitejs.dev/) bundler. The example
-code is also using [jsdoc](https://jsdoc.app/) to provide type hints for
-JavaScript. You are not required to use JSDoc yourself, and you will be removing
-these examples and providing your own code for `App.jsx`
-
-Inside of `api` is a minimal FastAPI application.
-"Where are all the files?" you might ask? Well, the
-`main.py` file is the whole thing, and go take look inside
-of it... There's not even much in there..., hmm? That is
-FastAPI, we'll learn more about it in the coming days. Can
-you figure out what this little web-application does even
-though you haven't learned about FastAPI yet?
-
-Also in `api` is a directory for your migrations.
-If you choose to use PostgreSQL, then you'll want to use
-migrations to control your database. Unlike Django, where
-migrations were automatically created for you, you'll write
-yours by hand using DDL. Don't worry about not knowing what
-DDL means; we have you covered. There's a sample migration
-in there that creates two tables so you can see what they
-look like.
-
-The Dockerfile and Dockerfile.dev run your migrations
-for you automatically.
-
-### Installing python dependencies locally
-
-In order for VSCode's built in code completion and intelligence to
-work correctly, it needs the dependencies from the requirements.txt file
-installed. We do this inside docker, but not in the workspace.
-
-So we need to create a virtual environment and pip install the requirements.
-
-From inside the `api` folder:
-
-```bash
-python -m venv .venv
+3. Build and run the project using Docker with these commands:
 ```
-
-Then activate the virtual environment
-
-```bash
-source .venv/bin/activate
+docker volume create mongo-data
+docker volume create mongo-express
+docker volume create running-fridge
+docker-compose build
+docker-compose up
 ```
+- After running these commands, make sure all of your Docker containers are running
 
-And finally install the dependencies
+## Accessing Endpoints to Send and View Data: Access Through Swagger and view data through Swagger or Mongo-Express
 
-```bash
-pip install -r requirements.txt
-```
+All endpoints can be viewed and used to send data to database and view inputs through swagger at http://localhost:8000/docs#/.
 
-Then make sure the venv is selected in VSCode by checking the lower right of the
-VSCode status bar
+To view all inputs in database as well as other database information through Mongo-Express input http://localhost:8081/ into browser and username = admin and password = pass.
 
-### Other files
+example of an input with beverage (which will be structured the same with all other catagories) is.
 
-The following project files have been created as a minimal
-starting point. Please follow the guidance for each one for
-a most successful project.
+## Input
 
--   `docker-compose.yaml`: there isn't much in here, just a
-    **really** simple UI and FastAPI service. Add services
-    (like a database) to this file as you did with previous
-    projects in module #2.
--   `.gitlab-ci.yml`: This is your "ci/cd" file where you will
-    configure automated unit tests, code quality checks, and
-    the building and deployment of your production system.
-    Currently, all it does is deploy an "under construction"
-    page to your production UI on GitLab and a sample backend
-    to CapRover. We will learn much more about this file.
--   `.gitignore`: This is a file that prevents unwanted files
-    from getting added to your repository, files like
-    `pyc` files, `__pycache__`, etc. We've set it up so that
-    it has a good default configuration for Python projects.
--   `.env.sample`: This file is a template to copy when
-    creating environment variables for your team. Create a
-    copy called `.env` and put your own passwords in here
-    without fear of it being committed to git (see `.env`
-    listed in `.gitignore`). You can also put team related
-    environment variables in here, things like api and signing
-    keys that shouldn't be committed; these should be
-    duplicated in your deployed environments.
+{
+  "name": "Sunny-D",
+  "cost": "4.00",
+  "expiration_date": "2024-03-21",
+  "measurement": "1 Gallon",
+  "store_name": "Walmart"
+}
+
+## Output
+
+{
+  "id": "65fc64ac2909181b65116887",
+  "account_id": "65fc64a62909181b65116883",
+  "name": "Sunny-D",
+  "cost": "4.00",
+  "expiration_date": "2024-03-21",
+  "measurement": "1 Gallon",
+  "store_name": "Walmart"
+}
+
+ID is unique to every product inputted and is used to manipulate data when user wants. And account_id is unique to every user and is what restricts every user to their own data. Name is used to name the item being added to inventory. Cost is used to add the cost of the item being added to inventory. expiration date is used to input the date the item is set to expire helping the customer keep track of items expiration. Measurement is used to input the quantity of item in inventory. And store name is used to keep track of where customer bought the item.
+
+//////////////
 
 ## How to complete the initial deploy
 
