@@ -28,4 +28,9 @@ got all authentication to work on all the queries and added new code so that log
 going to fix authorization key so the auth function refers to the .env file instead of having the key inside the code, we will also start writing our backend test.
 4/12/2024
 worked on backend test and wrote one for add beverage, dairies, grains, produces, proteins.
-
+04/19/2024
+cleaned up the code by deleting unnecessary things.
+04/20/2024
+fixed some errors with some test and some spelling errors since i did not know produce is both singular and plural.
+04/21/2024
+working on the read me file
