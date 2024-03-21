@@ -1,66 +1,102 @@
 import { Link, NavLink } from 'react-router-dom'
-
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { User } from 'lucide-react'
 
 const Nav = () => {
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+    const dropdownVariants = {
+        hidden: { opacity: 0, y: -20, display: 'none' },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.2 }, display: 'block' },
+    };
+
     return (
-        <nav>
-            <div className="items-center gap-x-4 hover: opacity-75 transition navbar bg-base-100 shadow-lg">
-                <div className="flex-1 bg-white rounded-full p-1 mr-12 shrink-0 lg:mr-0 lg:shrink">
-                    <img src="/logo.png" alt="Logo" height="32" width="150" />
-                </div>
-                <div className="flex-none gap-2">
-                    <div className="form-control">
-                        <input
+        <nav className="bg-blue-200 shadow-lg">
+            <div className="max-w-6xl mx-auto px-4 py-4">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center space-x-4">
+                        <Link
+                            to="/"
+                            className="flex items-center py-3 px-2 text-gray-700 hover:text-gray-900"
+                        >
+                            <img
+                                src="/logo.png"
+                                alt="Logo"
+                                className="h-12 w-auto mr-2"
+                            />
+                            <span className="font-bold"></span>
+                        </Link>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <motion.input
+                            whileFocus={{ scale: 1.05 }}
+                            onFocus={() => setIsDropdownVisible(false)}
                             type="text"
                             placeholder="Search"
-                            className="input input-bordered w-24 md:w-auto"
+                            className="input input-bordered w-full max-w-xs"
                         />
-                        <div></div>
-                    </div>
-                    <div className="dropdown dropdown-end">
-                        <div
-                            tabIndex={0}
-                            role="button"
-                            className="btn btn-ghost btn-circle avatar"
-                        >
-                            <div className="w-10 rounded-full">
-                                <div className="skeleton w-32 h-32"></div>
-                            </div>
+                        <div className="relative">
+                            <motion.div
+                                tabIndex={0}
+                                className="btn btn-ghost btn-circle avatar"
+                                onClick={() =>
+                                    setIsDropdownVisible(!isDropdownVisible)
+                                }
+                                onBlur={() => setIsDropdownVisible(false)}
+                            >
+                                <User size="32" className="text-gray-700" />
+                            </motion.div>
+                            <motion.ul
+                                className="absolute right-0 mt-2 p-2 shadow bg-blue-100 rounded-box w-52"
+                                initial="hidden"
+                                animate={
+                                    isDropdownVisible ? 'visible' : 'hidden'
+                                }
+                                variants={dropdownVariants}
+                            >
+                                <li>
+                                    <a className="justify-between text-gray-700 hover:bg-blue-300">
+
+                                        <Link
+                                            to={'/profile'}
+                                            className="text-gray-700 hover:bg-blue-300"
+                                        >
+                                            Profile
+                                        </Link>
+                                    </a>
+                                </li>
+                                <li>
+                                    <Link
+                                        to={'/'}
+                                        className="text-gray-700 hover:bg-blue-300"
+                                    >
+                                        Homepage
+                                    </Link>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={'/signup'}
+                                        className="text-gray-700 hover:bg-blue-300"
+                                    >
+                                        Sign Up
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <Link
+                                        to={'/login'}
+                                        className="text-gray-700 hover:bg-blue-300"
+                                    >
+                                        Login
+                                    </Link>
+                                </li>
+                            </motion.ul>
                         </div>
-                        <ul
-                            tabIndex={0}
-                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-                        >
-                            <li>
-                                <a className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </a>
-                            </li>
-                            <li>
-                                <Link to={'/'}>Homepage</Link>
-                            </li>
-                            <li>
-                                <NavLink to={'/signup'}>Sign Up</NavLink>
-                            </li>
-                            <li>
-                                <Link to={'/login'}>Login</Link>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </nav>
-
-        // <ul>
-        //     <li>
-        //         <Link to={'/'}>Homepage</Link>
-        //     </li>
-        //     <li>
-        //         <NavLink to={'/about'}>About</NavLink>
-        //     </li>
-        // </ul>
     )
-}
+};
 
-export default Nav
+export default Nav;

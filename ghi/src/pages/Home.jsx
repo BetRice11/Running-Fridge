@@ -1,26 +1,74 @@
-import React, { useState, useEffect } from "react"
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const Home = () => {
-
-
     return (
-        <nav>
-            <div className="flex w-full">
-                <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
-                    Expires Soon
-                </div>
-                <div className="divider divider-horizontal"></div>
-                <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
-                    Suggested Recipes
-                </div>
-                <div
-                    id="content"
-                    className="col-span-8 h-[calc(100vh-3.75rem)] p-4"
+        <div className="flex flex-col min-h-screen">
+            {/* Hero Section */}
+            <motion.div
+                className="bg-blue-500 text-white text-center py-20 lg:py-32"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+            >
+                <h1 className="text-4xl lg:text-6xl font-bold mb-4">
+                    Discover the Flavorful World
+                </h1>
+                <p className="mb-8">
+                    Explore recipes, ingredients, and culinary knowledge.
+                </p>
+                <motion.a
+                    href="#features"
+                    className="bg-white text-blue-500 px-6 py-3 rounded-full font-semibold hover:bg-gray-100"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                 >
-                    <table className="absolute inset-x-0 bottom-0 h-16"></table>
-                </div>
-            </div>
-        </nav>
+                    <Link to={"/login"}>
+                    Get Started
+                    </Link>
+                </motion.a>
+            </motion.div>
+
+            {/* Features Section */}
+            <motion.div
+                className="flex flex-col md:flex-row justify-around items-center bg-gray-100 py-16"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.5 },
+                    },
+                }}
+            >
+                {['Fresh Ingredients', 'Easy Recipes', 'Healthy Options'].map(
+                    (feature, index) => (
+                        <FeatureCard key={index} title={feature} />
+                    )
+                )}
+            </motion.div>
+
+            {/* Footer */}
+            <footer className="bg-blue-700 text-white text-center p-4">
+                © {new Date().getFullYear()} Running Fridge - All rights reserved.
+            </footer>
+        </div>
     )
 }
-export default Home;
+
+const FeatureCard = ({ title }) => {
+    return (
+        <motion.div
+            className="card bg-white rounded-xl shadow-lg p-6 m-4"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+        >
+            <h2 className="font-semibold text-xl">{title}</h2>
+            <p>Learn more about our {title.toLowerCase()}.</p>
+        </motion.div>
+    )
+}
+
+export default Home

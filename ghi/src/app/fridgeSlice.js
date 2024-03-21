@@ -11,6 +11,7 @@ export const fridgeApi = createApi({
         getAllBeverages: builder.query({
             query: () => '/api/beverages/beverages/mine',
             refetchOnMountOrArgChange: true,
+            providesTags: ['BeverageList']
         }),
 
         getBeverage: builder.query({
@@ -23,6 +24,24 @@ export const fridgeApi = createApi({
                 url: `api/beverages/beverages/${item_id}`,
                 method: 'DELETE',
             }),
+        }),
+
+        updateBeverage: builder.mutation({
+            query: ({ item_id, updatedData }) => ({
+                url: `api/beverages/beverages/${item_id}`,
+                method: 'PUT',
+                body: updatedData,
+            }),
+            invalidatesTags: ['BeverageList']
+        }),
+
+        createBeverage: builder.mutation({
+            query: (createData) => ({
+                url: '/api/beverages/beverages',
+                body: createData,
+                method: 'POST',
+            }),
+            invalidatesTags: ['BeverageList'],
         }),
 
         getAllGrains: builder.query({
@@ -64,6 +83,8 @@ export const {
     useGetAllBeveragesQuery,
     useGetBeverageQuery,
     useDeleteBeverageMutation,
+    useUpdateBeverageMutation,
+    useCreateBeverageMutation,
     useDeleteGrainMutation,
     useGetAllGrainsQuery,
     useGetGrainQuery
