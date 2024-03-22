@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import  store  from './app/store'
+import { store } from './app/store'
 import { Provider } from 'react-redux'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
@@ -13,15 +13,14 @@ import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Beverages from './pages/BeverageDetail.jsx'
 import GrainList from './pages/GrainList.jsx'
-import BeverageList from './BeverageList.jsx'
+import BeverageList from './pages/BeverageList.jsx'
 import Grains from './pages/Grains.jsx'
 import DairiesList from './pages/DairiesList.jsx'
 import Dairies from './pages/Dairies.jsx'
-import UpdateBeverage from './pages/GrainUpdate.jsx'
 import Proteins from './pages/ProteinDetail.jsx'
-import ProteinList from './ProteinList.jsx'
+import ProteinList from './pages/ProteinList.jsx'
 import Produce from './pages/ProduceDetail.jsx'
-import ProduceList from './ProduceList.jsx'
+import ProduceList from './pages/ProduceList.jsx'
 import UpdateBeverage from './pages/BeverageUpdate.jsx'
 import BeverageForm from './pages/CreateBeverage.jsx'
 import DairyForm from './pages/CreateDairy.jsx'
@@ -57,22 +56,22 @@ const router = createBrowserRouter([
             { path: 'dairies/:item_id/update', element: <UpdateDairy /> },
             { path: 'grains/:item_id/update', element: <UpdateGrain /> },
             { path: 'grains/create', element: <GrainForm /> },
-            { path: 'grains', element: <GrainList />},
+            { path: 'grains', element: <GrainList /> },
             { path: 'grains/:item_id', element: <Grains /> },
-            { path: 'dairies', element: <DairiesList />},
-            { path: 'dairies/:item_id', element: <Dairies />},
-            { path: 'grains/:item_id', element: <Grains />},
-            { path: 'proteins', element: <ProteinList />},
-            { path: 'proteins/:item_id', element: <Proteins />},
+            { path: 'dairies', element: <DairiesList /> },
+            { path: 'dairies/:item_id', element: <Dairies /> },
+            { path: 'grains/:item_id', element: <Grains /> },
+            { path: 'proteins', element: <ProteinList /> },
+            { path: 'proteins/:item_id', element: <Proteins /> },
             { path: 'proteins/:item_id/update', element: <UpdateProtein /> },
-            { path: 'proteins/create', element: <ProteinForm />},
-            { path: 'produce', element: <ProduceList />},
-            { path: 'produce/:item_id', element: <Produce />},
+            { path: 'proteins/create', element: <ProteinForm /> },
+            { path: 'produce', element: <ProduceList /> },
+            { path: 'produce/:item_id', element: <Produce /> },
             { path: 'produce/:item_id/update', element: <UpdateProduce /> },
-            { path: 'produce/create', element: <ProduceForm />},
-            { path: 'grains/:item_id', element: <Grains />},
+            { path: 'produce/create', element: <ProduceForm /> },
+            { path: 'grains/:item_id', element: <Grains /> },
             { path: 'beverages/:item_id/update', element: <UpdateBeverage /> },
-            { path: 'beverages/create', element: <BeverageForm />}
+            { path: 'beverages/create', element: <BeverageForm /> },
         ],
     },
 ])

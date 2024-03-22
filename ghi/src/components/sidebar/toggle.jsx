@@ -46,10 +46,10 @@ export const Toggle = () => {
                     <ul className="space-y-2 p-4">
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
                             <Link to={'/grains'} className="flex items-center">
-                                {/* Consider adding icons or images next to these links */}
                                 Grains
                             </Link>
                         </li>
+
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
                             <Link
                                 to={'/beverages'}
@@ -58,23 +58,14 @@ export const Toggle = () => {
                                 Beverages
                             </Link>
                         </li>
+
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
-                            <Link
-                                to={'/beverages/create'}
-                                className="flex items-center"
-                            >
-                                Add Beverages
-                            </Link>
-                            <Link
-                                to={'/grains/create'}
-                                className="flex items-center"
-                            >
-                                Add Grains
+                            <Link to={'/produce'} className="flex items-center">
+                                Produce
                             </Link>
                         </li>
+
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
-                            <Link to={'/Dairies'} className="flex items-center">
-                                Dairy
                             <Link
                                 to={'/proteins'}
                                 className="flex items-center"
@@ -82,26 +73,52 @@ export const Toggle = () => {
                                 Proteins
                             </Link>
                         </li>
+
+                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
+                            <Link
+                                to={'/dairies'}
+                                className="flex items-center"
+                            >
+                                Dairies
+                            </Link>
+                        </li>
+
+                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
+                            <Link
+                                to={'/beverages/create'}
+                                className="flex items-center"
+                            >
+                                Add Beverages
+                            </Link>
+                        </li>
+
+                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
+                            <Link
+                                to={'/grains/create'}
+                                className="flex items-center"
+                            >
+                                Add Grains
+                            </Link>
+                        </li>
+
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
                             <Link
                                 to={'/dairies/create'}
                                 className="flex items-center"
                             >
                                 Add Dairy
+                            </Link>
+                        </li>
+
+                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
+                            <Link
                                 to={'/proteins/create'}
                                 className="flex items-center"
                             >
-                                Add Proteins
+                                Add Protein
                             </Link>
                         </li>
-                        <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
-                            <Link
-                                to={'/Produce'}
-                                className="flex items-center"
-                            >
-                                Produce
-                            </Link>
-                        </li>
+
                         <li className="hover:bg-blue-700 p-2 rounded-md transition-colors duration-200">
                             <Link
                                 to={'/produce/create'}
@@ -110,6 +127,7 @@ export const Toggle = () => {
                                 Add Produce
                             </Link>
                         </li>
+                        
                     </ul>
                 </motion.nav>
                 <div className="flex bg-blue-700 p-4 justify-center">
