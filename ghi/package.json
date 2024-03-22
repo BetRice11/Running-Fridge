@@ -15,7 +15,7 @@
         "axios": "^1.6.7",
         "clsx": "^2.1.0",
         "dom": "^0.0.3",
-        "framer-motion": "^11.0.18",
+        "framer-motion": "^11.0.20",
         "localforage": "^1.10.0",
         "lucide": "^0.356.0",
         "lucide-react": "^0.356.0",

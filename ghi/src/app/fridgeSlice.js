@@ -129,7 +129,7 @@ export const {
     useGetGrainQuery,
     useDeleteGrainMutation,
     useUpdateGrainMutation,
-    useCreateGrainMutation,,
+    useCreateGrainMutation,
     useGetDairyQuery,
     useGetAllDairyQuery,
     useDeleteDairyMutation,
