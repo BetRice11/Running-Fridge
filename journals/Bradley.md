@@ -26,3 +26,11 @@ working on authorization for all queries.
 got all authentication to work on all the queries and added new code so that logged in user can only access their own data, also decided to get rid of get all on the queries because we thought it would be a security risk because no one needs access to all the inputs to the queries. we replaced get all with get all for account so they can only pull their own data.
 4/08/2024
 going to fix authorization key so the auth function refers to the .env file instead of having the key inside the code, we will also start writing our backend test.
+4/12/2024
+worked on backend test and wrote one for add beverage, dairies, grains, produces, proteins.
+04/19/2024
+cleaned up the code by deleting unnecessary things.
+04/20/2024
+fixed some errors with some test and some spelling errors since i did not know produce is both singular and plural.
+04/21/2024
+working on the read me file, and finish backend test.

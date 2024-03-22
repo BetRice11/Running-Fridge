@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import date
 
-
 class Error(BaseModel):
     message: str
 
@@ -15,6 +14,7 @@ class ItemIn(BaseModel):
 
 class ItemOut(BaseModel):
     id: str
+    account_id: str
     name: str
     cost: str
     measurement: str

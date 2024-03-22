@@ -13,5 +13,3 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => //this is async await
         getDefaultMiddleware().concat(accountApi.middleware, fridgeApi.middleware)
 })
-
-// Global state for entire app... create query or api in file and import into store
