@@ -1,7 +1,4 @@
-import {
-    useGetAllDairyQuery,
-    useDeleteDairyMutation,
-} from '../app/fridgeSlice'
+import { useGetAllDairyQuery, useDeleteDairyMutation } from '../app/fridgeSlice'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
@@ -9,7 +6,6 @@ import { useState } from 'react'
 function DairiesList() {
     const { data, isLoading } = useGetAllDairyQuery()
     const [deleteDairy] = useDeleteDairyMutation()
-    
 
     const handleDelete = async (item_id) => {
         try {
@@ -24,7 +20,6 @@ function DairiesList() {
         e.preventDefault()
         changeName(item_id)
     }
-
 
     const [lightOn, setLightOn] = useState(true)
     const toggleLight = () => setLightOn(!lightOn)
@@ -45,7 +40,6 @@ function DairiesList() {
                 <button onClick={toggleLight} className="btn btn-sm">
                     {lightOn ? 'Turn Light Off' : 'Turn Light On'}
                 </button>
-                {/* The rest of your component */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {data.map((dairy, index) => (
                         <motion.div
