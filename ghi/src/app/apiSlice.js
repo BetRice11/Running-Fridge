@@ -38,12 +38,10 @@ export const accountApi = createApi({
             },
         }),
         logout: builder.mutation({
-            query: () => {
-                return {
+            query: () => ({
                     url: '/token',
                     method: 'DELETE',
-                }
-            },
+                }),
             invalidatesTags: ['Account'],
         }),
         getToken: builder.query({

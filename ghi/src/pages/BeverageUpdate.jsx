@@ -3,15 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
     useGetBeverageQuery,
     useUpdateBeverageMutation,
-    useGetAllBeveragesQuery,
 } from '../app/fridgeSlice'
-import { query } from '../app/querySlice'
-import { useDispatch } from 'react-redux'
 
 function UpdateBeverage() {
     const { item_id } = useParams()
     const navigate = useNavigate()
-    const { data: beverage, refetch, error } = useGetBeverageQuery(item_id)
+    const { data: beverage, error } = useGetBeverageQuery(item_id)
     const [updateBeverage] = useUpdateBeverageMutation()
     const [isLoading, setIsLoading] = useState(false)
 

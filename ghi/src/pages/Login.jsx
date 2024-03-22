@@ -18,7 +18,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setErrorMessage('') // Clear any existing error messages
+        setErrorMessage('')
         await login({ username, password })
     }
 

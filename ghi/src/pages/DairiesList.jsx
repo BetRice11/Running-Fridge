@@ -10,16 +10,15 @@ function DairiesList() {
     const handleDelete = async (item_id) => {
         try {
             await deleteDairy(item_id)
-            // Optionally, trigger a refetch or manage state locally
         } catch (error) {
             console.error('Error deleting item:', error)
         }
     }
 
-    const submitToRedux = (e, item_id) => {
-        e.preventDefault()
-        changeName(item_id)
-    }
+    // const submitToRedux = (e, item_id) => {
+    //     e.preventDefault()
+    //     changeName(item_id)
+    // }
 
     const [lightOn, setLightOn] = useState(true)
     const toggleLight = () => setLightOn(!lightOn)
@@ -55,7 +54,7 @@ function DairiesList() {
                             <p>Cost: {dairy.cost}</p>
                             <p>Expiration: {dairy.expiration_date}</p>
                             <p>Measurement: {dairy.measurement}</p>
-                            <form onSubmit={(e) => submitToRedux(e, item_id)}>
+                            {/* <form onSubmit={(e) => submitToRedux(e, item_id)}> */}
                                 <div className="flex justify-between mt-4">
                                     <Link
                                         to={`/dairies/${dairy.id}`}
@@ -76,7 +75,7 @@ function DairiesList() {
                                         Update
                                     </Link>
                                 </div>
-                            </form>
+                            {/* </form> */}
                         </motion.div>
                     ))}
                 </div>

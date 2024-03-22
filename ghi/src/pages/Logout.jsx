@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserCircle, Settings, PlusCircle } from 'lucide-react'
-import LogoutButton from './components/LogoutButton' // Import your LogoutButton component
+import LogoutButton from './components/LogoutButton' 
 
 const Profile = () => {
     const [activeTab, setActiveTab] = React.useState('recipes')
@@ -21,15 +21,12 @@ const Profile = () => {
                                 </p>
                             </div>
                         </div>
-                        {/* Position the LogoutButton here for accessibility */}
                         <LogoutButton />
                     </div>
                     <div className="mt-4 lg:mt-8">
                         <ul className="flex space-x-2 lg:space-x-4">
-                            {/* Tab buttons */}
                         </ul>
                     </div>
-                    {/* Content based on active tab */}
                 </div>
             </div>
         </div>

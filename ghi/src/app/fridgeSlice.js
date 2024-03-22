@@ -21,8 +21,8 @@ export const fridgeApi = createApi({
             query: (item_id) => ({
                 url: `api/beverages/beverages/${item_id}`,
                 method: 'DELETE',
-                invalidatesTags: ['BeverageList'],
             }),
+            invalidatesTags: ['BeverageList'],
         }),
 
         updateBeverage: builder.mutation({
@@ -30,8 +30,8 @@ export const fridgeApi = createApi({
                 url: `api/beverages/beverages/${item_id}`,
                 method: 'PUT',
                 body: updatedData,
-                invalidatesTags: ['BeverageList'],
             }),
+            invalidatesTags: ['BeverageList'],
         }),
 
         createBeverage: builder.mutation({
@@ -39,8 +39,8 @@ export const fridgeApi = createApi({
                 url: '/api/beverages/beverages',
                 body: createData,
                 method: 'POST',
-                invalidatesTags: ['BeverageList'],
             }),
+            invalidatesTags: ['BeverageList'],
         }),
 
         getAllGrains: builder.query({
@@ -58,8 +58,8 @@ export const fridgeApi = createApi({
             query: (item_id) => ({
                 url: `api/grains/grains/${item_id}`,
                 method: 'DELETE',
-                invalidatesTags: ['GrainList'],
             }),
+            invalidatesTags: ['GrainList'],
         }),
 
         updateGrain: builder.mutation({
@@ -67,8 +67,17 @@ export const fridgeApi = createApi({
                 url: `api/grains/grains/${item_id}`,
                 method: 'PUT',
                 body: updatedData,
-                invalidatesTags: ['GrainList'],
             }),
+            invalidatesTags: ['GrainList'],
+        }),
+
+        updateBeverage: builder.mutation({
+            query: ({ item_id, updatedData }) => ({
+                url: `api/beverages/beverages/${item_id}`,
+                method: 'PUT',
+                body: updatedData,
+            }),
+            invalidatesTags: ['BeverageList'],
         }),
 
         createGrain: builder.mutation({
@@ -76,8 +85,8 @@ export const fridgeApi = createApi({
                 url: '/api/grains/grains',
                 body: createData,
                 method: 'POST',
-                invalidatesTags: ['GrainList'],
             }),
+            invalidatesTags: ['GrainList'],
         }),
 
         getAllDairy: builder.query({
@@ -95,8 +104,8 @@ export const fridgeApi = createApi({
             query: (item_id) => ({
                 url: `api/dairies/dairies/${item_id}`,
                 method: 'DELETE',
-                invalidatesTags: ['DairyList'],
             }),
+            invalidatesTags: ['DairyList'],
         }),
 
         createDairy: builder.mutation({
@@ -104,8 +113,8 @@ export const fridgeApi = createApi({
                 url: '/api/dairies/dairies',
                 body: createData,
                 method: 'POST',
-                invalidatesTags: ['DairyList'],
             }),
+            invalidatesTags: ['DairyList'],
         }),
 
         updateDairy: builder.mutation({
@@ -113,8 +122,8 @@ export const fridgeApi = createApi({
                 url: `api/dairies/dairies/${item_id}`,
                 method: 'PUT',
                 body: updatedData,
-                invalidatesTags: ['DairyList'],
             }),
+            invalidatesTags: ['DairyList'],
         }),
 
         getAllProteins: builder.query({
@@ -133,6 +142,7 @@ export const fridgeApi = createApi({
                 url: `api/proteins/proteins/${item_id}`,
                 method: 'DELETE',
             }),
+            invalidatesTags: ['ProteinList'],
         }),
 
         updateProtein: builder.mutation({
@@ -140,8 +150,8 @@ export const fridgeApi = createApi({
                 url: `api/proteins/proteins/${item_id}`,
                 method: 'PUT',
                 body: updatedData,
-                invalidatesTags: ['ProteinList'],
             }),
+            invalidatesTags: ['ProteinList'],
         }),
 
         createProtein: builder.mutation({
@@ -149,8 +159,8 @@ export const fridgeApi = createApi({
                 url: '/api/proteins/proteins',
                 method: 'POST',
                 body: proteinData,
-                invalidatesTags: ['ProduceList'],
             }),
+            invalidatesTags: ['ProteinList'],
         }),
 
         getAllProduce: builder.query({
@@ -169,6 +179,7 @@ export const fridgeApi = createApi({
                 url: `api/produce/produce/${item_id}`,
                 method: 'DELETE',
             }),
+            invalidatesTags: ['ProduceList'],
         }),
 
         updateProduce: builder.mutation({
@@ -176,8 +187,8 @@ export const fridgeApi = createApi({
                 url: `api/produce/produce/${item_id}`,
                 method: 'PUT',
                 body: updatedData,
-                invalidatesTags: ['ProduceList'],
             }),
+            invalidatesTags: ['ProduceList'],
         }),
 
         createProduce: builder.mutation({

@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 const Home = () => {
     return (
         <div className="flex flex-col min-h-screen">
-            {/* Hero Section */}
             <motion.div
                 className="bg-blue-500 text-white text-center py-20 lg:py-32"
                 initial={{ opacity: 0, y: -50 }}
@@ -29,8 +28,6 @@ const Home = () => {
                     </Link>
                 </motion.a>
             </motion.div>
-
-            {/* Features Section */}
             <motion.div
                 className="flex flex-col md:flex-row justify-around items-center bg-gray-100 py-16"
                 initial="hidden"
@@ -49,8 +46,6 @@ const Home = () => {
                     )
                 )}
             </motion.div>
-
-            {/* Footer */}
             <footer className="bg-blue-700 text-white text-center p-4">
                 © {new Date().getFullYear()} Running Fridge - All rights reserved.
             </footer>

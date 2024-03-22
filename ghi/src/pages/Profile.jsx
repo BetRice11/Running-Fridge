@@ -1,9 +1,23 @@
 import React from 'react'
 import { UserCircle, Settings, PlusCircle } from 'lucide-react'
-import LogoutButton from '../components/LogoutButton' // Import your LogoutButton component
+import { useLogoutMutation } from '../app/apiSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
+    const navigate = useNavigate()
+    const [logoutAccount, { isSuccess }] = useLogoutMutation()
     const [activeTab, setActiveTab] = React.useState('recipes')
+
+    const logoutClick = async () => {
+        await logoutAccount()
+    }
+
+    // Navigate to onboard or any other route after successful logout
+    React.useEffect(() => {
+        if (isSuccess) {
+            navigate('/login')
+        }
+    }, [isSuccess, navigate])
 
     return (
         <div className="min-h-screen bg-blue-400 p-4">
@@ -21,10 +35,16 @@ const Profile = () => {
                                 </p>
                             </div>
                         </div>
-                        <LogoutButton />
+                        <button
+                            onClick={logoutClick}
+                            className="btn btn-outline-danger" 
+                        >
+                            Log Out
+                        </button>
                     </div>
                     <div className="mt-4 lg:mt-8">
                         <ul className="flex space-x-2 lg:space-x-4">
+                            {/* Tabs content here */}
                         </ul>
                     </div>
                 </div>

@@ -5,14 +5,11 @@ import {
     useUpdateDairyMutation,
 
 } from '../app/fridgeSlice'
-import { query } from '../app/querySlice'
-import { useDispatch } from 'react-redux'
 
 function UpdateDairy() {
     const { item_id } = useParams()
     const navigate = useNavigate()
-    // const dispatch = useDispatch
-    const { data: dairy, refetch, error } = useGetDairyQuery(item_id)
+    const { data: dairy, error } = useGetDairyQuery(item_id)
     const [updateDairy] = useUpdateDairyMutation()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -24,7 +21,6 @@ function UpdateDairy() {
         store_name: '',
     })
 
-    // dispatch(dairyUpdated(response.data))
 
     useEffect(() => {
         if (dairy) {
@@ -50,28 +46,14 @@ function UpdateDairy() {
         setIsLoading(true)
         try {
             await updateDairy({ item_id, updatedData: formData }).unwrap()
-
-            // dispatchEvent(dairyUpdated(response.data))
             navigate('/dairies')
             console.log('Calling refetch...')
-            // Optionally, redirect to a different page after successful update
-            // history.push('/dairys');
         } catch (error) {
             console.error('Error updating dairy:', error)
         } finally {
             setIsLoading(false)
         }
     }
-
-    // const changeHandler = (e) => {
-    //     e.preventDefault()
-    //     setName(e.target.value)
-    // }
-
-    // const submitToRedux = (e, item_id) => {
-    //     e.preventDefault()
-    //     changeName(item_id)
-    // }
 
     console.log('isLoading:', isLoading)
 
@@ -83,7 +65,7 @@ function UpdateDairy() {
         <div className="bg-blue-950 min-h-screen flex items-center justify-center">
             <div className="bg-white shadow-xl rounded-lg p-8 border border-blue-300 max-w-md w-full">
                 <h1 className="text-2xl font-bold mb-6 text-blue-800">
-                    Update dairy
+                    Update Dairy
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -155,7 +137,7 @@ function UpdateDairy() {
                         type="submit"
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
                     >
-                        Update dairy
+                        Update Dairy
                     </button>
                 </form>
             </div>

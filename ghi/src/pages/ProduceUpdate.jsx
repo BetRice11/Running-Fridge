@@ -1,14 +1,12 @@
 import { useState , useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useGetProduceQuery, useUpdateProduceMutation, useGetAllProduceQuery } from '../app/fridgeSlice'
-import { query } from '../app/querySlice'
-import { useDispatch } from 'react-redux'
+import { useGetProduceQuery, useUpdateProduceMutation } from '../app/fridgeSlice'
+
 
 function UpdateProduce() {
     const { item_id } = useParams()
     const navigate = useNavigate()
-    // const dispatch = useDispatch
-    const { data: produce, refetch, error } = useGetProduceQuery(item_id)
+    const { data: produce, error } = useGetProduceQuery(item_id)
     const [updateProduce] = useUpdateProduceMutation()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -19,8 +17,6 @@ function UpdateProduce() {
         measurement: '',
         store_name: '',
     })
-
-    // dispatch(produceUpdated(response.data))
 
     useEffect(() => {
         if (produce) {
@@ -41,35 +37,19 @@ function UpdateProduce() {
         })
     }
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
         try {
             await updateProduce({ item_id, updatedData: formData }).unwrap()
-
-            // dispatchEvent(ProduceUpdated(response.data))
             navigate('/Produce')
             console.log('Calling refetch...')
-            // Optionally, redirect to a different page after successful update
-            // history.push('/produces');
         } catch (error) {
             console.error('Error updating produce:', error)
         } finally {
             setIsLoading(false)
         }
     }
-
-    // const changeHandler = (e) => {
-    //     e.preventDefault()
-    //     setName(e.target.value)
-    // }
-
-    // const submitToRedux = (e, item_id) => {
-    //     e.preventDefault()
-    //     changeName(item_id)
-    // }
 
     console.log('isLoading:', isLoading)
 
