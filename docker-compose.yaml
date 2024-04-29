@@ -1,25 +1,43 @@
-# volumes:
+volumes:
+    mongo-data:
+        external: true
 services:
+    mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+        - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    mongo:
+        image: mongo:5
+        volumes:
+            - mongo-data:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
     fastapi:
         environment:
+            DATABASE_URL: mongodb://root:example@mongo:27017/
+            DB_NAME: db-running-fridge-db
             CORS_HOST: http://localhost:5173
+            SIGNING_KEY: ${SIGNING_KEY}
         build:
             context: api
             dockerfile: Dockerfile.dev
         ports:
             - 8000:8000
-        user: "1000:1000" # on macOS and Linux, replace this with your real user id and group id
         volumes:
             - ./api:/app
-
     ghi:
         image: node:lts-bullseye
         command: /bin/bash run.sh
         working_dir: /app
-        user: "1000:1000" # on macOS and Linux, replace this with your real user id and group id
         volumes:
             - ./ghi:/app
         environment:
             VITE_API_HOST: http://localhost:8000
         ports:
-            - "5173:5173"
+            - 5173:5173

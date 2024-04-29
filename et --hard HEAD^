@@ -1,0 +1,87 @@
+[33mac9be18[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mpforms[m[33m, [m[1;31morigin/pforms[m[33m)[m HEAD@{0}: commit: adding all
+[33mda9b89e[m HEAD@{1}: pull origin backend-code: Merge made by the 'ort' strategy.
+[33mf534c68[m HEAD@{2}: pull origin backend-code: Merge made by the 'ort' strategy.
+[33m8849743[m HEAD@{3}: commit: added brittanys journals last week -1day
+[33mf51f9ab[m HEAD@{4}: commit: added produce and proteins update and create
+[33md56fa95[m HEAD@{5}: commit: added produce and proteins update and create
+[33ma909069[m HEAD@{6}: commit: added produce and proteins update and create
+[33mb5ea121[m HEAD@{7}: commit: added produce and proteins update and create
+[33mbb1f250[m HEAD@{8}: commit: added produce and proteins update and create
+[33m9f65049[m HEAD@{9}: commit (merge): Merge branch 'css-stuff' of https://gitlab.com/12tier/running-fridge into pforms
+[33m6c7f11d[m HEAD@{10}: commit: added produce with form and proteins updated
+[33m0acc59e[m HEAD@{11}: pull origin dairy: Merge made by the 'ort' strategy.
+[33m809d67d[m HEAD@{12}: commit: added produce with form and proteins updated
+[33m34418d5[m[33m ([m[1;31morigin/produce[m[33m, [m[1;32mproduce[m[33m)[m HEAD@{13}: checkout: moving from produce to pforms
+[33m34418d5[m[33m ([m[1;31morigin/produce[m[33m, [m[1;32mproduce[m[33m)[m HEAD@{14}: commit: added produce with form
+[33m7b0d031[m[33m ([m[1;32mproteinform[m[33m)[m HEAD@{15}: checkout: moving from proteinform to produce
+[33m7b0d031[m[33m ([m[1;32mproteinform[m[33m)[m HEAD@{16}: pull origin backend-code: Merge made by the 'ort' strategy.
+[33m34726d5[m HEAD@{17}: checkout: moving from proteinform to proteinform
+[33m34726d5[m HEAD@{18}: revert: Revert "added protein form just need to connect to backend to post"
+[33m00f60bb[m HEAD@{19}: checkout: moving from proteinform to proteinform
+[33m00f60bb[m HEAD@{20}: reset: moving to HEAD
+[33m00f60bb[m HEAD@{21}: checkout: moving from proteinform to proteinform
+[33m00f60bb[m HEAD@{22}: reset: moving to HEAD
+[33m00f60bb[m HEAD@{23}: commit (merge): Merge branch 'backend-code' of https://gitlab.com/12tier/running-fridge into proteinform
+[33m69599b4[m[33m ([m[1;31morigin/proteinform[m[33m)[m HEAD@{24}: commit (merge): Merge branch 'dairy' of https://gitlab.com/12tier/running-fridge into proteinform
+[33m459da55[m HEAD@{25}: commit: added protein form just need to connect to backend to post
+[33me95da98[m[33m ([m[1;31morigin/Proteins[m[33m, [m[1;32mProteins[m[33m)[m HEAD@{26}: checkout: moving from Proteins to proteinform
+[33me95da98[m[33m ([m[1;31morigin/Proteins[m[33m, [m[1;32mProteins[m[33m)[m HEAD@{27}: commit: added protein pages with categories- done
+[33mcd65bea[m[33m ([m[1;32mprofilepage[m[33m)[m HEAD@{28}: checkout: moving from profilepage to Proteins
+[33mcd65bea[m[33m ([m[1;32mprofilepage[m[33m)[m HEAD@{29}: commit (merge): Merge branch 'grains' of https://gitlab.com/12tier/running-fridge into profilepage
+[33m7821920[m[33m ([m[1;32mfrontendauthtest[m[33m)[m HEAD@{30}: checkout: moving from frontendauthtest to profilepage
+[33m7821920[m[33m ([m[1;32mfrontendauthtest[m[33m)[m HEAD@{31}: commit: adding profile page update
+[33m3b815b8[m HEAD@{32}: pull origin try-auth: Merge made by the 'ort' strategy.
+[33m3027355[m HEAD@{33}: commit (merge): Merge branch 'try-auth' of https://gitlab.com/12tier/running-fridge into frontendauthtest
+[33mba7b83b[m[33m ([m[1;31morigin/frontendauthtest[m[33m)[m HEAD@{34}: checkout: moving from FAcomplete to frontendauthtest
+[33m25d991a[m[33m ([m[1;31morigin/FAcomplete[m[33m, [m[1;32mFAcomplete[m[33m)[m HEAD@{35}: reset: moving to HEAD
+[33m25d991a[m[33m ([m[1;31morigin/FAcomplete[m[33m, [m[1;32mFAcomplete[m[33m)[m HEAD@{36}: checkout: moving from frontendauthtest to FAcomplete
+[33mba7b83b[m[33m ([m[1;31morigin/frontendauthtest[m[33m)[m HEAD@{37}: commit: sign up/login and logout almost complete 2
+[33m7f438bd[m HEAD@{38}: commit (merge): sign up/login and logout almost complete
+[33mc0ef131[m HEAD@{39}: commit (merge): Merge branch 'FAcomplete' of https://gitlab.com/12tier/running-fridge into frontendauthtest
+[33m0092fdd[m HEAD@{40}: reset: moving to HEAD
+[33m0092fdd[m HEAD@{41}: commit: frontend auth with redux added/ still working
+[33meacb07b[m HEAD@{42}: commit: frontend auth started and testing
+[33m2a4e891[m[33m ([m[1;32mfrontend-started[m[33m)[m HEAD@{43}: checkout: moving from frontend-started to frontendauthtest
+[33m2a4e891[m[33m ([m[1;32mfrontend-started[m[33m)[m HEAD@{44}: commit (merge): Merge branch 'backend-code' of https://gitlab.com/12tier/running-fridge into frontend-started
+[33m8eaca7c[m[33m ([m[1;31morigin/frontend-started[m[33m)[m HEAD@{45}: reset: moving to HEAD
+[33m8eaca7c[m[33m ([m[1;31morigin/frontend-started[m[33m)[m HEAD@{46}: commit (merge): Merge branch 'deane-journal' of https://gitlab.com/12tier/running-fridge into frontend-started
+[33m7cc7933[m HEAD@{47}: pull origin journal-update-brittany: Merge made by the 'ort' strategy.
+[33m00ce1f8[m HEAD@{48}: commit (merge): Merge branch 'frontend-code' of https://gitlab.com/12tier/running-fridge into frontend-started
+[33mc8358ce[m HEAD@{49}: commit: adding updated backend to frontend started
+[33m82b552d[m HEAD@{50}: commit (merge): Merge branch 'backend-code' of https://gitlab.com/12tier/running-fridge into frontend-started
+[33me75b78a[m HEAD@{51}: checkout: moving from journal-update-brittany to frontend-started
+[33m8950692[m[33m ([m[1;31morigin/journal-update-brittany[m[33m, [m[1;32mjournal-update-brittany[m[33m)[m HEAD@{52}: commit: week update for journals
+[33m18b60ea[m HEAD@{53}: checkout: moving from frontend-started to journal-update-brittany
+[33me75b78a[m HEAD@{54}: commit: still editing signup login
+[33m6524f4a[m HEAD@{55}: reset: moving to HEAD
+[33m6524f4a[m HEAD@{56}: checkout: moving from backend-code to frontend-started
+[33m95d1ab4[m[33m ([m[1;32mbackend-code[m[33m)[m HEAD@{57}: checkout: moving from frontend-started to backend-code
+[33m6524f4a[m HEAD@{58}: commit: fixed hiccups
+[33m608d6cc[m HEAD@{59}: checkout: moving from frontend-started to frontend-started
+[33m608d6cc[m HEAD@{60}: checkout: moving from backend-code to frontend-started
+[33m95d1ab4[m[33m ([m[1;32mbackend-code[m[33m)[m HEAD@{61}: pull: Fast-forward
+[33mb982ce3[m HEAD@{62}: pull: Fast-forward
+[33m0285a12[m HEAD@{63}: pull: Fast-forward
+[33mb25ef1f[m HEAD@{64}: reset: moving to HEAD
+[33mb25ef1f[m HEAD@{65}: pull: Merge made by the 'ort' strategy.
+[33mc881abb[m HEAD@{66}: commit: beverage auth added
+[33m828ae22[m HEAD@{67}: pull: Fast-forward
+[33mbef9997[m HEAD@{68}: pull: Fast-forward
+[33mf347eef[m HEAD@{69}: checkout: moving from backend-code to backend-code
+[33mf347eef[m HEAD@{70}: pull: Fast-forward
+[33m8aa0c3f[m HEAD@{71}: pull: Fast-forward
+[33m9bd451c[m HEAD@{72}: checkout: moving from frontend-started to backend-code
+[33m608d6cc[m HEAD@{73}: pull origin backend-code: Merge made by the 'ort' strategy.
+[33m503dad5[m HEAD@{74}: checkout: moving from journal-update-brittany to frontend-started
+[33m18b60ea[m HEAD@{75}: pull origin backend-code: Merge made by the 'ort' strategy.
+[33m85e17c4[m HEAD@{76}: commit: update journal Brittany week 2/3
+[33mc5e60fa[m HEAD@{77}: checkout: moving from frontend-started to journal-update-brittany
+[33m503dad5[m HEAD@{78}: commit (merge): Merge branch 'backend-code' of https://gitlab.com/12tier/running-fridge into frontend-started
+[33mb325eda[m HEAD@{79}: commit: started frontend
+[33mc5e60fa[m HEAD@{80}: checkout: moving from journal-update-brittany to frontend-started
+[33mc5e60fa[m HEAD@{81}: checkout: moving from backend-code to journal-update-brittany
+[33m9bd451c[m HEAD@{82}: checkout: moving from backend-code to backend-code
+[33m9bd451c[m HEAD@{83}: reset: moving to HEAD
+[33m9bd451c[m HEAD@{84}: pull: Fast-forward
+[33m38827da[m HEAD@{85}: checkout: moving from journal-update-brittany to backend-code
+[33mc5e60fa[m HEAD@{86}: commit: update 
